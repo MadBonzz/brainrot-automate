@@ -1,0 +1,283 @@
+{
+  "lift_a_crate": {
+    "intent": "Squat, close the hands on an imaginary crate and rise with its weight.",
+    "frames": [0, 9, 18, 28, 39, 52],
+    "ground": true,
+    "landmarks": [{"frame": 18, "side": -1, "space": "body", "point": [-0.3, -0.37, 1.29], "tolerance": 0.075}, {"frame": 28, "side": -1, "space": "body", "point": [-0.3, -0.37, 1.31], "tolerance": 0.075}, {"frame": 39, "side": -1, "space": "body", "point": [-0.3, -0.42, 1.48], "tolerance": 0.075}, {"frame": 52, "side": -1, "space": "body", "point": [-0.3, -0.43, 1.51], "tolerance": 0.075}, {"frame": 18, "side": 1, "space": "body", "point": [0.3, -0.37, 1.29], "tolerance": 0.075}, {"frame": 28, "side": 1, "space": "body", "point": [0.3, -0.37, 1.31], "tolerance": 0.075}, {"frame": 39, "side": 1, "space": "body", "point": [0.3, -0.42, 1.48], "tolerance": 0.075}, {"frame": 52, "side": 1, "space": "body", "point": [0.3, -0.43, 1.51], "tolerance": 0.075}],
+    "pose": {
+      "leg1.x": [0, -22, -48, -46, -14, 0],
+      "leg-1.x": [0, -22, -48, -46, -14, 0],
+      "knee1.x": [0, 46, 96, 91, 26, 0],
+      "knee-1.x": [0, 46, 96, 91, 26, 0],
+      "spine.x": [0, 16, 32, 29, 5, -4],
+      "arm1.x": [0, -19, -28.0, -27.3, -40.2, -43.9],
+      "arm-1.x": [0, -19, -28.0, -27.3, -40.2, -43.9],
+      "elbow1.x": [0, -8, -47.4, -52.9, -68.5, -68.6],
+      "elbow-1.x": [0, -8, -47.4, -52.9, -68.5, -68.6],
+      "head.x": [0, 13, 18, 12, 1, -3],
+      "arm-1.y": [0, 0, -14.8, -14.3, -8.5, -6.9],
+      "arm-1.z": [0, 0, 19.6, 20.7, 25.9, 26.3],
+      "arm1.y": [0, 0, 14.8, 14.3, 8.5, 6.9],
+      "arm1.z": [0, 0, -19.6, -20.7, -25.9, -26.3]
+    }
+  },
+  "catch_and_cushion": {
+    "intent": "Track a falling parcel, raise both arms, then absorb its weight with elbows and knees.",
+    "frames": [0, 8, 17, 22, 29, 41],
+    "ground": true,
+    "landmarks": [{"frame": 17, "side": -1, "space": "body", "point": [-0.31, -0.35, 1.92], "tolerance": 0.075}, {"frame": 22, "side": -1, "space": "body", "point": [-0.31, -0.4, 1.72], "tolerance": 0.075}, {"frame": 29, "side": -1, "space": "body", "point": [-0.31, -0.38, 1.44], "tolerance": 0.075}, {"frame": 41, "side": -1, "space": "body", "point": [-0.31, -0.38, 1.5], "tolerance": 0.075}, {"frame": 17, "side": 1, "space": "body", "point": [0.31, -0.35, 1.92], "tolerance": 0.075}, {"frame": 22, "side": 1, "space": "body", "point": [0.31, -0.4, 1.72], "tolerance": 0.075}, {"frame": 29, "side": 1, "space": "body", "point": [0.31, -0.38, 1.44], "tolerance": 0.075}, {"frame": 41, "side": 1, "space": "body", "point": [0.31, -0.38, 1.5], "tolerance": 0.075}],
+    "pose": {
+      "head.x": [0, -15, -26, -9, 11, 4],
+      "arm1.x": [0, -46, -94.3, -63.3, -30.8, -35.1],
+      "arm-1.x": [0, -46, -94.3, -63.3, -30.8, -35.1],
+      "elbow1.x": [0, -17, -70.4, -81.4, -75.7, -82.2],
+      "elbow-1.x": [0, -17, -70.4, -81.4, -75.7, -82.2],
+      "leg1.x": [0, -4, -11, -23, -37, -9],
+      "leg-1.x": [0, -4, -11, -23, -37, -9],
+      "knee1.x": [0, 8, 22, 43, 74, 17],
+      "knee-1.x": [0, 8, 22, 43, 74, 17],
+      "spine.x": [0, -5, -9, 1, 15, 3],
+      "arm-1.y": [0, 0, 18.2, 5.2, -10.5, -8.2],
+      "arm-1.z": [0, 0, 19.3, 27.9, 25.2, 27.4],
+      "arm1.y": [0, 0, -18.2, -5.2, 10.5, 8.2],
+      "arm1.z": [0, 0, -19.3, -27.9, -25.2, -27.4]
+    }
+  },
+  "push_a_heavy_door": {
+    "intent": "Plant the back foot, bring both hands forward, and lean into resistance.",
+    "frames": [0, 8, 17, 27, 38, 50],
+    "ground": true,
+    "plant": ["-1:0:50"],
+    "pose": {
+      "leg1.x": [0, -18, -32, -37, -30, -12],
+      "knee1.x": [0, 35, 50, 67, 58, 23],
+      "leg-1.x": [0, 5, 12, 17, 14, 4],
+      "arm1.x": [0, -41, -55, -73, -88, -43],
+      "arm-1.x": [0, -41, -55, -73, -88, -43],
+      "elbow1.x": [0, -45, -57, -36, -10, -37],
+      "elbow-1.x": [0, -45, -57, -36, -10, -37],
+      "spine.x": [0, 4, 12, 24, 31, 8],
+      "head.x": [0, -2, -7, -14, -15, -5]
+    }
+  },
+  "hand_over_hand_pull": {
+    "intent": "Reach high, pull one hand low, and pass the load to the other hand.",
+    "frames": [0, 8, 16, 24, 32, 40, 48],
+    "pose": {
+      "arm1.x": [0, -127, -103, -45, -26, -56, 0],
+      "arm-1.x": [0, -21, -49, -129, -109, -41, 0],
+      "elbow1.x": [0, -18, -34, -79, -90, -54, 0],
+      "elbow-1.x": [0, -58, -44, -18, -32, -81, 0],
+      "spine.z": [0, 11, 7, -13, -9, 11, 0],
+      "head.x": [0, -16, -7, -15, -9, 5, 0],
+      "spine.x": [0, -5, 1, -5, 0, 9, 0]
+    }
+  },
+  "turn_a_crank": {
+    "intent": "Brace with one hand and turn two circles with the other.",
+    "frames": [0, 6, 12, 18, 24, 30, 36, 42, 48, 56],
+    "landmarks": [{"frame": 6, "side": 1, "space": "body", "point": [0.76, -0.43, 1.63], "tolerance": 0.075}, {"frame": 12, "side": 1, "space": "body", "point": [0.59, -0.43, 1.7999999999999998], "tolerance": 0.075}, {"frame": 18, "side": 1, "space": "body", "point": [0.41999999999999993, -0.43, 1.63], "tolerance": 0.075}, {"frame": 24, "side": 1, "space": "body", "point": [0.59, -0.43, 1.46], "tolerance": 0.075}, {"frame": 30, "side": 1, "space": "body", "point": [0.76, -0.43, 1.63], "tolerance": 0.075}, {"frame": 36, "side": 1, "space": "body", "point": [0.59, -0.43, 1.7999999999999998], "tolerance": 0.075}, {"frame": 42, "side": 1, "space": "body", "point": [0.41999999999999993, -0.43, 1.63], "tolerance": 0.075}, {"frame": 48, "side": 1, "space": "body", "point": [0.59, -0.43, 1.46], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, -55.2, -75.5, -49.1, -29.0, -55.2, -75.5, -49.1, -29.0, 0],
+      "arm1.y": [0, -21.7, -24.3, -46.9, -25.8, -19.6, -24.3, -46.9, -25.8, 0],
+      "elbow1.x": [0, -74.1, -81.7, -87.0, -79.5, -74.1, -81.7, -87.0, -79.5, 0],
+      "arm-1.x": [0, -46, -49, -49, -48, -49, -49, -48, -47, 0],
+      "elbow-1.x": [0, -26, -29, -31, -30, -29, -31, -29, -26, 0],
+      "spine.z": [0, 4, 9, 4, -3, 3, 9, 4, -3, 0],
+      "arm1.z": [0, 27.7, 17.5, -15.7, -3.6, 27.7, 17.5, -15.7, -3.6, 0]
+    }
+  },
+  "open_a_jar": {
+    "intent": "Brace a jar against the body, twist the lid twice, and lift it off.",
+    "frames": [0, 9, 17, 23, 29, 36, 43, 54],
+    "landmarks": [{"frame": 17, "side": -1, "space": "body", "point": [-0.12, -0.28, 1.42], "tolerance": 0.075}, {"frame": 23, "side": -1, "space": "body", "point": [-0.12, -0.28, 1.42], "tolerance": 0.075}, {"frame": 29, "side": -1, "space": "body", "point": [-0.12, -0.28, 1.42], "tolerance": 0.075}, {"frame": 36, "side": -1, "space": "body", "point": [-0.12, -0.28, 1.42], "tolerance": 0.075}, {"frame": 43, "side": -1, "space": "body", "point": [-0.12, -0.28, 1.42], "tolerance": 0.075}, {"frame": 17, "side": 1, "space": "body", "point": [0.13, -0.32, 1.67], "tolerance": 0.075}, {"frame": 23, "side": 1, "space": "body", "point": [0.03, -0.34, 1.65], "tolerance": 0.075}, {"frame": 29, "side": 1, "space": "body", "point": [0.13, -0.32, 1.67], "tolerance": 0.075}, {"frame": 36, "side": 1, "space": "body", "point": [0.03, -0.34, 1.65], "tolerance": 0.075}, {"frame": 43, "side": 1, "space": "body", "point": [0.1, -0.34, 1.91], "tolerance": 0.075}],
+    "pose": {
+      "arm-1.x": [0, -36, -39.0, -39.0, -39.0, -39.0, -39.0, 0],
+      "elbow-1.x": [0, -55, -54.4, -54.4, -54.4, -54.4, -54.4, 0],
+      "arm1.x": [0, -52, -63.5, -84.0, -63.5, -84.0, -116.0, 0],
+      "arm1.z": [0, -16, -51.3, -55.8, -51.3, -55.8, -49.2, 0],
+      "elbow1.x": [0, -40, -65.7, -15.2, -65.7, -15.2, -0.8, 0],
+      "head.x": [0, 8, 16, 19, 15, 17, -2, 0],
+      "spine.z": [0, -2, -5, -12, -3, -12, 0, 0],
+      "arm-1.y": [0, 0, -23.3, -23.3, -23.3, -23.3, -23.3, 0],
+      "arm-1.z": [0, 0, 44.7, 44.7, 44.7, 44.7, 44.7, 0],
+      "arm1.y": [0, 0, -1.3, -0.1, -1.4, -0.1, -5.0, 0]
+    }
+  },
+  "flip_a_page": {
+    "intent": "Hold an open book, pinch a corner, carry it to the opposite side and release.",
+    "frames": [0, 8, 16, 26, 36, 47],
+    "landmarks": [{"frame": 16, "side": -1, "space": "body", "point": [-0.22, -0.35, 1.46], "tolerance": 0.075}, {"frame": 26, "side": -1, "space": "body", "point": [-0.22, -0.35, 1.46], "tolerance": 0.075}, {"frame": 36, "side": -1, "space": "body", "point": [-0.22, -0.35, 1.46], "tolerance": 0.075}, {"frame": 16, "side": 1, "space": "body", "point": [0.33, -0.43, 1.46], "tolerance": 0.075}, {"frame": 26, "side": 1, "space": "body", "point": [0.14, -0.39, 1.79], "tolerance": 0.075}, {"frame": 36, "side": 1, "space": "body", "point": [-0.02, -0.26, 1.5], "tolerance": 0.075}],
+    "pose": {
+      "arm-1.x": [0, -45, -36.7, -36.7, -36.7, 0],
+      "elbow-1.x": [0, -45, -69.8, -69.8, -69.8, 0],
+      "arm1.x": [0, -48, -38.1, -86.5, -77.0, 0],
+      "arm1.z": [0, 5, -20.7, -44.0, -63.6, 0],
+      "elbow1.x": [0, -29, -67.7, -41.0, -0.0, 0],
+      "head.x": [0, 7, 16, 18, 14, 0],
+      "head.z": [0, 3, 15, -7, -23, 0],
+      "arm-1.y": [0, 0, -13.5, -13.4, -13.5, 0],
+      "arm-1.z": [0, 0, 36.2, 36.3, 36.2, 0],
+      "arm1.y": [0, 0, 11.2, -3.6, 5.0, 0]
+    }
+  },
+  "pull_a_drawer": {
+    "intent": "Reach forward, close the grip, draw the elbow back, and look inside.",
+    "frames": [0, 8, 17, 24, 34, 46],
+    "pose": {
+      "arm1.x": [0, -50, -84, -77, -22, -18],
+      "arm1.y": [0, -6, -8, -7, -3, -2],
+      "elbow1.x": [0, -24, -8, -16, -74, -65],
+      "spine.x": [0, 8, 19, 13, -7, 13],
+      "head.x": [0, 3, 7, 4, -1, 23],
+      "arm-1.y": [0, 4, 14, 16, 28, 11]
+    }
+  },
+  "shoulder_a_bag": {
+    "intent": "Swing a bag up onto one shoulder, catch the strap and adjust it.",
+    "frames": [0, 9, 18, 27, 36, 47],
+    "landmarks": [{"frame": 27, "side": 1, "space": "body", "point": [0.49, -0.08, 1.83], "tolerance": 0.075}, {"frame": 36, "side": 1, "space": "body", "point": [0.43, -0.25, 1.69], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, 13, -46, -102.9, -47.8, -34],
+      "arm1.y": [0, -14, -32, -16.1, -29.0, -11],
+      "elbow1.x": [0, -15, -41, -140.8, -127.4, -79],
+      "spine.y": [0, 7, -5, -17, 9, 3],
+      "head.y": [0, 2, -7, -12, 4, 0],
+      "arm-1.y": [0, 9, 22, 36, 17, 3],
+      "arm1.z": [0, 0, 0, 11.1, -15.9, 0]
+    }
+  },
+  "rock_a_bundle": {
+    "intent": "Cradle a bundle with both bent arms and sway through two sides.",
+    "frames": [0, 9, 18, 27, 36, 46],
+    "landmarks": [{"frame": 18, "side": -1, "space": "body", "point": [-0.24, -0.29, 1.43], "tolerance": 0.075}, {"frame": 27, "side": -1, "space": "body", "point": [-0.24, -0.29, 1.43], "tolerance": 0.075}, {"frame": 36, "side": -1, "space": "body", "point": [-0.24, -0.29, 1.43], "tolerance": 0.075}, {"frame": 46, "side": -1, "space": "body", "point": [-0.24, -0.29, 1.43], "tolerance": 0.075}, {"frame": 18, "side": 1, "space": "body", "point": [0.24, -0.29, 1.43], "tolerance": 0.075}, {"frame": 27, "side": 1, "space": "body", "point": [0.24, -0.29, 1.43], "tolerance": 0.075}, {"frame": 36, "side": 1, "space": "body", "point": [0.24, -0.29, 1.43], "tolerance": 0.075}, {"frame": 46, "side": 1, "space": "body", "point": [0.24, -0.29, 1.43], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, -30, -24.4, -24.3, -24.4, -24.3],
+      "arm-1.x": [0, -33, -24.5, -24.4, -24.5, -24.4],
+      "elbow1.x": [0, -68, -82.2, -82.2, -82.2, -82.2],
+      "elbow-1.x": [0, -58, -82.2, -82.2, -82.2, -82.2],
+      "spine.y": [0, 0, 15, -15, 13, 0],
+      "head.y": [0, -4, 4, -9, 4, -3],
+      "head.x": [0, 13, 20, 18, 21, 14],
+      "arm-1.y": [0, 0, -17.4, -17.9, -17.3, -17.9],
+      "arm-1.z": [0, 0, 35.8, 35.5, 35.8, 35.5],
+      "arm1.y": [0, 0, 17.7, 18.1, 17.8, 18.2],
+      "arm1.z": [0, 0, -35.6, -35.4, -35.5, -35.3]
+    }
+  },
+  "ring_a_high_bell": {
+    "intent": "Look up, stretch the arm overhead, pull down sharply, and let go.",
+    "frames": [0, 8, 16, 23, 31, 43],
+    "landmarks": [{"frame": 16, "side": 1, "space": "body", "point": [0.52, -0.19, 2.18], "tolerance": 0.075}, {"frame": 23, "side": 1, "space": "body", "point": [0.52, -0.19, 2.16], "tolerance": 0.075}, {"frame": 31, "side": 1, "space": "body", "point": [0.52, -0.19, 1.46], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, -59, -142.3, -137.4, 8.5, 0],
+      "arm1.y": [0, -12, -3.1, -3.2, -2.3, 0],
+      "elbow1.x": [0, -24, -40.5, -49.8, -130.0, 0],
+      "head.x": [0, -17, -29, -24, 4, 0],
+      "spine.x": [0, -6, -10, -7, 13, 0],
+      "arm-1.y": [0, 9, 20, 16, 27, 0],
+      "arm1.z": [0, 0, 5.8, 5.8, -5.2, 0]
+    }
+  },
+  "sweep_the_floor": {
+    "intent": "Hold an imaginary broom with spaced hands and sweep through a broad arc.",
+    "frames": [0, 10, 20, 30, 40, 50],
+    "pose": {
+      "arm1.x": [0, -37, -49, -54, -40, 0],
+      "arm-1.x": [0, -52, -62, -66, -51, 0],
+      "elbow1.x": [0, -24, -35, -38, -24, 0],
+      "elbow-1.x": [0, -51, -63, -67, -48, 0],
+      "spine.z": [0, -19, -31, 32, -22, 0],
+      "spine.x": [0, 12, 20, 22, 18, 0],
+      "head.z": [0, -8, -16, 17, -10, 0]
+    }
+  },
+  "paddle_a_canoe": {
+    "intent": "Place an imaginary paddle, pull past the hip, lift it clear and recover.",
+    "frames": [0, 8, 16, 25, 34, 46],
+    "pose": {
+      "arm1.x": [0, -62, -81, -43, 9, 0],
+      "arm-1.x": [0, -74, -91, -65, -29, 0],
+      "elbow1.x": [0, -16, -7, -52, -74, 0],
+      "elbow-1.x": [0, -49, -55, -42, -29, 0],
+      "spine.z": [0, -16, -31, -7, 30, 0],
+      "spine.x": [0, 12, 24, 8, -8, 0],
+      "head.z": [0, -8, -13, 2, 10, 0]
+    }
+  },
+  "draw_a_rectangle": {
+    "intent": "Keep one hand up and trace four corners in front of the body.",
+    "frames": [0, 8, 16, 24, 32, 40, 50],
+    "landmarks": [{"frame": 8, "side": 1, "space": "body", "point": [0.19, -0.38, 1.45], "tolerance": 0.075}, {"frame": 16, "side": 1, "space": "body", "point": [0.7, -0.38, 1.45], "tolerance": 0.075}, {"frame": 24, "side": 1, "space": "body", "point": [0.7, -0.38, 1.9], "tolerance": 0.075}, {"frame": 32, "side": 1, "space": "body", "point": [0.19, -0.38, 1.9], "tolerance": 0.075}, {"frame": 40, "side": 1, "space": "body", "point": [0.19, -0.38, 1.45], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, -44.9, -28.1, -88.9, -98.7, -44.9, 0],
+      "arm1.z": [0, -39.4, 23.5, 22.9, -37.8, -39.4, 0],
+      "elbow1.x": [0, -53.9, -83.1, -73.1, -40.6, -53.9, 0],
+      "head.z": [0, -8, 15, 16, -10, -9, 0],
+      "head.x": [0, 8, 9, -9, -10, 8, 0],
+      "arm1.y": [0, 6.4, -1.4, 1.9, -7.9, 6.4, 0]
+    }
+  },
+  "polish_a_window": {
+    "intent": "Press one hand forward and polish a small circle twice.",
+    "frames": [0, 6, 12, 18, 24, 30, 36, 42, 48, 57],
+    "landmarks": [{"frame": 6, "side": 1, "space": "body", "point": [0.5, -0.43, 1.63], "tolerance": 0.075}, {"frame": 12, "side": 1, "space": "body", "point": [0.36, -0.43, 1.77], "tolerance": 0.075}, {"frame": 18, "side": 1, "space": "body", "point": [0.21999999999999997, -0.43, 1.63], "tolerance": 0.075}, {"frame": 24, "side": 1, "space": "body", "point": [0.36, -0.43, 1.4899999999999998], "tolerance": 0.075}, {"frame": 30, "side": 1, "space": "body", "point": [0.5, -0.43, 1.63], "tolerance": 0.075}, {"frame": 36, "side": 1, "space": "body", "point": [0.36, -0.43, 1.77], "tolerance": 0.075}, {"frame": 42, "side": 1, "space": "body", "point": [0.21999999999999997, -0.43, 1.63], "tolerance": 0.075}, {"frame": 48, "side": 1, "space": "body", "point": [0.36, -0.43, 1.4899999999999998], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, -48.2, -71.2, -61.9, -38.3, -48.2, -71.2, -61.9, -38.3, 0],
+      "arm1.z": [0, -4.0, -21.1, -35.8, -21.0, -4.0, -21.1, -35.8, -21.0, 0],
+      "elbow1.x": [0, -90.4, -76.4, -59.5, -74.6, -90.4, -76.4, -59.5, -74.6, 0],
+      "arm-1.x": [0, -34, -36, -34, -35, -34, -36, -34, -35, 0],
+      "spine.x": [0, 8, 12, 11, 9, 8, 12, 11, 9, 0],
+      "head.z": [0, 4, -5, -9, -3, 4, -5, -9, -3, 0],
+      "arm1.y": [0, -0.0, -1.5, 0.2, 1.7, -0.0, -1.5, 0.2, 1.7, 0]
+    }
+  },
+  "pass_a_parcel": {
+    "intent": "Gather a parcel, turn toward a neighbor, extend both arms and release.",
+    "frames": [0, 9, 18, 27, 37, 49],
+    "landmarks": [{"frame": 9, "side": -1, "space": "body", "point": [-0.28, -0.3, 1.42], "tolerance": 0.075}, {"frame": 18, "side": -1, "space": "body", "point": [-0.28, -0.35, 1.47], "tolerance": 0.075}, {"frame": 27, "side": -1, "space": "body", "point": [-0.28, -0.4, 1.5], "tolerance": 0.075}, {"frame": 37, "side": -1, "space": "body", "point": [-0.28, -0.51, 1.61], "tolerance": 0.075}, {"frame": 9, "side": 1, "space": "body", "point": [0.28, -0.3, 1.42], "tolerance": 0.075}, {"frame": 18, "side": 1, "space": "body", "point": [0.28, -0.35, 1.47], "tolerance": 0.075}, {"frame": 27, "side": 1, "space": "body", "point": [0.28, -0.4, 1.5], "tolerance": 0.075}, {"frame": 37, "side": 1, "space": "body", "point": [0.28, -0.51, 1.61], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, -20.7, -31.1, -40.4, -67.5, 0],
+      "arm-1.x": [0, -20.7, -31.1, -40.4, -67.5, 0],
+      "elbow1.x": [0, -85.8, -81.7, -72.7, -42.5, 0],
+      "elbow-1.x": [0, -85.8, -81.7, -72.7, -42.5, 0],
+      "spine.z": [0, -8, -12, 15, 39, 18],
+      "head.z": [0, -4, -8, 27, 39, 17],
+      "arm-1.y": [0, -16.4, -11.8, -8.5, -1.4, 0],
+      "arm-1.z": [0, 30.2, 30.8, 29.5, 26.0, 0],
+      "arm1.y": [0, 16.4, 11.8, 8.5, 1.4, 0],
+      "arm1.z": [0, -30.2, -30.8, -29.5, -26.0, 0]
+    }
+  },
+  "fold_a_map": {
+    "intent": "Spread a map, bring one edge across, press the fold, and tuck it away.",
+    "frames": [0, 8, 17, 26, 35, 45, 55],
+    "landmarks": [{"frame": 17, "side": 1, "space": "body", "point": [0.55, -0.4, 1.58], "tolerance": 0.075}, {"frame": 26, "side": 1, "space": "body", "point": [0.18, -0.41, 1.7], "tolerance": 0.075}, {"frame": 35, "side": 1, "space": "body", "point": [0.01, -0.3, 1.53], "tolerance": 0.075}, {"frame": 17, "side": -1, "space": "body", "point": [-0.49, -0.4, 1.58], "tolerance": 0.075}, {"frame": 26, "side": -1, "space": "body", "point": [-0.4, -0.41, 1.56], "tolerance": 0.075}, {"frame": 35, "side": -1, "space": "body", "point": [-0.31, -0.34, 1.51], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, -51, -36.5, -71.6, -78.8, -24, 0],
+      "arm-1.x": [0, -51, -36.8, -38.8, -31.0, -22, 0],
+      "arm1.y": [0, -17, -32.9, -12.5, 4.9, -1, 0],
+      "arm-1.y": [0, 17, 32.3, 22.8, 5.9, 5, 0],
+      "arm1.z": [0, 3, -2.7, -39.1, -59.1, -14, 0],
+      "elbow1.x": [0, -29, -97.2, -54.7, -1.7, -56, 0],
+      "elbow-1.x": [0, -29, -96.9, -88.7, -92.0, -47, 0],
+      "head.x": [0, 11, 16, 19, 20, 7, 0],
+      "arm-1.z": [0, 0, 11.1, 22.1, 34.8, 0, 0]
+    }
+  },
+  "wind_up_and_toss": {
+    "intent": "Shift weight, wind up below the hip, toss underhand and follow the flight.",
+    "frames": [0, 8, 17, 24, 32, 44],
+    "ground": true,
+    "plant": ["-1:0:44"],
+    "pose": {
+      "arm1.x": [0, 26, 43, -16, -86, -39],
+      "elbow1.x": [0, -25, -41, -34, -16, -23],
+      "spine.z": [0, 12, 31, 15, -24, -10],
+      "leg1.x": [0, -7, -23, -19, 7, 4],
+      "knee1.x": [0, 14, 46, 37, 12, 5],
+      "head.x": [0, 6, 8, 0, -25, -19],
+      "arm-1.x": [0, -14, -31, -14, 12, 4]
+    }
+  }
+}

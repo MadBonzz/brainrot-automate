@@ -16,6 +16,7 @@ import sys
 import time
 
 from film import assets, audio, planning, storage
+from film.performances import motion_end
 
 ROOT = Path(__file__).resolve().parent
 
@@ -65,6 +66,8 @@ def render(job, story, design, quality, blender, ffmpeg, asset_root, cast_direct
         position = next(t for w, t in timed if anchor in [word(x) for x in re.findall(r"[^\W_]+(?:['’][^\W_]+)*", w)])
         cue = 1+round(position*fps)
         count = max(cue+1, math.ceil((seconds+shot['hold_ms']/1000)*fps), 2)
+        playback = [planning.MOTIONS[action] for action in (shot['lead'], shot['witness']) if action != 'absent']
+        count = motion_end(cue, count, fps, playback)
         speech.extend(raw)
         samples = round((offset+count)*audio.RATE/fps)-len(speech)
         speech.extend(array('h', [0])*samples)
@@ -78,7 +81,6 @@ def render(job, story, design, quality, blender, ffmpeg, asset_root, cast_direct
         if shot['witness'] != 'absent':
             used.extend([actors['witness']['sha256'], models['motions/'+shot['witness']]['sha256']])
         screen = {k:shot[k] for k in ('camera','face','lead','witness','prop','turn_degrees')}
-        playback = [planning.MOTIONS[action] for action in (shot['lead'], shot['witness']) if action != 'absent']
         signature = assets.digest([version, engine, screen, count, cue, angle, width, height, fps, used, playback,
                                    design['location_sign'], design['prop']['label'], design['prop']['color'], planning.CAMERAS[shot['camera']]])
         folder = target/'shots'/f'{i:03d}-{signature[:24]}'

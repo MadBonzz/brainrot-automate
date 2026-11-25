@@ -6,6 +6,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+from .performances import read_motions
 
 
 def obj(**fields):
@@ -21,7 +22,7 @@ def choices(values):
 
 
 PRESETS = Path(__file__).resolve().parent / "presets"
-MOTIONS = json.loads((PRESETS/"motions.json").read_text(encoding="utf8"))
+MOTIONS = read_motions()
 CAMERAS = json.loads((PRESETS/"cameras.json").read_text(encoding="utf8"))
 
 S = {"type": "string"}

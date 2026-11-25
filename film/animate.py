@@ -7,7 +7,7 @@ import tempfile
 from pathlib import Path
 
 import bpy
-from mathutils import Vector
+from mathutils import Vector, Matrix
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from storage import copy_file, restore_shot
@@ -143,6 +143,55 @@ def tagged(obj, joint):
     obj.name = joint
     return obj
 
+def move_under(obj, pivot):
+    # Both the new pivot and obj started in the same parent's coordinates.
+    inverse = obj.matrix_parent_inverse.copy()
+    obj.parent = pivot
+    if inverse == Matrix.Identity(4):
+        obj.location -= pivot.location
+    else:
+        obj.matrix_parent_inverse = Matrix.Translation(-pivot.location) @ inverse
+
+
+def articulate(base):
+    """Upgrade an original rigid cast instance in memory, including its attached accessories."""
+    joints = {obj.get('shortfilm_joint'):obj for obj in base.children_recursive}
+    if 'spine' in joints:
+        return
+    upper = [obj for obj in base.children if obj not in (joints['leg-1'], joints['leg1'])
+             and obj.location.z > .85]
+    spine = tagged(empty('Spine', (0, 0, .91), base), 'spine')
+    for obj in upper:
+        move_under(obj, spine)
+    for side in (-1, 1):
+        for limb, hinge, cut, length in [('arm','elbow',-.33,.56), ('leg','knee',-.41,.74)]:
+            parent = joints[f'{limb}{side}']
+            children = list(parent.children)
+            joint = tagged(empty(hinge, (0, 0, cut), parent), f'{hinge}{side}')
+            for obj in children:
+                # Split only the stock rectangular sleeve/trouser. Other attachments keep their geometry.
+                is_block = (obj.type == 'MESH' and len(obj.data.vertices) == 8
+                            and all(abs(abs(v)-.5)<.0001 for vert in obj.data.vertices for v in vert.co)
+                            and abs(obj.rotation_euler.to_matrix().to_quaternion().angle)<.0001
+                            and abs(obj.scale.z-length) < .0001
+                            and abs(obj.location.z-(-.27 if limb=='arm' else -.37)) < .0001)
+                if is_block:
+                    bottom, top = obj.location.z-length/2, obj.location.z+length/2
+                    lower = obj.copy()
+                    for collection in list(obj.users_collection):
+                        collection.objects.link(lower)
+                    lower.parent = joint
+                    lower.location.z = (bottom-cut)/2
+                    lower.scale.z = cut-bottom
+                    obj.location.z = (top+cut)/2
+                    obj.scale.z = top-cut
+                elif obj.location.z < cut:
+                    if limb == 'arm' and obj.type == 'MESH' and abs(obj.location.z+.61)<.001:
+                        obj['shortfilm_hand'] = side
+                    if limb == 'leg' and obj.type == 'MESH' and abs(obj.location.z+.80)<.001:
+                        obj['shortfilm_sole'] = side
+                    move_under(obj, joint)
+
 def build_character(coat, second):
     base = tagged(empty('Root', (0, 0, 0)), 'root')
     skin = 'skin2' if second else 'skin'
@@ -173,6 +222,7 @@ def build_character(coat, second):
         part((0, 0, -.37), (.39, .51, .74), 'navy', leg)
         part((0, -.055, -.80), (.42, .64, .20), 'charcoal', leg)
         part((0, -.35, -.83), (.40, .05, .07), 'cream', leg)
+    articulate(base)
     return base
 
 def save_collection(name):
@@ -195,8 +245,9 @@ def load_collection(path, name):
 
 def actor(path, x, y, face):
     collection = load_collection(path, 'Character')
-    joints = {obj['shortfilm_joint']:obj for obj in collection.all_objects if 'shortfilm_joint' in obj}
-    base = joints['root']
+    base = next(obj for obj in collection.all_objects if obj.get('shortfilm_joint') == 'root')
+    articulate(base)
+    joints = {obj['shortfilm_joint']:obj for obj in [base, *base.children_recursive] if 'shortfilm_joint' in obj}
     base.location.x += x
     base.location.y += y
     for side in (-1, 1):
@@ -235,6 +286,89 @@ def load_actions(path):
         loaded.actions = list(available.actions)
     return {a['shortfilm_joint']:a for a in loaded.actions if 'shortfilm_joint' in a}
 
+def clear_swing_sole(knee, corners, height):
+    """Find the smallest additional knee bend that clears the support plane."""
+    local = [knee.matrix_world.inverted() @ p for p in corners]
+    def lowest(angle):
+        matrix = knee.matrix_world @ Matrix.Rotation(angle,4,'X')
+        return min((matrix @ p).z for p in local)
+    lo = 0.
+    limit = max(0.,math.radians(148)-knee.delta_rotation_euler.x)
+    for step in range(1,25):
+        hi = limit*step/24
+        if lowest(hi) >= height:
+            for _ in range(10):
+                mid = (lo+hi)/2
+                if lowest(mid) < height:
+                    lo = mid
+                else:
+                    hi = mid
+            return hi
+        lo = hi
+    return 0.
+
+
+def place_feet(rig, recipe, cue, end, scale):
+    """Solve floor height and stance-foot drift from the evaluated shoe geometry."""
+    base = rig['root']
+    boots = {int(o['shortfilm_sole']):o for o in base.children_recursive if 'shortfilm_sole' in o}
+    if len(boots) != 2:
+        raise ValueError('Foot placement requires both shoes tagged with shortfilm_sole (-1 and 1).')
+    spans = [tuple(map(int,p.split(':'))) for p in recipe.get('plant',[])]
+    clearance = {}
+    if spans:
+        for side in boots:
+            knee = rig[f'knee{side}']
+            children = list(knee.children)
+            pivot = empty('Swing shoe clearance',(0,0,0),knee)
+            for child in children:
+                move_under(child,pivot)
+            clearance[side] = pivot
+    scene = bpy.context.scene
+    old_frame, old_sub = scene.frame_current, scene.frame_subframe
+    root_offset = empty('Foot placement', (0,0,0))
+    base.parent = root_offset
+    samples = []
+    previous = anchor = None
+    shift = Vector((0.,0.))
+    # Sample without the correction parent animated, so previous keys cannot feed back.
+    last = end if recipe.get('loop') else min(end,math.ceil(cue+recipe['frames']*scale))
+    for frame in range(cue,last+1):
+        scene.frame_set(frame)
+        points = {side:[boot.matrix_world @ Vector(c) for c in boot.bound_box] for side,boot in boots.items()}
+        floor = min(v.z for corners in points.values() for v in corners)
+        if frame == cue:
+            rest = floor
+        t = (frame-cue)/scale
+        cycle = int(t//recipe['frames']) if recipe.get('loop') else 0
+        t = t%recipe['frames'] if recipe.get('loop') else min(t,recipe['frames'])
+        stance = next(((side,a,b,cycle) for side,a,b in spans if a<=t<=b),None)
+        bends = {side:0. for side in clearance}
+        if stance:
+            supporting = stance[0]
+            desired = min(v.z for v in points[supporting])
+            if desired-floor > .0001:
+                swing = -supporting
+                bend = clear_swing_sole(rig[f'knee{swing}'],points[swing],desired)
+                if bend:
+                    bends[swing] = bend
+                    floor = desired
+            corners = points[stance[0]]
+            center = (sum(corners,Vector())/len(corners)).xy
+            if previous != stance:
+                anchor = center+shift
+            shift = anchor-center
+        previous = stance
+        lift = rest-floor if recipe.get('ground') else max(0,rest-floor)
+        samples.append((frame,(shift.x,shift.y,lift),bends))
+    for frame,xyz,bends in samples:
+        for side,bend in bends.items():
+            clearance[side].rotation_euler.x = bend
+            key(clearance[side],'rotation_euler',frame)
+        root_offset.location = xyz
+        key(root_offset,'location',frame)
+    scene.frame_set(old_frame,subframe=old_sub)
+
 def motion(rig, name, cue, end, library):
     recipe = job['motions'][name]
     if name not in library:
@@ -261,6 +395,8 @@ def motion(rig, name, cue, end, library):
         key(base, 'location', cue)
         base.location += Vector(recipe['travel'])
         key(base, 'location', end)
+    if recipe.get('ground') or recipe.get('floor'):
+        place_feet(rig, recipe, cue, end, scale)
 
 def build_prop(p):
     root = empty('Clue', (1.00, .1, .99))

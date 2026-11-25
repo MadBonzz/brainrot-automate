@@ -1,0 +1,236 @@
+{
+  "scan_the_horizon": {
+    "intent": "Shade the eyes, scan left and right, then drop the arm.",
+    "frames": [0, 8, 16, 25, 34, 44],
+    "landmarks": [{"frame": 16, "side": 1, "space": "head", "point": [0.34, -0.32, 0.26], "tolerance": 0.075}, {"frame": 25, "side": 1, "space": "head", "point": [0.34, -0.32, 0.26], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, -44, -111.1, -112.1, -48, 0],
+      "arm1.y": [0, -15, -14.5, -19.7, -15, 0],
+      "elbow1.x": [0, -45, -91.7, -48.0, -53, 0],
+      "head.z": [0, 4, 13, -12, -5, 0],
+      "spine.z": [0, 6, 28, -27, -10, 0],
+      "arm1.dz": [0, 0.03, 0.095, 0.095, 0.04, 0],
+      "arm1.dy": [0, -0.02, -0.055, -0.055, -0.025, 0],
+      "arm1.z": [0, 0, -9.7, -20.8, 0, 0]
+    }
+  },
+  "beckon_twice": {
+    "intent": "Extend one arm and curl the forearm inward twice.",
+    "frames": [0, 7, 13, 19, 25, 32, 42],
+    "pose": {
+      "arm1.x": [0, -50, -61, -57, -61, -57, 0],
+      "elbow1.x": [0, -12, -62, -14, -66, -12, 0],
+      "arm1.y": [0, -14, -17, -15, -17, -15, 0],
+      "head.x": [0, 0, 8, 1, 9, 1, 0]
+    }
+  },
+  "double_take": {
+    "intent": "Look sideways, almost return, then snap head and shoulders back.",
+    "frames": [0, 8, 14, 19, 25, 34, 44],
+    "pose": {
+      "head.z": [0, 34, 4, -5, 62, 50, 0],
+      "spine.z": [0, 4, 0, -3, 20, 13, 0],
+      "head.x": [0, 1, 0, 0, -13, -6, 0],
+      "arm-1.y": [0, 0, 0, 0, 16, 8, 0],
+      "elbow1.x": [0, 0, 0, 0, -32, -18, 0]
+    }
+  },
+  "cover_ears": {
+    "intent": "Shoot both hands up, hunch, peek, and lower them.",
+    "frames": [0, 6, 13, 22, 32, 42],
+    "landmarks": [{"frame": 13, "side": -1, "space": "head", "point": [-0.43, -0.07, 0.23], "tolerance": 0.075}, {"frame": 22, "side": -1, "space": "head", "point": [-0.43, -0.07, 0.23], "tolerance": 0.075}, {"frame": 13, "side": 1, "space": "head", "point": [0.43, -0.07, 0.23], "tolerance": 0.075}, {"frame": 22, "side": 1, "space": "head", "point": [0.43, -0.07, 0.23], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, -24, -120.7, -125.2, -32, 0],
+      "arm-1.x": [0, -26, -120.7, -125.1, -30, 0],
+      "arm1.y": [0, -45, -13.7, -12.4, -50, 0],
+      "arm-1.y": [0, 45, 13.7, 12.3, 50, 0],
+      "elbow1.x": [0, -68, -90.2, -88.1, -80, 0],
+      "elbow-1.x": [0, -67, -90.2, -88.1, -78, 0],
+      "head.x": [0, 6, 18, 10, -2, 0],
+      "spine.x": [0, 4, 11, 9, 3, 0],
+      "arm-1.z": [0, 0, 1.5, 4.9, 0, 0],
+      "arm1.z": [0, 0, -1.2, -4.5, 0, 0]
+    }
+  },
+  "inspect_sleeve": {
+    "intent": "Raise the left sleeve, turn it toward the face, trace it with the opposite hand.",
+    "frames": [0, 8, 17, 28, 39, 48],
+    "pose": {
+      "arm-1.x": [0, -43, -63, -68, -53, 0],
+      "arm-1.y": [0, 15, 21, 18, 10, 0],
+      "elbow-1.x": [0, -35, -66, -63, -42, 0],
+      "arm1.x": [0, -15, -51, -65, -42, 0],
+      "arm1.z": [0, 0, -29, -43, -20, 0],
+      "elbow1.x": [0, -18, -41, -54, -25, 0],
+      "head.x": [0, 10, 21, 23, 10, 0],
+      "head.z": [0, -6, -21, -16, -8, 0]
+    }
+  },
+  "shrug_and_offer": {
+    "intent": "Shrug both shoulders, tilt the head, then offer one palm.",
+    "frames": [0, 7, 13, 22, 31, 43],
+    "pose": {
+      "arm1.y": [0, -17, -31, -40, -30, 0],
+      "arm-1.y": [0, 17, 31, 13, 7, 0],
+      "elbow1.x": [0, -50, -76, -48, -34, 0],
+      "elbow-1.x": [0, -52, -75, -28, -10, 0],
+      "head.y": [0, 6, 15, 7, 0, 0],
+      "arm1.x": [0, -8, -15, -44, -56, 0]
+    }
+  },
+  "wipe_brow": {
+    "intent": "Lift a forearm, sweep it across the brow, then let the shoulders drop.",
+    "frames": [0, 9, 18, 27, 36, 48],
+    "landmarks": [{"frame": 18, "side": 1, "space": "head", "point": [0.32, -0.37, 0.27], "tolerance": 0.075}, {"frame": 27, "side": 1, "space": "head", "point": [0.09, -0.37, 0.27], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, -44, -92.6, -99.8, -57, 0],
+      "arm1.z": [0, -6, -23.9, -45.8, -23, 0],
+      "elbow1.x": [0, -38, -74.1, -36.2, -45, 0],
+      "head.x": [0, 4, 12, 16, 5, 0],
+      "spine.y": [0, 2, 8, -4, -2, 0],
+      "arm1.dz": [0, 0.035, 0.1, 0.1, 0.045, 0],
+      "arm1.dx": [0, -0.02, -0.045, -0.07, -0.03, 0],
+      "arm1.dy": [0, -0.02, -0.06, -0.065, -0.03, 0],
+      "arm1.y": [0, 0, -1.1, 0.9, 0, 0]
+    }
+  },
+  "listen_then_signal": {
+    "intent": "Cup an ear, lean toward the sound, then raise the other arm to signal.",
+    "frames": [0, 8, 16, 26, 35, 45],
+    "landmarks": [{"frame": 16, "side": -1, "space": "head", "point": [-0.43, -0.07, 0.22], "tolerance": 0.075}, {"frame": 26, "side": -1, "space": "head", "point": [-0.43, -0.07, 0.22], "tolerance": 0.075}],
+    "pose": {
+      "arm-1.y": [0, 30, 10.1, 9.6, 17, 0],
+      "arm-1.x": [0, -22, -113.2, -114.8, -17, 0],
+      "elbow-1.x": [0, -65, -122.2, -118.6, -47, 0],
+      "head.y": [0, -7, -17, -15, -1, 0],
+      "arm1.x": [0, 0, 0, -44, -78, 0],
+      "elbow1.x": [0, 0, 0, -23, -12, 0],
+      "spine.y": [0, -2, -8, -6, 0, 0],
+      "arm-1.z": [0, 0, 3.1, 5.1, 0, 0]
+    }
+  },
+  "conduct_downbeat": {
+    "intent": "Lift both hands, cue a sharp downbeat, rebound and cut off.",
+    "frames": [0, 8, 16, 21, 28, 36, 46],
+    "pose": {
+      "arm1.x": [0, -52, -105, -49, -71, -49, 0],
+      "arm-1.x": [0, -37, -68, -28, -52, -38, 0],
+      "elbow1.x": [0, -34, -46, -16, -32, -58, 0],
+      "elbow-1.x": [0, -32, -46, -25, -39, -54, 0],
+      "spine.x": [0, -4, -6, 7, 1, 0, 0],
+      "head.x": [0, -4, -6, 10, 1, 0, 0]
+    }
+  },
+  "cross_then_uncross": {
+    "intent": "Fold both forearms across the chest, settle, then open them in sequence.",
+    "frames": [0, 8, 17, 25, 34, 42],
+    "landmarks": [{"frame": 17, "side": -1, "space": "body", "point": [0.055, -0.32, 1.345], "tolerance": 0.075}, {"frame": 25, "side": -1, "space": "body", "point": [0.055, -0.32, 1.345], "tolerance": 0.075}, {"frame": 17, "side": 1, "space": "body", "point": [-0.055, -0.32, 1.4549999999999998], "tolerance": 0.075}, {"frame": 25, "side": 1, "space": "body", "point": [-0.055, -0.32, 1.4549999999999998], "tolerance": 0.075}],
+    "pose": {
+      "arm1.x": [0, -31, -56.8, -56.8, -21, 0],
+      "arm-1.x": [0, -20, -62.0, -62.0, -35, 0],
+      "arm1.z": [0, -30, -54.8, -54.7, -12, 0],
+      "arm-1.z": [0, 16, 53.5, 53.5, 34, 0],
+      "elbow1.x": [0, -36, -32.2, -32.2, -28, 0],
+      "elbow-1.x": [0, -26, -0.0, -0.0, -49, 0],
+      "head.y": [0, 0, 6, 8, 3, 0],
+      "arm-1.dx": [0, 0.04, 0.13, 0.13, 0.07, 0],
+      "arm-1.y": [0, 0, -2.5, -2.5, 0, 0],
+      "arm1.dx": [0, -0.04, -0.13, -0.13, -0.07, 0],
+      "arm1.y": [0, 0, 0.3, 0.6, 0, 0]
+    }
+  },
+  "overhead_stretch": {
+    "intent": "Reach overhead, side-bend, straighten and relax.",
+    "frames": [0, 10, 20, 30, 40, 50],
+    "pose": {
+      "arm1.y": [0, -56, -157, -155, -85, 0],
+      "arm-1.y": [0, 56, 157, 153, 83, 0],
+      "elbow1.x": [0, -12, -10, -17, -12, 0],
+      "elbow-1.x": [0, -12, -10, -15, -12, 0],
+      "spine.y": [0, 0, 0, 18, 3, 0],
+      "head.y": [0, 0, 1, 9, 0, 0]
+    }
+  },
+  "show_the_size": {
+    "intent": "Frame a small gap between the hands, widen it, then frame it again.",
+    "frames": [0, 9, 18, 27, 36, 46],
+    "pose": {
+      "arm1.x": [0, -48, -54, -55, -50, 0],
+      "arm-1.x": [0, -48, -54, -55, -50, 0],
+      "arm1.y": [0, -4, 6, -44, -3, 0],
+      "arm-1.y": [0, 4, -6, 44, 3, 0],
+      "elbow1.x": [0, -29, -42, -31, -41, 0],
+      "elbow-1.x": [0, -29, -42, -31, -41, 0],
+      "head.x": [0, 5, 12, 1, 9, 0]
+    }
+  },
+  "trace_an_arc": {
+    "intent": "Lead with the eyes as one hand traces a high arc across the body.",
+    "frames": [0, 8, 16, 24, 32, 42],
+    "pose": {
+      "arm1.x": [0, -42, -87, -99, -53, 0],
+      "arm1.z": [0, 18, 8, -32, -53, 0],
+      "arm1.y": [0, -17, -24, -8, 2, 0],
+      "elbow1.x": [0, -10, -19, -21, -28, 0],
+      "head.z": [0, 21, 12, -21, -37, 0]
+    }
+  },
+  "self_fan": {
+    "intent": "Bring one hand beside the face and fan inward twice.",
+    "frames": [0, 7, 13, 19, 25, 31, 39],
+    "pose": {
+      "arm1.y": [0, -37, -42, -34, -44, -35, 0],
+      "arm1.x": [0, -43, -43, -51, -43, -52, 0],
+      "elbow1.x": [0, -85, -54, -98, -53, -98, 0],
+      "head.y": [0, -4, -8, -10, -6, -10, 0],
+      "spine.x": [0, 0, -3, -5, -3, -5, 0]
+    }
+  },
+  "formal_bow": {
+    "intent": "Bring a hand to the chest, hinge at the waist, pause and rise.",
+    "frames": [0, 9, 18, 27, 36, 48],
+    "pose": {
+      "arm1.x": [0, -26, -36, -37, -30, 0],
+      "arm1.z": [0, -16, -42, -42, -20, 0],
+      "elbow1.x": [0, -40, -76, -76, -58, 0],
+      "spine.x": [0, 0, 28, 32, 14, 0],
+      "head.x": [0, 2, 15, 18, 6, 0],
+      "arm-1.x": [0, 3, 15, 18, 8, 0]
+    }
+  },
+  "present_both_sides": {
+    "intent": "Present something on one side, then sweep across to the other side.",
+    "frames": [0, 8, 17, 25, 34, 45],
+    "pose": {
+      "arm1.x": [0, -45, -60, -32, -9, 0],
+      "arm1.y": [0, -16, -53, -20, -4, 0],
+      "elbow1.x": [0, -31, -17, -25, -12, 0],
+      "arm-1.x": [0, -7, -8, -40, -62, 0],
+      "arm-1.y": [0, 2, 3, 20, 48, 0],
+      "head.z": [0, 18, 38, 1, -40, 0],
+      "spine.z": [0, 5, 13, 0, -15, 0]
+    }
+  },
+  "shiver_and_release": {
+    "intent": "Hug in, shudder from side to side, then release the shoulders.",
+    "frames": [0, 7, 12, 17, 22, 27, 36],
+    "pose": {
+      "arm1.x": [0, -29, -38, -37, -39, -36, 0],
+      "arm-1.x": [0, -29, -39, -37, -39, -36, 0],
+      "elbow1.x": [0, -46, -75, -66, -78, -65, 0],
+      "elbow-1.x": [0, -47, -73, -68, -76, -65, 0],
+      "spine.y": [0, 0, -9, 8, -8, 6, 0],
+      "head.y": [0, 0, 8, -8, 7, -5, 0]
+    }
+  },
+  "count_and_confirm": {
+    "intent": "Mark three counts with a hand and finish with an emphatic nod.",
+    "frames": [0, 6, 11, 16, 21, 26, 31, 37, 45],
+    "pose": {
+      "arm1.x": [0, -43, -55, -44, -55, -43, -55, -42, 0],
+      "elbow1.x": [0, -31, -54, -27, -56, -27, -58, -35, 0],
+      "arm-1.x": [0, -12, -18, -18, -19, -20, -21, -14, 0],
+      "head.x": [0, 0, 3, 0, 3, 0, -4, 19, 0]
+    }
+  }
+}
