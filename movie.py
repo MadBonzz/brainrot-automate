@@ -16,6 +16,7 @@ import sys
 import time
 
 from film import assets, audio, planning, storage
+from film.prop_timing import prop_end, next_state
 from film.performances import motion_end
 
 ROOT = Path(__file__).resolve().parent
@@ -49,7 +50,7 @@ def render(job, story, design, quality, blender, ffmpeg, asset_root, cast_direct
     effects = []
     shots = []
     offset = 0
-    angle = 0
+    angle, visible = 0, design['shots'][0]['prop'] != 'appear'
     version = hashlib.sha256((ROOT/'film/animate.py').read_bytes()).hexdigest()
     command = [blender, '-b', '-t', str(min(6, os.cpu_count() or 2)), '-noaudio', '--factory-startup',
                '--python-exit-code', '1', '--python', str(ROOT/'film/animate.py'), '--']
@@ -68,6 +69,7 @@ def render(job, story, design, quality, blender, ffmpeg, asset_root, cast_direct
         count = max(cue+1, math.ceil((seconds+shot['hold_ms']/1000)*fps), 2)
         playback = [planning.MOTIONS[action] for action in (shot['lead'], shot['witness']) if action != 'absent']
         count = motion_end(cue, count, fps, playback)
+        count = prop_end(cue, count, fps, shot['prop'])
         speech.extend(raw)
         samples = round((offset+count)*audio.RATE/fps)-len(speech)
         speech.extend(array('h', [0])*samples)
@@ -81,13 +83,12 @@ def render(job, story, design, quality, blender, ffmpeg, asset_root, cast_direct
         if shot['witness'] != 'absent':
             used.extend([actors['witness']['sha256'], models['motions/'+shot['witness']]['sha256']])
         screen = {k:shot[k] for k in ('camera','face','lead','witness','prop','turn_degrees')}
-        signature = assets.digest([version, engine, screen, count, cue, angle, width, height, fps, used, playback,
+        signature = assets.digest([version, engine, screen, count, cue, angle, visible, width, height, fps, used, playback,
                                    design['location_sign'], design['prop']['label'], design['prop']['color'], planning.CAMERAS[shot['camera']]])
         folder = target/'shots'/f'{i:03d}-{signature[:24]}'
         shared = asset_root/'shots'/(signature+'.mp4')
-        shots.append(dict(shot=shot, cue=cue, frames=count, angle=angle, folder=str(folder), shared_clip=str(shared)))
-        if shot["prop"] == "turn":
-            angle = (angle+shot["turn_degrees"])%360
+        shots.append(dict(shot=shot, cue=cue, frames=count, angle=angle, visible=visible, folder=str(folder), shared_clip=str(shared)))
+        angle, visible = next_state(shot["prop"],angle,visible,shot["turn_degrees"])
         offset += count
     timeline = dict(ffmpeg=ffmpeg, width=width, height=height, fps=fps, design=design, shots=shots, cast=actors,
                     models=models, motions=planning.MOTIONS, cameras=planning.CAMERAS)
@@ -170,6 +171,7 @@ def args():
     group.add_argument('--resume', type=Path, help='Reuse a prior job and valid completed stages.')
     group.add_argument('--from-plan', type=Path, help='Render a folder containing story.json and direction.json.')
     group.add_argument('--list-cast', action='store_true', help='List saved character IDs and exit.')
+    group.add_argument('--list-prop-kinds', action='store_true', help='List built-in prop designs and the custom kind.')
     group.add_argument('--list-props', action='store_true', help='List named recurring props and exit.')
     group.add_argument('--list-actions', action='store_true', help='List the actions available to either character.')
     p.add_argument('--prop-id', type=assets.character_id, help='Save a clue design by name, or use that saved prop.')
@@ -185,6 +187,9 @@ def main():
     default_assets = ROOT/'assets'
     if a.list_actions:
         print('\n'.join(sorted(planning.MOTIONS)))
+        return
+    if a.list_prop_kinds:
+        print('\n'.join(sorted(planning.PROP['properties']['kind']['enum'])))
         return
     if a.list_props:
         directory = ((a.asset_dir or default_assets)/'props/named').resolve()

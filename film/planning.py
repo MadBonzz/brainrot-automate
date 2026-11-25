@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import tempfile
 from .performances import read_motions
+from .props import CATALOG
 
 
 def obj(**fields):
@@ -31,7 +32,7 @@ I = {"type": "integer"}
 COLOR = choices("navy teal mint gold rust red cream charcoal lavender blue brown")
 STORY = obj(title=S, rule=S, planted_clue=S, payoff=S, beats=arr(S))
 PIECE = obj(shape=choices("box sphere cylinder cone"), x=N, y=N, z=N, width=N, depth=N, height=N, color=COLOR)
-PROP = obj(kind=choices("clock signal radio lantern custom"), label=S, color=COLOR, parts=arr(PIECE))
+PROP = obj(kind=choices(" ".join(["clock","signal","radio","lantern","custom",*CATALOG])), label=S, color=COLOR, parts=arr(PIECE))
 PERFORMANCE = choices(" ".join(MOTIONS))
 SHOT = obj(beat=I, set=choices("station archive rooftop hallway"), camera=choices(" ".join(CAMERAS)),
            lead=PERFORMANCE, witness=choices("absent "+" ".join(MOTIONS)),
@@ -166,8 +167,8 @@ def plan(job, premise, seconds, characters=None, prop_id=None, saved_prop=None):
             "Use one shot per beat numbered from 1, preserving the order. Choose the exact ONE spoken word that "
             "triggers each cue. The rig action, clue change and sound start at that word. Pick wide for geography, "
             "face or witness for reactions, clue to reveal details, shoulder for the lead facing the clue. "
-            "Use purposeful variety. Keep wardrobe and place continuous. A shot’s prop state is its own staging: "
-            "still = present, appear/vanish change on cue, turn rotates by signed turn_degrees (use 0 for other cues), pulse changes size. Rotation persists across cuts. For custom props provide "
+            "Use purposeful variety. Keep wardrobe and place continuous. The same clue persists across cuts. "
+            "Appear and vanish change visibility until the next reveal. Still holds the previous state. Turn rotates the mechanism or object by signed turn_degrees (0 for other cues). Pulse briefly enlarges it. Prefer a named catalog kind when it matches the clue. For custom props provide "
             "1–30 blocks, cones, upright cylinders or ellipsoids in local coordinates. x horizontal, y depth, z up. "
             "Fit within x ±0.8, y ±0.5, z 0–1.4; dimensions positive. Otherwise use empty parts. "
             "The clue label is fixed and legible, 12 characters maximum, scene sign 20 maximum. "

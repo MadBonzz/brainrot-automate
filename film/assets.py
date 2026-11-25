@@ -8,6 +8,7 @@ import re
 import subprocess
 
 from .planning import save
+from .props import geometry as prop_geometry
 
 
 def character_id(value):
@@ -85,7 +86,7 @@ def prepare(job, root, cast_dir, names, design, blender_command, motions):
         recipe = motions[name]
         asset('motions', name, name+'-'+digest(recipe)[:12], recipe=recipe)
     prop = design['prop']
-    geometry = dict(kind=prop['kind'], parts=prop['parts'] if prop['kind']=='custom' else [])
+    geometry = prop_geometry(prop)
     asset('props', 'clue', prop['kind']+'-'+digest(geometry)[:16], geometry=geometry)
     result = ensure_models(job, root, entries, blender_command)
     library = dict(cast=cast, models=result)

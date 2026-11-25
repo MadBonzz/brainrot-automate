@@ -68,10 +68,28 @@ Reuse is on by default. Keep the `assets/` folder when updating the scripts. Use
 |---|---|
 | Character animation | The director selects a motion by name for either actor. On first use the renderer turns its pose curves into native Blender Actions and saves them in `assets/motions/`. Future shots attach the same Actions to the corresponding joints. Each actor gets their own start time and placement. Walk cycles repeat. One-time gestures hold their ending pose. |
 | Sets | Each of the four sets has one editable Blender file in `assets/sets/`. Shots load the chosen set and add the episode's sign. |
-| Props | Stock props reuse the same geometry across colors and labels. Custom props reuse matching geometry. Give a clue a name with `--prop-id station-clock` to bring its complete design back in another story. The runner fills in a known prop automatically. `--list-props` shows saved names. |
+| Props | The 54 built-in designs reuse geometry across colors and labels. List them with `--list-prop-kinds`. Custom props reuse matching geometry. Give a clue a name with `--prop-id station-clock` to bring its complete design back in another story. The runner fills in a known prop automatically. `--list-props` shows saved names. |
 | Cameras and visual cues | Six framing presets live in `film/presets/cameras.json`. Camera pushes, facial expressions, and prop reveals use shared rendering code. The episode supplies the framing, timing and rotation. |
 | Audio | Effects and looping music beds are saved as WAV files. An identical narration line can reuse its WAV and word marks on the same machine and voice configuration. Windows detects the voice, Linux uses SLT, and macOS can share lines between jobs when `SHORTFILM_VOICE` names an installed voice. With the macOS system default, voice reuse stays within the job. Captions, fades and the mix follow the new timeline. |
 | Rendered shots | Matching visuals and timing reuse a completed clip across episodes. The signature includes the visible actors, motion and geometry files, camera, cue frame, shot duration, renderer version and resolution. Changing an action refreshes the shots that use it. Music or caption edits can reuse the visual clip when the timing matches. |
+
+### Reuse and review a prop
+
+The director can choose 50 tabletop instruments, machines and miniatures alongside the four original props. A saved direction can select the compass with this prop entry.
+
+```json
+{"kind": "gimbal_compass", "label": "NORTH", "color": "rust", "parts": []}
+```
+
+A turn rotates the working part on models with an axle, such as the compass needle or the desk globe. Other models turn as a whole. The renderer seats the contact points on the tabletop, mounts the nameplate on the pedestal, and fits the clue close-up around the complete turn and pulse. A vanished prop stays hidden across cuts until an appear cue. A shot starting with a reveal can open on an empty pedestal.
+
+This command reviews the machines in Blender and saves the rendered views.
+
+```bash
+blender -b --factory-startup --python-exit-code 1 --python tools/review_props.py -- --batch machines --out review/props/machines --render
+```
+
+Use `instruments`, `machines`, `miniatures`, or `legacy`. Add `--only tabletop_fan` to isolate one model in its batch. Omit `--render` for geometry, playback and camera checks only. The [prop review](docs/prop-review.md) lists the designs, their turn behavior, and the tests performed.
 
 ### Add a movement once
 
@@ -126,7 +144,7 @@ Preview is 360 × 640 at 12 fps. The preview-to-final command reuses the same ge
 ## What actually gets generated
 
 - **Story and direction.** Two Codex CLI calls by default. The first writes the complete narration. The second chooses the set, framing, actions, cue words, pauses, palette, prop, music mood, and effects. The semantic validator checks the shot count, actor visibility for witness close-ups, and whether the cue word occurs in the actual line.
-- **Cast and scenery.** Blender loads the cast, set, clue and movement files selected for the shot. The director can design a custom clue from geometry. Clock hands and prop rotations persist across cuts.
+- **Cast and scenery.** Blender loads the cast, set, clue and movement files selected for the shot. The director can design a custom clue from geometry. Prop rotation and visibility persist across cuts.
 - **Audio and captions.** Windows renders voice to WAV through its installed speech voice and uses reported word positions when available. On Linux, an FFmpeg build with `flite` and the SLT voice is required. The macOS and Linux backends estimate individual word timings within each synthesized line. Caption placement moves higher for clue close-ups. Sound and prop changes use the same cue word. Music and foley are synthesized locally; the voice is a basic system voice.
 - **Rendering.** Tested here with Blender 4.3.2 and FFmpeg on Linux. Blender's Workbench renderer renders the frames of each shot, encodes a clip, and releases those PNGs. FFmpeg needs libx264, AAC, and libass support. On Linux the Blender build also needs a working headless graphics context. `blender.log` records failures. Blender, FFmpeg, and speech synthesis are local execution steps. Movie production does not require Roblox Studio, a Roblox account, an asset download, or an upload to YouTube.
 

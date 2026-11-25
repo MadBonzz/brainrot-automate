@@ -42,8 +42,33 @@ def mesh(shape):
         m = bpy.data.meshes.new('Block')
         m.from_pydata(verts, [], faces)
         m.update()
+    elif shape in ('horn','tapered_case'):
+        # Revolve a hollow flared bell; four matching corners form the metronome case.
+        profile = ([(.08,-.5),(.11,-.22),(.19,.06),(.32,.32),(.5,.47),(.49,.50),
+                    (.46,.47),(.29,.32),(.16,.06),(.08,-.22),(.05,-.5)]
+                   if shape=='horn' else [(.707,-.5),(.175,.5)])
+        sides = 32 if shape=='horn' else 4
+        phase = 0 if shape=='horn' else math.pi/4
+        verts = [(rad*math.cos(i*math.tau/sides+phase),rad*math.sin(i*math.tau/sides+phase),z)
+                 for rad,z in profile for i in range(sides)]
+        faces = [(j*sides+i,j*sides+(i+1)%sides,(j+1)*sides+(i+1)%sides,(j+1)*sides+i)
+                 for j in range(len(profile)-1) for i in range(sides)]
+        if shape=='tapered_case':
+            faces.extend([tuple(reversed(range(4))),tuple(range(4,8))])
+        m = bpy.data.meshes.new(shape)
+        m.from_pydata(verts,[],faces)
+        m.update()
+    elif shape == 'sail':
+        verts = [(x,y,z) for y in (-.5,.5) for x,z in [(-.5,-.5),(.5,-.5),(.5,.5)]]
+        m = bpy.data.meshes.new('Triangular sail')
+        m.from_pydata(verts,[],[(0,1,2),(5,4,3),(0,3,4,1),(1,4,5,2),(2,5,3,0)])
+        m.update()
     else:
-        if shape == 'sphere':
+        if shape == 'ring':
+            bpy.ops.mesh.primitive_torus_add(major_segments=32, minor_segments=8, major_radius=.46, minor_radius=.04)
+            for vertex in bpy.context.object.data.vertices:
+                vertex.co.z /= .08
+        elif shape == 'sphere':
             bpy.ops.mesh.primitive_uv_sphere_add(segments=16, ring_count=8, radius=.5)
         elif shape == 'cone':
             bpy.ops.mesh.primitive_cone_add(vertices=24, radius1=.5, depth=1)
@@ -58,7 +83,7 @@ def mesh(shape):
 def part(pos, size, color, parent=None, shape='box', angle=None):
     global serial
     serial += 1
-    o = bpy.data.objects.new('part'+str(serial), mesh(shape))
+    o = bpy.data.objects.new('part'+str(serial), mesh(shape) if isinstance(shape,str) else shape)
     bpy.context.collection.objects.link(o)
     o.parent=parent
     o.location=pos
@@ -449,6 +474,23 @@ def build_prop(p):
         part((0, 0, .48), (1.30, .24, .9), 'charcoal', root)
         part((0, -.14, .52), (1.16, .05, .70), color, root)
         hand = root
+    elif 'pieces' in p:
+        pivot = p['pivot']
+        hand = empty('Working mechanism',pivot['point'],root) if pivot else root
+        if pivot:
+            hand['clue_axis'] = pivot['axis']
+        for piece in p['pieces']:
+            moving = piece['moving']
+            pos = Vector(piece['pos'])
+            if moving:
+                pos -= Vector(pivot['point'])
+            shape = piece['shape']
+            if shape == 'surface':
+                shape = bpy.data.meshes.new('Surface detail')
+                shape.from_pydata(piece['vertices'],[],piece['faces'])
+                shape.update()
+            part(pos,piece['size'],piece['color'],hand if moving else root,shape,
+                 tuple(map(math.radians,piece['rotation'])))
     else:
         for piece in p['parts']:
             pos = [max(-1.5, min(1.5, piece[k])) for k in ('x', 'y', 'z')]
@@ -458,34 +500,125 @@ def build_prop(p):
     root['clue_root'] = True
     hand['clue_turn'] = True
 
-def stage_prop(path, p, act, cue, end, angle, delta):
+def seat_prop(objects, root, hand):
+    """Place the asset on its actual plinth, including models cached by older versions."""
+    meshes = [o for o in root.children_recursive if o.type == 'MESH']
+    furniture = [o for o in objects if not o.parent and o.type == 'MESH']
+    top = max(furniture, key=lambda o:max((o.matrix_world @ Vector(v)).z for v in o.bound_box))
+    board = [top.matrix_world @ Vector(v) for v in top.bound_box]
+    center = sum(board,Vector())/8
+    half_x = max(p.x-center.x for p in board)
+    half_y = max(p.y-center.y for p in board)
+    inv = root.matrix_world.inverted()
+    clouds = {}
+    for obj in meshes:
+        mat = inv @ obj.matrix_world
+        clouds[obj] = [mat @ v.co for v in obj.data.vertices]
+    points = [p for cloud in clouds.values() for p in cloud]
+    bottom = min(p.z for p in points)
+    # Center the contact patch. A radio antenna or long spout can be off-center.
+    feet = [p for p in points if p.z <= bottom+.018]
+    origin = Vector([(min(p[i] for p in feet)+max(p[i] for p in feet))/2 for i in (0,1)]+[bottom])
+    radius = max((p-origin).xy.length for p in feet)
+    if hand == root:
+        fit = min(half_x,half_y)/max(.001,radius)
+    else:
+        fit = min(half_x/max(.001,max(abs(p.x-origin.x) for p in feet)),
+                  half_y/max(.001,max(abs(p.y-origin.y) for p in feet)))
+    # Keep the contact patch on the tabletop even at the peak of a pulse.
+    fit = min(1.,fit/1.15*.97)
+    # Bound a custom clue with a tiny foot and an oversized upper body as well.
+    reach = max((p-origin).xy.length for p in points)
+    fit = min(fit,.84/max(reach,.001),1.40/max(.001,max(p.z for p in points)-bottom))
+    # A view of this asset must use the same framing at any angle, including hidden cuts.
+    # Bound the swept circle around the working axle, and include the largest pulse.
+    moving = set(hand.children_recursive)
+    axis = 'xyz'.index(hand.get('clue_axis','y' if hand!=root else 'z'))
+    pivot = origin if hand==root else inv @ hand.matrix_world.translation
+    radial = [i for i in range(3) if i!=axis]
+    lows, highs = [0.]*3, [0.]*3
+    for obj,cloud in clouds.items():
+        for v in cloud:
+            lo = list(v-origin)
+            hi = list(v-origin)
+            if obj in moving:
+                r = math.hypot(v[radial[0]]-pivot[radial[0]],v[radial[1]]-pivot[radial[1]])
+                for i in radial:
+                    lo[i],hi[i] = pivot[i]-origin[i]-r,pivot[i]-origin[i]+r
+            for i in range(3):
+                lows[i]=min(lows[i],lo[i]*fit*1.15)
+                highs[i]=max(highs[i],hi[i]*fit*1.15)
+    root['clue_bounds'] = lows+highs
+    for child in root.children:
+        child.location -= origin
+    root.location = (center.x,center.y,max(p.z for p in board))
+    root.scale = (fit,)*3
+    return fit, center, half_y
+
+
+def stage_prop(path, p, act, cue, end, angle, delta, visible=None):
     objects = load_collection(path, 'Prop').all_objects
     root = next(o for o in objects if o.get('clue_root'))
     hand = next(o for o in objects if o.get('clue_turn'))
-    kind = p['kind']
+    bpy.context.view_layer.update()
+    fit, center, half_y = seat_prop(objects,root,hand)
     for obj in objects:
         if obj.get('clue_paint'):
             obj.color = rgb(p['color'])
+    # The plaque is mounted on the front of the pedestal, outside the moving assembly.
     if p['label']:
-        part((0, -.44, .025), (1.27, .075, .235), 'charcoal', root)
-        label(p['label'][:12].upper(), (0, -.486, .030), .125, 'ivory', root)
-    cue = max(1, min(cue, end-1))
-    finish = min(end, cue+max(2, round(FPS*.33)))
-    axis = 1 if kind == 'clock' else 2
-    hand.rotation_euler[axis]=math.radians(angle)
+        y = center.y-half_y
+        z = root.location.z-.16
+        part((center.x,y+.008,z),(1.27,.052,.19),'charcoal')
+        lettering = label(p['label'][:12].upper(),(center.x,y-.022,z),.110,'ivory')
+        bpy.context.view_layer.update()
+        corners = [lettering.matrix_world @ Vector(c)-root.location for c in lettering.bound_box]
+        root['plaque_bounds'] = [fn(v[i] for v in corners) for fn in (min,max) for i in range(3)]
+    cue = max(1,min(cue,end-1))
+    finish = min(end,cue+max(2,round(FPS*.33)))
+    axis = 'xyz'.index(hand.get('clue_axis','y' if p['kind']=='clock' else 'z'))
+    hand.rotation_euler[axis] = math.radians(angle)
     if act == 'turn':
-        key(hand, 'rotation_euler', cue)
-        hand.rotation_euler[axis]=math.radians(angle+delta)
-        key(hand, 'rotation_euler', finish)
-    if act in ('appear', 'vanish', 'pulse'):
-        if act == 'appear':
-            root.scale=(.001,)*3
-        key(root, 'scale', cue)
-        root.scale=(.001 if act == 'vanish' else 1.15 if act == 'pulse' else 1,)*3
-        key(root, 'scale', finish)
+        key(hand,'rotation_euler',cue)
+        hand.rotation_euler[axis] = math.radians(angle+delta)
+        key(hand,'rotation_euler',finish)
+    if visible is None:
+        visible = act != 'appear'  # Timelines written before per-shot visibility.
+    initial = fit if visible else 0.
+    root.scale = (initial,)*3
+    if act in ('appear','vanish','pulse'):
+        key(root,'scale',cue)
+        target = {'appear':fit,'vanish':0.,'pulse':initial*1.15}[act]
+        root.scale = (target,)*3
+        key(root,'scale',finish)
         if act == 'pulse':
-            root.scale=(1,)*3
-            key(root, 'scale', min(end, finish+max(2, FPS//4)))
+            root.scale = (initial,)*3
+            key(root,'scale',min(end,finish+max(2,FPS//4)))
+    return root
+
+
+def fit_clue_camera(preset, root):
+    """Frame the full swept bounds so zoom is independent of the cue, seek order, or cut."""
+    scene = bpy.context.scene
+    bounds = root['clue_bounds']
+    target = Vector(preset['target'])
+    target.z = root.location.z + (bounds[2]+bounds[5])*.5 - .045
+    rotation = (target-Vector(preset['position'])).to_track_quat('-Z','Y')
+    right, up = rotation @ Vector((1,0,0)), rotation @ Vector((0,1,0))
+    aspect = scene.render.resolution_x/scene.render.resolution_y
+    span = preset['span']
+    boxes = [bounds]
+    if 'plaque_bounds' in root:
+        boxes.append(root['plaque_bounds'])
+    for box in boxes:
+        for x in (box[0],box[3]):
+            for y in (box[1],box[4]):
+                for z in (box[2],box[5]):
+                    p = root.location + Vector((x,y,z))-target
+                    span = max(span,2.18*abs(p.dot(right))/(min(1,aspect)*preset['end_zoom']),
+                               2.18*abs(p.dot(up))*max(1,aspect)/preset['end_zoom'])
+    return dict(preset,span=span,target=list(target))
+
 
 def camera(preset, end):
     pos, aim, span = preset['position'], preset['target'], preset['span']
@@ -584,7 +717,10 @@ if __name__ == '__main__':
         motion(lead, shot['lead'], cue, end, actions)
         if shot['witness'] != 'absent':
             motion(actor(job['cast']['witness']['path'], .08, 1.34, 'calm'), shot['witness'], cue, end, actions)
-        stage_prop(job['models']['props/clue']['path'], design['prop'], shot['prop'], cue, end, spec['angle'], shot['turn_degrees'])
+        clue = stage_prop(job['models']['props/clue']['path'], design['prop'], shot['prop'], cue, end,
+                         spec['angle'], shot['turn_degrees'], spec.get('visible'))
+        if shot['camera']=='clue':
+            camera_preset = fit_clue_camera(camera_preset,clue)
         camera(camera_preset, end)
         s.frame_start=1
         s.frame_end=end
