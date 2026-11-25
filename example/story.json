@@ -1,0 +1,14 @@
+{
+  "title": "One Minute Back",
+  "rule": "The station clock refunds one minute for an unfinished goodbye.",
+  "planted_clue": "Only the clock at the empty platform turns back.",
+  "payoff": "After the child waves goodbye to their mother, the clock can go forward.",
+  "beats": [
+    "The last train took my mother. The station clock kept one minute.",
+    "Every night, at nine, its hands slipped back.",
+    "Tonight I stayed. Someone in a blue coat was waiting.",
+    "Mum. Last time I was too angry to wave.",
+    "This time, I raised my hand.",
+    "At nine oh one, the platform was empty."
+  ]
+}

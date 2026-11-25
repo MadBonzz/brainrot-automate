@@ -1,0 +1,92 @@
+{
+  "lead_coat": "rust",
+  "witness_coat": "blue",
+  "location_sign": "NORTH QUAY",
+  "prop": {
+    "kind": "clock",
+    "label": "PLATFORM 04",
+    "color": "teal",
+    "parts": []
+  },
+  "score": "wonder",
+  "shots": [
+    {
+      "beat": 1,
+      "set": "station",
+      "camera": "wide",
+      "lead": "still",
+      "witness": "absent",
+      "face": "worried",
+      "prop": "still",
+      "anchor": "clock",
+      "effect": "none",
+      "hold_ms": 160,
+      "turn_degrees": 0
+    },
+    {
+      "beat": 2,
+      "set": "station",
+      "camera": "clue",
+      "lead": "still",
+      "witness": "absent",
+      "face": "calm",
+      "prop": "turn",
+      "anchor": "back",
+      "effect": "click",
+      "hold_ms": 350,
+      "turn_degrees": -6
+    },
+    {
+      "beat": 3,
+      "set": "station",
+      "camera": "wide",
+      "lead": "look",
+      "witness": "still",
+      "face": "startled",
+      "prop": "still",
+      "anchor": "waiting",
+      "effect": "none",
+      "hold_ms": 230,
+      "turn_degrees": 0
+    },
+    {
+      "beat": 4,
+      "set": "station",
+      "camera": "witness",
+      "lead": "look",
+      "witness": "nod",
+      "face": "worried",
+      "prop": "still",
+      "anchor": "Mum",
+      "effect": "none",
+      "hold_ms": 280,
+      "turn_degrees": 0
+    },
+    {
+      "beat": 5,
+      "set": "station",
+      "camera": "medium",
+      "lead": "reach",
+      "witness": "still",
+      "face": "happy",
+      "prop": "still",
+      "anchor": "raised",
+      "effect": "none",
+      "hold_ms": 350,
+      "turn_degrees": 0
+    },
+    {
+      "beat": 6,
+      "set": "station",
+      "camera": "wide",
+      "lead": "still",
+      "witness": "absent",
+      "face": "calm",
+      "prop": "turn",
+      "anchor": "one",
+      "effect": "bell",
+      "hold_ms": 850,
+      "turn_degrees": 6
+    }
+  ]
+}

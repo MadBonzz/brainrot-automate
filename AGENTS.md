@@ -1,0 +1,10 @@
+# Making an episode from a Codex terminal session
+
+For a request to make a short film in this project, take the episode from an original story through to a local MP4. If the user supplies a premise, honor it; otherwise invent one. Default to about 45 seconds. The user can request a different target or a preview.
+
+1. Choose an original impossible rule, a visible clue, a test, and a payoff. Match the tone requested. Select existing movements and cameras from `film/presets/`. Either character can play any listed movement. Reuse the existing sets, cast and props where the story calls for them. For a recurring named prop, use `--list-props` and `--prop-id <id>`. A new prop can use colored 3D primitives. When a requested shot needs a new joint-based movement, add one reusable entry to `motions.json` and use its name in the direction. Preserve character and object continuity across cuts.
+2. Create a new unique folder inside `plans/`. Write `story.json` and `direction.json` using the STORY and DESIGN schemas and semantic checks in `film/planning.py`. The two files under `example/` demonstrate the exact format. The story contains the first-person narration, divided into short visual beats. Direct one shot per beat. Use actual narration words as cue anchors.
+3. Run `uv run movie.py --from-plan <your-plan-folder> --quality final` in the extracted project (use preview if requested). For recurring characters, use `--lead <id>` and `--witness <id>` as appropriate. Look up IDs with `uv run movie.py --list-cast`. Use the same ID when an actor changes roles. This calls the local speech engine, Blender, and FFmpeg. The session has already supplied the creative plans. Use the from-plan path to avoid another model session.
+4. Resolve recoverable validation or rendering errors. Report the final MP4 path and actual duration from the command. If a required program or sign-in is missing, report the specific blocker.
+
+If invoked with an output schema and a JSON-only generation request, return the requested JSON directly. The Python runner handles rendering for that entry point.

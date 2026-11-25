@@ -1,0 +1,65 @@
+{
+  "still": {
+    "frames": 18,
+    "channels": {"head": {"delta_location.z": [[0, 0], [6, 0.026], [18, 0]]}}
+  },
+  "look": {
+    "frames": 8,
+    "channels": {"head": {
+      "delta_rotation_euler.z": [[0, 0], [8, 0.5]],
+      "delta_rotation_euler.x": [[0, 0], [8, -0.07]]
+    }}
+  },
+  "nod": {
+    "frames": 14,
+    "channels": {"head": {
+      "delta_rotation_euler.x": [[0, 0], [6, 0.24], [14, 0]],
+      "delta_rotation_euler.z": [[0, 0], [6, -0.12], [14, 0]]
+    }}
+  },
+  "reach": {
+    "frames": 9,
+    "channels": {
+      "head": {"delta_rotation_euler.z": [[0, 0], [9, 0.5]], "delta_rotation_euler.x": [[0, 0], [9, -0.07]]},
+      "arm-1": {"delta_rotation_euler.x": [[0, 0], [9, -0.12]], "delta_rotation_euler.y": [[0, 0], [9, -0.13]]},
+      "arm1": {"delta_rotation_euler.x": [[0, 0], [9, -1.1]], "delta_rotation_euler.y": [[0, 0], [9, -0.13]]}
+    }
+  },
+  "recoil": {
+    "frames": 7,
+    "channels": {
+      "root": {"delta_location.y": [[0, 0], [7, 0.25]]},
+      "head": {"delta_rotation_euler.z": [[0, 0], [7, -0.18]], "delta_rotation_euler.x": [[0, 0], [7, 0.24]]},
+      "arm-1": {"delta_rotation_euler.x": [[0, 0], [7, -0.98]], "delta_rotation_euler.y": [[0, 0], [7, -0.24]]},
+      "arm1": {"delta_rotation_euler.x": [[0, 0], [7, -0.98]], "delta_rotation_euler.y": [[0, 0], [7, 0.24]]}
+    }
+  },
+  "wave": {
+    "frames": 28,
+    "channels": {
+      "arm1": {
+        "delta_rotation_euler.y": [[0, 0], [7, -2.42], [11, -2.75], [15, -2.25], [19, -2.75], [23, -2.42], [28, 0]],
+        "delta_rotation_euler.x": [[0, 0], [7, -0.25], [23, -0.25], [28, 0]]
+      }
+    }
+  },
+  "point": {
+    "frames": 10,
+    "channels": {
+      "arm1": {"delta_rotation_euler.y": [[0, 0], [10, -1.32]], "delta_rotation_euler.x": [[0, 0], [10, -0.25]]},
+      "head": {"delta_rotation_euler.z": [[0, 0], [10, 0.46]]}
+    }
+  },
+  "walk": {
+    "frames": 20,
+    "loop": true,
+    "travel": [0.72, 0, 0],
+    "channels": {
+      "head": {"delta_location.z": [[0, 0], [5, 0.026], [10, 0], [15, 0.026], [20, 0]]},
+      "arm-1": {"delta_rotation_euler.x": [[0, 0], [5, 0.48], [10, 0], [15, -0.48], [20, 0]]},
+      "arm1": {"delta_rotation_euler.x": [[0, 0], [5, -0.48], [10, 0], [15, 0.48], [20, 0]]},
+      "leg-1": {"delta_rotation_euler.x": [[0, 0], [5, -0.48], [10, 0], [15, 0.48], [20, 0]]},
+      "leg1": {"delta_rotation_euler.x": [[0, 0], [5, 0.48], [10, 0], [15, -0.48], [20, 0]]}
+    }
+  }
+}

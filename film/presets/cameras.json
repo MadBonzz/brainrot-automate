@@ -1,0 +1,8 @@
+{
+  "wide": {"position": [0.1,-7.2,3.1], "target": [0.05,0.4,1.63], "span": 6.65, "end_zoom": 0.95},
+  "medium": {"position": [-0.5,-5.6,2.45], "target": [-0.63,0.1,1.55], "span": 3.2, "end_zoom": 0.95},
+  "face": {"position": [-0.94,-3.9,2.38], "target": [-1.02,0.1,1.96], "span": 1.84, "end_zoom": 0.95},
+  "witness": {"position": [0.15,-4,2.5], "target": [0.1,1.3,1.95], "span": 1.95, "end_zoom": 0.95},
+  "clue": {"position": [1.15,-3.45,2.08], "target": [1,0.07,1.52], "span": 1.82, "captions_top": true, "end_zoom": 0.95},
+  "shoulder": {"position": [-1.88,-2.2,2.42], "target": [0.52,0.3,1.63], "span": 2.8, "lead_yaw": 1.6, "end_zoom": 0.95}
+}
