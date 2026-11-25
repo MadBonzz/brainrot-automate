@@ -1,0 +1,325 @@
+{
+  "jumping_jack": {
+    "intent": "Spring outward with raised arms, land wide, then spring back to the starting stance.",
+    "frames": [0, 5, 10, 15, 20, 25, 31, 38],
+    "floor": true,
+    "observations": [
+      {"frame": 0, "metric": "foot_gap", "min": 0.4, "max": 0.46},
+      {"frame": 15, "metric": "foot_gap", "min": 1.1, "max": 1.65},
+      {"frame": 38, "metric": "foot_gap", "min": 0.4, "max": 0.46},
+      {"frame": 10, "metric": "clearance", "min": 0.15, "max": 0.53},
+      {"frame": 25, "metric": "clearance", "min": 0.12, "max": 0.45}
+    ],
+    "pose": {
+      "root.dz": [0, -0.05, 0.24, 0.02, -0.05, 0.22, 0, 0],
+      "leg1.y": [0, -4, -28, -34, -32, -17, -3, 0],
+      "leg-1.y": [0, 4, 28, 34, 32, 17, 3, 0],
+      "knee1.x": [0, 37, 16, 14, 39, 19, 24, 0],
+      "knee-1.x": [0, 37, 16, 14, 39, 19, 24, 0],
+      "leg1.x": [0, -19, -8, -8, -20, -7, -12, 0],
+      "leg-1.x": [0, -19, -8, -8, -20, -7, -12, 0],
+      "arm1.y": [0, -10, -87, -155, -159, -79, -12, 0],
+      "arm-1.y": [0, 10, 87, 155, 159, 79, 12, 0]
+    }
+  },
+  "half_turn_hop": {
+    "intent": "Wind up, rotate halfway around in the air, absorb the landing facing backwards.",
+    "frames": [0, 7, 13, 18, 25, 32, 42],
+    "floor": true,
+    "observations": [
+      {"frame": 18, "metric": "clearance", "min": 0.3, "max": 0.72},
+      {"frame": 42, "metric": "clearance", "min": 0.0, "max": 0.04}
+    ],
+    "pose": {
+      "root.z": [0, -16, 21, 91, 172, 180, 180],
+      "root.dz": [0, -0.045, 0.12, 0.44, 0.11, -0.045, 0],
+      "spine.z": [0, -23, 21, 18, 9, -6, 0],
+      "head.z": [0, 15, 34, 24, 10, -5, 0],
+      "leg1.x": [0, -26, -14, -42, -17, -24, 0],
+      "leg-1.x": [0, -25, -9, -34, -15, -23, 0],
+      "knee1.x": [0, 53, 22, 67, 27, 51, 0],
+      "knee-1.x": [0, 51, 16, 59, 23, 46, 0],
+      "arm1.y": [0, -37, -62, -28, -52, -34, 0],
+      "arm-1.y": [0, 42, 57, 25, 51, 31, 0]
+    }
+  },
+  "grapevine_four_count": {
+    "intent": "Step sideways, cross the trailing foot behind, step out again and tap.",
+    "frames": [0, 7, 14, 21, 28, 35, 44],
+    "ground": true,
+    "plant": ["-1:0:8", "1:9:23", "-1:24:31", "1:32:44"],
+    "observations": [
+      {"frame": 14, "metric": "sole-1", "min": 0.0, "max": 0.85}
+    ],
+    "pose": {
+      "leg1.y": [0, -26, -13, -8, -27, -16, 0],
+      "leg-1.y": [0, 4, -15, -25, 7, 16, 0],
+      "leg1.x": [0, -15, 1, -13, -17, -5, 0],
+      "leg-1.x": [0, 6, 26, 32, 9, -20, 0],
+      "knee1.x": [0, 31, 7, 23, 33, 11, 0],
+      "knee-1.x": [0, 12, 38, 53, 15, 39, 0],
+      "spine.z": [0, 8, -6, -16, 7, 5, 0],
+      "arm1.y": [0, -20, -12, -27, -25, -12, 0],
+      "arm-1.y": [0, 17, 32, 18, 20, 11, 0]
+    }
+  },
+  "charleston_kick": {
+    "intent": "Flick the free foot forward, swing it behind with a bent knee, and counter-swing the arms.",
+    "frames": [0, 7, 14, 22, 30, 38, 46],
+    "ground": true,
+    "plant": ["-1:0:46"],
+    "observations": [
+      {"frame": 14, "metric": "sole1", "min": 0.1, "max": 0.8},
+      {"frame": 30, "metric": "sole1", "min": 0.12, "max": 1.0}
+    ],
+    "pose": {
+      "leg1.x": [0, -37, -66, -13, 32, 17, 0],
+      "knee1.x": [0, 48, 9, 22, 86, 38, 0],
+      "leg-1.x": [0, -5, -10, -5, -8, -3, 0],
+      "knee-1.x": [0, 11, 21, 10, 16, 7, 0],
+      "arm1.x": [0, 15, 30, 0, -43, -18, 0],
+      "arm-1.x": [0, -23, -42, 0, 30, 14, 0],
+      "spine.x": [0, -3, -10, 1, 12, 4, 0],
+      "head.y": [0, -3, -6, 2, 7, 2, 0]
+    }
+  },
+  "skater_push_and_coast": {
+    "intent": "Push one leg diagonally behind, tuck the arms and coast on the other skate.",
+    "frames": [0, 9, 17, 26, 37, 49],
+    "ground": true,
+    "plant": ["-1:0:49"],
+    "observations": [
+      {"frame": 26, "metric": "sole1", "min": 0.16, "max": 1.0}
+    ],
+    "pose": {
+      "leg1.y": [0, -10, -27, -36, -24, 0],
+      "leg1.x": [0, 4, 24, 42, 30, 0],
+      "knee1.x": [0, 21, 27, 54, 41, 0],
+      "leg-1.x": [0, -16, -27, -24, -16, 0],
+      "knee-1.x": [0, 33, 56, 50, 35, 0],
+      "spine.x": [0, 10, 30, 34, 23, 0],
+      "spine.y": [0, -5, -11, -12, -8, 0],
+      "arm1.x": [0, -17, 17, 33, 24, 0],
+      "arm-1.x": [0, -29, -54, -59, -42, 0],
+      "elbow-1.x": [0, -27, -47, -57, -39, 0]
+    }
+  },
+  "box_step": {
+    "intent": "Draw a four-corner dance step: forward, side, back, then collect.",
+    "frames": [0, 7, 15, 23, 31, 39, 47, 56],
+    "ground": true,
+    "plant": ["-1:0:8", "1:9:20", "-1:21:34", "1:35:45", "-1:46:56"],
+    "pose": {
+      "leg1.x": [0, -32, -17, -8, 20, 11, -5, 0],
+      "leg-1.x": [0, 8, -10, -20, -5, 26, 14, 0],
+      "leg1.y": [0, -3, 0, -25, -14, -9, -4, 0],
+      "leg-1.y": [0, 0, 17, 23, 11, 6, 17, 0],
+      "knee1.x": [0, 45, 15, 22, 25, 14, 20, 0],
+      "knee-1.x": [0, 9, 24, 37, 11, 39, 24, 0],
+      "spine.z": [0, 8, 3, -7, -12, 6, 9, 0],
+      "arm1.x": [0, -29, -32, -28, -32, -30, -20, 0],
+      "arm-1.y": [0, 18, 23, 20, 22, 17, 13, 0]
+    }
+  },
+  "alternating_heel_digs": {
+    "intent": "Set the right heel out, collect, and repeat with the left while swinging the bent elbows.",
+    "frames": [0, 6, 13, 20, 27, 34, 41],
+    "ground": true,
+    "loop": true,
+    "plant": ["-1:0:17", "1:21:38"],
+    "pose": {
+      "leg1.x": [0, -31, -39, 0, 4, 1, 0],
+      "leg-1.x": [0, 4, 1, 0, -31, -39, 0],
+      "knee1.x": [0, 26, 6, 0, 5, 3, 0],
+      "knee-1.x": [0, 5, 3, 0, 26, 6, 0],
+      "arm1.x": [0, 12, 20, 0, -35, -43, 0],
+      "arm-1.x": [0, -35, -43, 0, 12, 20, 0],
+      "elbow1.x": [0, -48, -55, -25, -65, -70, 0],
+      "elbow-1.x": [0, -65, -70, -25, -48, -55, 0],
+      "spine.y": [0, -5, -8, 0, 5, 8, 0]
+    }
+  },
+  "stomp_then_freeze": {
+    "intent": "Wind the knee up, stamp down on the beat and stop in a wide bent-arm pose.",
+    "frames": [0, 7, 15, 19, 24, 34, 43],
+    "ground": true,
+    "plant": ["-1:0:17", "1:19:43"],
+    "observations": [
+      {"frame": 15, "metric": "sole1", "min": 0.13, "max": 0.9},
+      {"frame": 24, "metric": "sole1", "min": 0.0, "max": 0.04}
+    ],
+    "pose": {
+      "leg1.x": [0, -28, -72, -14, 2, 0, 0],
+      "knee1.x": [0, 48, 98, 21, 9, 7, 7],
+      "leg1.y": [0, -6, -15, -28, -24, -21, -21],
+      "leg-1.x": [0, -6, -12, -21, -19, -14, -14],
+      "knee-1.x": [0, 14, 27, 45, 35, 26, 26],
+      "arm1.y": [0, -18, -49, -79, -73, -71, -71],
+      "arm-1.y": [0, 13, 21, 48, 43, 40, 40],
+      "elbow1.x": [0, -31, -81, -61, -52, -49, -49],
+      "spine.y": [0, -3, -9, 10, 7, 5, 5],
+      "head.x": [0, 0, -8, 13, 5, 0, 0]
+    }
+  },
+  "cross_body_knee_crunch": {
+    "intent": "Raise one knee towards the opposite elbow, release, and switch sides.",
+    "frames": [0, 7, 15, 23, 31, 39, 48],
+    "ground": true,
+    "plant": ["-1:0:20", "1:24:48"],
+    "observations": [
+      {"frame": 15, "metric": "sole1", "min": 0.14, "max": 0.95},
+      {"frame": 39, "metric": "sole-1", "min": 0.14, "max": 0.95}
+    ],
+    "pose": {
+      "leg1.x": [0, -32, -78, 0, -5, -5, 0],
+      "leg-1.x": [0, -5, -5, 0, -32, -78, 0],
+      "knee1.x": [0, 49, 101, 0, 10, 10, 0],
+      "knee-1.x": [0, 10, 10, 0, 49, 101, 0],
+      "arm1.y": [0, -46, -49, -64, -42, -28, 0],
+      "arm-1.y": [0, 42, 28, 64, 46, 49, 0],
+      "elbow1.x": [0, -89, -93, -97, -97, -109, 0],
+      "elbow-1.x": [0, -97, -109, -97, -89, -93, 0],
+      "spine.z": [0, 14, 31, 0, -14, -31, 0],
+      "spine.x": [0, 10, 24, 3, 10, 24, 0],
+      "head.x": [0, 5, 14, 0, 5, 14, 0]
+    }
+  },
+  "clock_face_foot_taps": {
+    "intent": "Keep the left shoe planted and tap the other foot towards twelve, three and six o\u2019clock.",
+    "frames": [0, 7, 13, 19, 25, 31, 37, 45],
+    "ground": true,
+    "plant": ["-1:0:45"],
+    "pose": {
+      "leg1.x": [0, -34, -17, -9, -7, 28, 12, 0],
+      "leg1.y": [0, -3, -5, -34, -17, -3, -4, 0],
+      "knee1.x": [0, 20, 39, 15, 40, 29, 43, 0],
+      "spine.y": [0, -5, -3, -11, -7, -6, -3, 0],
+      "head.z": [0, 0, 4, 25, 16, 32, 12, 0],
+      "head.x": [0, 13, 11, 18, 13, 9, 5, 0],
+      "arm-1.y": [0, 15, 9, 23, 14, 20, 10, 0]
+    }
+  },
+  "robot_isolations": {
+    "intent": "Move the head, then one forearm, then the other, with a separate held pose between accents.",
+    "frames": [0, 5, 10, 15, 20, 25, 30, 35, 43],
+    "pose": {
+      "head.z": [0, 34, 34, 34, 34, 2, 2, 2, 0],
+      "arm1.y": [0, 0, 0, -77, -77, -77, -77, -18, 0],
+      "elbow1.x": [0, 0, 0, -10, -10, -94, -94, -94, 0],
+      "arm-1.x": [0, 0, 0, 0, 0, 0, -82, -82, 0],
+      "elbow-1.x": [0, 0, 0, 0, 0, 0, -9, -9, 0],
+      "spine.z": [0, 0, 0, 0, 0, -13, -13, -13, 0]
+    }
+  },
+  "body_wave": {
+    "intent": "Let a ripple pass from chin to chest to hips and knees, then roll upright.",
+    "frames": [0, 7, 14, 21, 29, 37, 46],
+    "ground": true,
+    "pose": {
+      "head.x": [0, -23, 12, 25, 13, 3, 0],
+      "spine.x": [0, -4, -24, -9, 23, 12, 0],
+      "spine.dy": [0, -0.02, -0.08, -0.03, 0.065, 0.025, 0],
+      "leg1.x": [0, 0, -3, -16, -36, -17, 0],
+      "leg-1.x": [0, 0, -3, -16, -36, -17, 0],
+      "knee1.x": [0, 0, 5, 34, 72, 35, 0],
+      "knee-1.x": [0, 0, 5, 34, 72, 35, 0],
+      "arm1.x": [0, -6, 16, 20, -9, -10, 0],
+      "arm-1.x": [0, -6, 16, 20, -9, -10, 0]
+    }
+  },
+  "backstroke_arm_drill": {
+    "intent": "Roll the shoulders and alternate an overhead recovery with the opposite arm\u2019s downward sweep.",
+    "frames": [0, 8, 16, 24, 32, 40, 48],
+    "loop": true,
+    "pose": {
+      "arm1.x": [0, -82, -158, -83, 19, 32, 0],
+      "arm1.y": [0, -27, -18, -83, -56, -18, 0],
+      "arm-1.x": [0, 23, 31, 0, -82, -158, 0],
+      "arm-1.y": [0, 44, 18, 4, 27, 18, 0],
+      "spine.z": [0, -10, -19, 0, 12, 20, 0],
+      "head.x": [0, -9, -15, -9, -12, -16, 0],
+      "elbow1.x": [0, -18, -8, -18, -31, -25, 0],
+      "elbow-1.x": [0, -27, -19, -12, -21, -8, 0]
+    }
+  },
+  "pendulum_leg_swing": {
+    "intent": "Balance on one foot and swing the free leg forward and back twice.",
+    "frames": [0, 7, 15, 23, 31, 39, 47],
+    "ground": true,
+    "plant": ["-1:0:47"],
+    "observations": [
+      {"frame": 23, "metric": "sole1", "min": 0.09, "max": 0.9},
+      {"frame": 31, "metric": "sole1", "min": 0.1, "max": 0.9}
+    ],
+    "pose": {
+      "leg1.x": [0, -53, 49, -60, 51, -20, 0],
+      "knee1.x": [0, 13, 28, 11, 30, 9, 0],
+      "spine.x": [0, -12, 15, -14, 15, -5, 0],
+      "arm1.x": [0, 19, -22, 24, -22, 7, 0],
+      "arm-1.y": [0, 29, 39, 40, 38, 19, 0],
+      "head.x": [0, 4, -4, 4, -4, 2, 0]
+    }
+  },
+  "skip_an_imaginary_rope": {
+    "intent": "Circle both forearms outside the hips and make two quick hops as the rope passes underneath.",
+    "frames": [0, 5, 10, 15, 20, 25, 30, 36],
+    "floor": true,
+    "observations": [
+      {"frame": 10, "metric": "clearance", "min": 0.13, "max": 0.5},
+      {"frame": 25, "metric": "clearance", "min": 0.13, "max": 0.51},
+      {"frame": 36, "metric": "clearance", "min": 0.0, "max": 0.04}
+    ],
+    "pose": {
+      "root.dz": [0, 0.01, 0.23, 0, 0.01, 0.24, 0, 0],
+      "knee1.x": [0, 31, 39, 27, 32, 40, 29, 0],
+      "knee-1.x": [0, 30, 38, 25, 30, 40, 28, 0],
+      "leg1.x": [0, -14, -19, -14, -15, -18, -15, 0],
+      "leg-1.x": [0, -14, -19, -14, -15, -18, -15, 0],
+      "arm1.y": [0, -26, -31, -19, -27, -32, -18, 0],
+      "arm-1.y": [0, 26, 31, 19, 27, 32, 18, 0],
+      "elbow1.x": [0, -54, -19, -60, -54, -19, -62, 0],
+      "elbow-1.x": [0, -54, -19, -60, -54, -19, -62, 0]
+    }
+  },
+  "sprinter_push_off": {
+    "intent": "Lower into a staggered start, tip forward, drive the back knee through and pump the opposite arm.",
+    "frames": [0, 9, 18, 24, 31, 40, 48],
+    "ground": true,
+    "plant": ["1:0:48"],
+    "observations": [
+      {"frame": 40, "metric": "sole-1", "min": 0.13, "max": 1.05}
+    ],
+    "pose": {
+      "leg1.x": [0, -32, -48, -37, -5, 23, 17],
+      "leg-1.x": [0, 21, 34, 16, -42, -68, -35],
+      "knee1.x": [0, 61, 87, 61, 17, 41, 36],
+      "knee-1.x": [0, 54, 81, 65, 93, 96, 60],
+      "spine.x": [0, 21, 43, 51, 39, 26, 22],
+      "head.x": [0, -6, -17, -21, -13, -8, -5],
+      "arm1.x": [0, 20, 37, 20, -39, -70, -52],
+      "arm-1.x": [0, -47, -65, -45, 15, 33, 28],
+      "elbow1.x": [0, -62, -82, -65, -75, -97, -80],
+      "elbow-1.x": [0, -75, -91, -73, -66, -81, -65]
+    }
+  },
+  "tightrope_weight_shift": {
+    "intent": "Stretch the arms along a balance line, transfer weight on a narrow base, then lift the free shoe.",
+    "frames": [0, 8, 17, 26, 36, 46],
+    "ground": true,
+    "plant": ["1:0:46"],
+    "observations": [
+      {"frame": 26, "metric": "sole-1", "min": 0.04, "max": 0.7}
+    ],
+    "pose": {
+      "leg1.y": [0, 3, 8, 8, 6, 0],
+      "leg-1.y": [0, -5, -10, -10, -7, 0],
+      "leg-1.x": [0, -10, -35, -58, -27, 0],
+      "knee-1.x": [0, 23, 63, 94, 49, 0],
+      "arm1.y": [0, -48, -85, -104, -77, 0],
+      "arm-1.y": [0, 41, 90, 58, 83, 0],
+      "spine.y": [0, 5, -8, 11, 3, 0],
+      "head.y": [0, -4, 7, -9, -2, 0],
+      "head.x": [0, 5, 12, 14, 8, 0]
+    }
+  }
+}

@@ -192,6 +192,21 @@ def articulate(base):
                         obj['shortfilm_sole'] = side
                     move_under(obj, joint)
 
+def add_wrists(base):
+    """Give both stock and previously saved articulated hands a twist pivot at the cuff."""
+    descendants = list(base.children_recursive)
+    joints = {o['shortfilm_joint']:o for o in descendants if 'shortfilm_joint' in o}
+    for hand in descendants:
+        side = hand.get('shortfilm_hand')
+        if side is None or f'wrist{side}' in joints:
+            continue
+        forearm = hand.parent
+        cuff = hand.location.copy()
+        cuff.z += hand.scale.z/2
+        wrist = tagged(empty('Wrist',cuff,forearm), f'wrist{side}')
+        move_under(hand,wrist)
+
+
 def build_character(coat, second):
     base = tagged(empty('Root', (0, 0, 0)), 'root')
     skin = 'skin2' if second else 'skin'
@@ -223,6 +238,7 @@ def build_character(coat, second):
         part((0, -.055, -.80), (.42, .64, .20), 'charcoal', leg)
         part((0, -.35, -.83), (.40, .05, .07), 'cream', leg)
     articulate(base)
+    add_wrists(base)
     return base
 
 def save_collection(name):
@@ -247,6 +263,7 @@ def actor(path, x, y, face):
     collection = load_collection(path, 'Character')
     base = next(obj for obj in collection.all_objects if obj.get('shortfilm_joint') == 'root')
     articulate(base)
+    add_wrists(base)
     joints = {obj['shortfilm_joint']:obj for obj in [base, *base.children_recursive] if 'shortfilm_joint' in obj}
     base.location.x += x
     base.location.y += y

@@ -35,7 +35,52 @@ def foot(obj):
     return center, min(c.z for c in corners)
 
 
-def measure(name, recipe, character, fps, landmarks):
+def check_accents(scene, rig, entry, cue, scale, end):
+    """Check physical hand targets and authored silhouette/contact cues in the evaluated scene."""
+    hands = {o['shortfilm_hand']:o for o in rig['root'].children_recursive if 'shortfilm_hand' in o}
+    shoes = soles(rig)
+    misses = []
+    worst = 0.
+    for mark in entry.get('landmarks', []):
+        frame = cue+mark['frame']*scale
+        if frame > end:
+            continue
+        at(scene,frame)
+        ref = rig['head'] if mark['space']=='head' else rig['spine']
+        local = Vector(mark['point'])
+        if mark['space']=='body':
+            local.z -= .91
+        distance = (hands[mark['side']].matrix_world.translation-ref.matrix_world @ local).length
+        worst = max(worst,distance)
+        if distance > mark['tolerance']:
+            misses.append(f"hand {mark['side']} at {mark['frame']}: {distance:.3f}")
+    for mark in entry.get('observations', []):
+        frame = cue+mark['frame']*scale
+        if frame > end:
+            continue
+        at(scene,frame)
+        metric = mark['metric']
+        if metric == 'hand_gap':
+            value = (hands[1].matrix_world.translation-hands[-1].matrix_world.translation).length
+        elif metric in ('forearm_up1', 'forearm_across-1'):
+            side = 1 if metric == 'forearm_up1' else -1
+            arm = hands[side].matrix_world.translation-rig[f'elbow{side}'].matrix_world.translation
+            axis = Vector((0,0,1) if side==1 else (1,0,0))
+            value = arm.normalized().dot(rig['spine'].matrix_world.to_quaternion() @ axis)
+        elif metric == 'foot_gap':
+            value = (foot(shoes['1'])[0]-foot(shoes['-1'])[0]).length
+        elif metric == 'clearance':
+            value = min(foot(o)[1] for o in shoes.values())
+        elif metric in ('sole1','sole-1'):
+            value = foot(shoes[metric[4:]])[1]
+        else:
+            raise ValueError(f'Unknown observation {metric}')
+        if not mark['min'] <= value <= mark['max']:
+            misses.append(f"{metric} at {mark['frame']}: {value:.3f} outside [{mark['min']}, {mark['max']}]")
+    return worst, misses
+
+
+def measure(name, recipe, character, fps, entry):
     reset()
     animation.FPS = fps
     rig = animation.actor(str(character), 0, 0, 'calm')
@@ -68,17 +113,8 @@ def measure(name, recipe, character, fps, landmarks):
                 actual = getattr(rig[joint],prop)[index]
                 worst = max(worst,abs(actual-expected))
     require(worst < .001, 'key/cue/hold error')
-    hand_error = 0.
-    hands = {o['shortfilm_hand']:o for o in rig['root'].children_recursive if 'shortfilm_hand' in o}
-    for mark in landmarks:
-        at(scene,cue+mark['frame']*fps/24)
-        ref = rig['head'] if mark['space']=='head' else rig['spine']
-        local = Vector(mark['point'])
-        if mark['space']=='body':
-            local.z -= .91
-        distance = (hands[mark['side']].matrix_world.translation-ref.matrix_world @ local).length
-        hand_error = max(hand_error,distance)
-        require(distance <= mark['tolerance'],'missed hand landmark at '+str(mark['frame']))
+    hand_error, misses = check_accents(scene,rig,entry,cue,fps/24,end)
+    errors.extend(misses)
     min_z = 100.
     max_clearance = -100.
     max_drift = 0.
@@ -111,13 +147,16 @@ def measure(name, recipe, character, fps, landmarks):
     late = animation.actor(str(character), 2, 0, 'calm')
     short_end = motion_end(cue,cue+1,fps,[recipe])
     animation.motion(late,name,cue,short_end,{})
+    short_scale = fps/24 if recipe.get('loop') else min(fps/24,(short_end-cue)/duration)
+    short_error, misses = check_accents(scene,late,entry,cue,short_scale,short_end)
+    errors.extend('late '+msg for msg in misses)
     excursion = 0.
     for frame in range(cue+1, short_end+1):
         at(scene,frame)
         excursion = max(excursion,max(j.delta_rotation_euler.to_matrix().to_quaternion().angle for j in late.values()))
     require(excursion > .12,'late cue has no readable rotation')
     return dict(fps=fps, late_cue_tail=short_end-cue, max_key_error=round(worst,6), min_sole_z=round(min_z,4),
-                max_sole_clearance=round(max_clearance,4), max_plant_drift=round(max_drift,4), max_support_height=round(max_support_height,4), max_landmark_distance=round(hand_error,4), errors=errors)
+                max_sole_clearance=round(max_clearance,4), max_plant_drift=round(max_drift,4), max_support_height=round(max_support_height,4), max_landmark_distance=round(hand_error,4), late_landmark_distance=round(short_error,4), errors=errors)
 
 
 def render_clip(name, recipe, character, out):
@@ -135,17 +174,32 @@ def render_clip(name, recipe, character, out):
     for x in (-2,-1,0,1,2):
         animation.part((x,0,-.008),(.025,7,.01),'steel')
         animation.part((0,x,-.008),(7,.025,.01),'steel')
-    animation.camera(dict(position=(3.7,-7.5,3.0),target=(0,0,1.24),span=3.5,end_zoom=1),end)
+    target = Vector((0,0,1.24))
+    positions = [('frames',Vector((3.7,-7.5,3.0))), ('profile',Vector((7.5,-1.9,2.6)))]
     scene.render.resolution_x=360
     scene.render.resolution_y=334
     scene.frame_start=1
     scene.frame_end=end
+    # Use the same fixed scale in both views, with room for the entire moving silhouette.
+    span = 3.5
+    meshes = [o for o in rig['root'].children_recursive if o.type == 'MESH']
+    axes = []
+    for _, pos in positions:
+        rotation = (target-pos).to_track_quat('-Z','Y')
+        axes.append((rotation @ Vector((1,0,0)), rotation @ Vector((0,1,0))))
+    for frame in range(1,end+1):
+        scene.frame_set(frame)
+        for obj in meshes:
+            for corner in obj.bound_box:
+                point = obj.matrix_world @ Vector(corner) - target
+                for right,up in axes:
+                    span = max(span, 2.2*abs(point.dot(right)), 2.2*abs(point.dot(up))*360/334)
+    animation.camera(dict(position=positions[0][1],target=target,span=span,end_zoom=1),end)
     views = []
-    for folder,position in [('frames',None),('profile',(7.5,-1.9,2.6))]:
-        if position:
-            cam = scene.camera
-            cam.location = position
-            cam.rotation_euler = (Vector((0,0,1.24))-cam.location).to_track_quat('-Z','Y').to_euler()
+    for folder,position in positions:
+        cam = scene.camera
+        cam.location = position
+        cam.rotation_euler = (target-position).to_track_quat('-Z','Y').to_euler()
         frames=out/folder/name
         frames.mkdir(parents=True,exist_ok=True)
         scene.render.filepath=str(frames/'f-')
@@ -162,7 +216,7 @@ def render_clip(name, recipe, character, out):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--batch',required=True,choices=['gestures','footwork','pantomime'])
+    p.add_argument('--batch',required=True,choices=sorted(p.stem for p in (PRESETS/'performances').glob('*.json')))
     p.add_argument('--out',type=Path,required=True)
     p.add_argument('--render',action='store_true',help='Render and label every motion as a real MP4.')
     p.add_argument('--character',type=Path,help='Check an existing compatible character file.')
@@ -181,7 +235,7 @@ def main():
         path=out/'models'/f'{name}-{revision}.blend'
         animation.save_asset(dict(path=str(path),kind='motions',name=name,recipe=recipe))
         animation.job=dict(motions=motions,models={'motions/'+name:{'path':str(path)}},width=360,height=334)
-        report[name]=[measure(name,recipe,character,fps,definitions[name].get('landmarks',[])) for fps in (12,24)]
+        report[name]=[measure(name,recipe,character,fps,definitions[name]) for fps in (12,24)]
         if args.render:
             render_clip(name,recipe,character,out)
         print(name,report[name],flush=True)

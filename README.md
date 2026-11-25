@@ -75,29 +75,32 @@ Reuse is on by default. Keep the `assets/` folder when updating the scripts. Use
 
 ### Add a movement once
 
-Run `uv run movie.py --list-actions` to see all 62 movements. The original eight actions are still available. Three pose sheets under `film/presets/performances/` add 54 multi-stage performances. A shot can use any one per actor, for example `"lead": "lift_a_crate", "witness": "double_take"`.
+Run `uv run movie.py --list-actions` to see all 112 movements. The catalog includes eight basic motions and 104 multi-stage performances in six pose sheets under `film/presets/performances/`. A shot can use any one per actor, for example `"lead": "lift_a_crate", "witness": "double_take"`.
 
 | Pose sheet | Examples |
 |---|---|
 | `gestures.json` | Cover the ears, wipe the brow, conduct a downbeat, bow and rise |
 | `footwork.json` | Side-step and collect, pivot a quarter turn, cross a gap, jump and land |
 | `pantomime.json` | Catch and cushion a parcel, turn a crank, fold a map, paddle a canoe |
+| `signals.json` | Clap three times, make a time-out sign, sneeze into an elbow, signal a fork in the path |
+| `rhythm.json` | Do a half-turn hop, a grapevine, a Charleston kick, or a tightrope weight shift |
+| `daily_tasks.json` | Check a wristwatch, wring out a cloth, deal three cards, play air accordion |
 
 Copy a similar entry to add a performance. The `frames` array gives the timing at 24 fps. Each row in `pose` contains one value per frame. Keys such as `elbow1.x` rotate the named joint in degrees. A leading `d` in the axis, such as `root.dz`, translates it in scene units. The sides `1` and `-1` refer to the model's positive and negative X sides. Start at zero and match the endpoints of loops. The director discovers the name automatically. Existing clips in `film/presets/motions.json` keep their original radians-based format.
 
-For flat-floor moves, `ground` keeps the lowest sole in contact. Optional `plant` intervals such as `"1:8:17"` pin that shoe's center horizontally and keep its sole on the floor over the specified authored frames. `floor` prevents penetration while allowing airborne phases. The renderer upgrades the stock cast with spine, elbow and knee pivots when loading older character files. Saved originals retain their appearance. The foot solver uses both tagged stock shoes and assumes a flat floor. The pantomimes animate the character. A physical prop that must follow a hand requires staging for that scene.
+For flat-floor moves, `ground` keeps the lowest sole in contact. Optional `plant` intervals such as `"1:8:17"` pin that shoe's center horizontally and keep its sole on the floor over the specified authored frames. `floor` prevents penetration while allowing airborne phases. The renderer upgrades the stock cast with spine, elbow, knee and wrist pivots when loading older character files. Saved originals retain their appearance. The foot solver uses both tagged stock shoes and assumes a flat floor. The pantomimes animate the character. A physical prop that must follow a hand requires staging for that scene.
 
 A late narration cue can extend the shot so the new performance has at least 70% of its authored duration to play. The longer of the lead and witness movements determines the minimum. The original eight presets keep their previous timing.
 
 ### Review an animation batch without a story or model call
 
-From the project root, run the following with Blender on your PATH. Replace `gestures` with `footwork` or `pantomime` to review another batch.
+From the project root, run the following with Blender on your PATH. Choose any of the six pose sheet names in the table above, omitting the `.json` extension.
 
 ```bash
 blender -b --factory-startup --python-exit-code 1 --python tools/review_motions.py -- --batch gestures --out review/gestures --render
 ```
 
-The [per-motion review](docs/motion-review.md) lists all 54 performances and their checks. The command builds the saved Blender Actions, measures normal and late-cue playback at 12 and 24 fps, and writes per-motion results to `checks.json`. With `--render`, it also writes a labeled two-view MP4 for each movement and its source frames. FFmpeg with drawtext is needed for those MP4s. Omit `--render` for measurements only. Pass `--character path/to/actor.blend` to check an existing stock-compatible cast file. Optional hand landmarks in the pose sheets give the checks a target position and tolerance in scene units.
+The review notes cover the [first 54 performances](docs/motion-review.md) and the [next 50 performances](docs/motion-review-2.md). The command builds the saved Blender Actions, measures normal and late-cue playback at 12 and 24 fps, and writes per-motion results to `checks.json`. With `--render`, it also writes a labeled two-view MP4 for each movement and its source frames. FFmpeg with drawtext is needed for those MP4s. Omit `--render` for measurements only. Pass `--character path/to/actor.blend` to check an existing stock-compatible cast file. Optional hand landmarks specify target positions and tolerances in scene units. A pose sheet can also test hand spacing, forearm direction, separation of the feet, and sole clearance at a particular beat, including compressed playback.
 
 ## Use Codex as the only entry point
 
