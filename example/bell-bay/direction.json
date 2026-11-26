@@ -595,6 +595,59 @@
       "color": "teal",
       "text": "",
       "parts": []
+    },
+    {
+      "id": "reflected_lamp",
+      "kind": "custom",
+      "place": "shop",
+      "at": [1.16, 0.41, 1.42],
+      "scale": 0.79,
+      "color": "gold",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, 0.18],
+          "size": [0.22, 0.012, 0.28],
+          "rotation": [0, 0, 0],
+          "color": "gold"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.011, 0.18],
+          "size": [0.15, 0.012, 0.22],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.02, 0.04],
+          "size": [0.29, 0.017, 0.045],
+          "rotation": [0, 0, 0],
+          "color": "navy"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.02, 0.33],
+          "size": [0.29, 0.017, 0.045],
+          "rotation": [0, 0, 0],
+          "color": "navy"
+        },
+        {
+          "shape": "box",
+          "at": [-0.11, -0.02, 0.18],
+          "size": [0.022, 0.017, 0.27],
+          "rotation": [0, 0, 0],
+          "color": "navy"
+        },
+        {
+          "shape": "box",
+          "at": [0.11, -0.02, 0.18],
+          "size": [0.022, 0.017, 0.27],
+          "rotation": [0, 0, 0],
+          "color": "navy"
+        }
+      ]
     }
   ],
   "shots": [
@@ -881,6 +934,15 @@
           "anchor": "",
           "start": 0.32,
           "end": 0.5
+        },
+        {
+          "id": "reflected_lamp",
+          "to": [1.119, 0.248, 1.42],
+          "anchor": "",
+          "spin": -16,
+          "text": "",
+          "start": 0.15,
+          "end": 0.32
         }
       ],
       "sounds": [{"kind": "click", "at": 0.34}],
@@ -1431,6 +1493,24 @@
           "anchor": "",
           "start": 0.41,
           "end": 0.57
+        },
+        {
+          "id": "reflected_lamp",
+          "to": [1.188, 0.385, 1.42],
+          "anchor": "",
+          "spin": 55,
+          "text": "",
+          "start": 0.17,
+          "end": 0.38
+        },
+        {
+          "id": "reflected_lamp",
+          "to": [1.18, 0.38, -2],
+          "anchor": "",
+          "spin": 68,
+          "text": "",
+          "start": 0.43,
+          "end": 0.58
         }
       ],
       "sounds": [],
