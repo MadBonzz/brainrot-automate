@@ -11,6 +11,8 @@ from mathutils import Vector
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import animate as art
 from world_art import city, practical, chest_badge
+from festival import street_life, practical_motion, contact_accent
+from shot_rhythm import performance_sample, camera_width
 from storage import copy_file
 from math import sin, cos, pi, radians, atan2, acos, hypot
 
@@ -66,6 +68,26 @@ def channel(points, t):
 def perform(a, look, asset, recipes, frames, fps, clock, sightline):
     rig = art.actor(asset, 0, 0, "calm")
     chest_badge(rig, look["badge"])
+    # Keep the stock eye joints so saved characters can use the same facial performance.
+    head = rig["head"]
+    glints = {}
+    whites = {}
+    corners = {}
+    for side in (-1, 1):
+        eye = rig["eye" + str(side)]
+        eye.location.y = -0.385
+        eye.scale.x *= 1.20
+        eye.scale.z *= 1.37
+        whites[side] = art.part(
+            (side * 0.165, -0.354, 0.247), (0.188, 0.050, 0.17), "ivory", head, "sphere"
+        )
+        glints[side] = art.part(
+            (side * 0.165 - 0.018, -0.405, 0.274), (0.038, 0.013, 0.038), "ivory", head, "sphere"
+        )
+        corners[side] = art.part(
+            (side * 0.081, -0.367, 0.069), (0.068, 0.022, 0.035), "ink", head, "sphere"
+        )
+
     for side in (-1, 1):
         for piece in rig["knee" + str(side)].children:
             if (
@@ -78,6 +100,8 @@ def perform(a, look, asset, recipes, frames, fps, clock, sightline):
     root.scale = [look["height"]] * 3
     phase = int(hashlib.sha256(a["id"].encode()).hexdigest()[:4], 16) / 65536 * 2 * pi
     start, end = a["start"], a["end"]
+    beat_seconds = (frames - 1) / fps
+    notice = [t * beat_seconds + 0.06 + phase * 0.018 for t in a.get("notice", [])]
     dx, dy = [v - u for u, v in zip(a["at"], a["to"])]
     dist = hypot(dx, dy)
     size = look["height"]
@@ -126,7 +150,22 @@ def perform(a, look, asset, recipes, frames, fps, clock, sightline):
             "delta_rotation_euler.x",
             (0.075 if mood == "worried" else -0.04) + 0.027 * sin(sec * 2.6 + phase),
         )
-        add("spine", "delta_location.z", 0.014 * sin(sec * 2.7 + phase))
+        # A moving object draws the eyes, then the head, then the shoulders; reactions ripple through a group.
+        elapsed = (frame - 1) / fps
+
+        def pulse(delay):
+            return max(
+                (
+                    sin(pi * (elapsed - hit - delay) / 0.54) ** 2
+                    for hit in notice
+                    if 0 < elapsed - hit - delay < 0.54
+                ),
+                default=0,
+            )
+
+        add("head", "delta_rotation_euler.x", -0.115 * pulse(0))
+        add("spine", "delta_rotation_euler.x", -0.065 * pulse(0.10))
+        add("spine", "delta_location.z", 0.014 * sin(sec * 2.7 + phase) + 0.024 * pulse(0.08))
         for side in (-1, 1):
             add(
                 "arm" + str(side),
@@ -154,13 +193,15 @@ def perform(a, look, asset, recipes, frames, fps, clock, sightline):
             add("arm" + str(side), "delta_rotation_euler.x", moving * 0.53 * cos(2 * pi * cycle))
         add("root", "delta_location.z", moving * (-0.075 + 0.025 * cos(travel / 1.12 * 4 * pi)))
         for c in a["cues"]:
-            v = (t - c["start"]) / (c["end"] - c["start"])
-            if not 0 < v < 1:
-                continue
             r = recipes[c["action"]]
-            # Leave recovery time even for legacy clips whose last key holds the pose.
-            local = min(1, v / 0.83) * r["frames"]
-            weight = 1 - ease((v - 0.83) / 0.17)
+            local, weight = performance_sample(
+                (t - c["start"]) * beat_seconds,
+                (c["end"] - c["start"]) * beat_seconds,
+                r,
+                c.get("play", "accent"),
+            )
+            if weight == 0:
+                continue
             for j, chs in r["channels"].items():
                 for k, pts in chs.items():
                     add(j, k, weight * channel(pts, local))
@@ -176,6 +217,22 @@ def perform(a, look, asset, recipes, frames, fps, clock, sightline):
             eye = rig[k]
             eye.scale.z = default[k][2] * blink * (1.32 if mood == "surprised" else 1)
             eye.keyframe_insert(data_path="scale", index=2, frame=frame)
+            eyeshift = max(-0.020, min(0.020, vals.get(("head", "delta_rotation_euler.z"), 0) * 0.034))
+            eye.delta_location.x = eyeshift
+            eye.keyframe_insert(data_path="delta_location", index=0, frame=frame)
+            whites[side].scale.z = 0.17 * blink
+            whites[side].keyframe_insert(data_path="scale", index=2, frame=frame)
+            glints[side].scale.z = 0.038 * blink
+            glints[side].delta_location.x = eyeshift
+            glints[side].keyframe_insert(data_path="scale", index=2, frame=frame)
+            glints[side].keyframe_insert(data_path="delta_location", index=0, frame=frame)
+            smile = {"proud": 0.034, "calm": 0.016, "surprised": -0.020, "worried": -0.028}[mood]
+            corners[side].location = (
+                side * (0.057 if mood == "surprised" else 0.090),
+                -0.365,
+                0.064 + smile,
+            )
+            corners[side].rotation_euler.y = -side * smile * 18
             brow = rig["brow" + str(side)]
             brow.rotation_euler.y = side * (
                 {"worried": 0.39, "surprised": -0.24, "proud": -0.23, "calm": -0.1}[mood]
@@ -188,7 +245,9 @@ def perform(a, look, asset, recipes, frames, fps, clock, sightline):
         mouth.scale.z = (
             default["mouth"][2] * ({"surprised": 3, "worried": 1.7, "proud": 1.7, "calm": 1}[mood])
         )
-        mouth.scale.z *= 1 + 0.26 * sin(sec * 4.3 + phase)
+        # Only the on-screen actor assigned a line articulates the voiced passage.
+        syllable = max((max(0, 1 - abs(t - mid) / half) for mid, half in a.get("syllables", [])), default=0)
+        mouth.scale.z *= 1.45 + 2.1 * syllable + 0.15 * sin(sec * 4.3 + phase)
         mouth.keyframe_insert(data_path="scale", index=2, frame=frame)
         mouth.scale.x = default["mouth"][0] * (
             0.69 if mood == "surprised" else 1.22 if mood == "proud" else 1
@@ -203,6 +262,7 @@ def place_props(spec, props, rigs, frames):
         old = spec["before"][name]
         root, letters, center = practical(p)
         events = [e for e in spec["shot"]["events"] if e["id"] == name]
+        practical_motion(root, old, events, spec["clock"], frames, art.FPS)
         scene = bpy.context.scene
         states = [(1, old["text"])]
 
@@ -292,6 +352,91 @@ def place_props(spec, props, rigs, frames):
     return targets
 
 
+CAMERA_OFFSETS = (
+    (0, 0),
+    (-15, 2),
+    (15, 2),
+    (-30, 5),
+    (30, 5),
+    (0, 16),
+    (-48, 9),
+    (48, 9),
+    (-63, 8),
+    (63, 8),
+)
+
+
+def camera_clearance(scene, camera, f, end, targets, rigs, looks):
+    """Test lines of sight through foreground bodies at three points without changing angle mid-shot."""
+    focus = camera["focus"]
+    if len(focus) > 2:
+        return 0, 0
+    samples = []
+    for frame in sorted({f, (f + end) // 2, end}):
+        scene.frame_set(frame)
+        graph = bpy.context.evaluated_depsgraph_get()
+        dots = [
+            targets[i][0].evaluated_get(graph).matrix_world.translation + Vector((0, 0, targets[i][1]))
+            for i in focus
+        ]
+        bodies = [
+            (rig["root"].evaluated_get(graph).matrix_world.translation.copy(), looks[i]["height"])
+            for i, rig in rigs.items()
+            if i not in focus
+        ]
+        angles = []
+        for yaw, pitch in CAMERA_OFFSETS:
+            angle = radians(camera["angle"] + yaw)
+            el = radians(camera["elevation"] + pitch)
+            direction = Vector((sin(angle) * cos(el), -cos(angle) * cos(el), sin(el)))
+            center = sum(dots, Vector()) / len(dots)
+            origin = center + direction * camera["size"] * (34 / 36)
+            blocked = 0
+            for name, dot in zip(focus, dots):
+                # A mark is deliberately invisible. Held props can be occluded by their own actor.
+                # Test above/below center to avoid a single finger or stray petal deciding the shot.
+                root = targets[name][0]
+                for dz in (-0.09, 0.09):
+                    endpoint = dot + Vector((0, 0, dz))
+                    ray = endpoint - origin
+                    if ray.length < 0.01:
+                        continue
+                    hit, loc, normal, index, obj, matrix = scene.ray_cast(
+                        graph, origin, ray.normalized(), distance=ray.length
+                    )
+                    if not hit or (loc - endpoint).length < 0.13:
+                        continue
+                    node = obj.original
+                    while node and node != root:
+                        node = node.parent
+                    if node is None:
+                        blocked += 1
+            angles.append(blocked)
+        samples.append((dots, bodies, angles))
+    choices = []
+    for index, (yaw, pitch) in enumerate(CAMERA_OFFSETS):
+        angle = radians(camera["angle"] + yaw)
+        el = radians(camera["elevation"] + pitch)
+        direction = Vector((sin(angle) * cos(el), -cos(angle) * cos(el), sin(el)))
+        score = 0.002 * abs(yaw) + 0.004 * pitch
+        for dots, bodies, blocked in samples:
+            score += blocked[index] * 0.48
+            origin = sum(dots, Vector()) / len(dots) + direction * camera["size"] * (34 / 36)
+            for dot in dots:
+                ray = origin - dot
+                for base, h in bodies:
+                    # Test the head and the shoulders; ignore intersections behind or past the camera.
+                    for z, r in ((2.10, 0.48), (1.32, 0.54)):
+                        center = base + Vector((0, 0, z * h))
+                        u = (center - dot).dot(ray) / max(0.001, ray.length_squared)
+                        if 0.035 < u < 1:
+                            gap = (dot + u * ray - center).length
+                            score += max(0, 1 - gap / (r * h)) ** 2
+        choices.append((score, yaw, pitch))
+    _, yaw, pitch = min(choices)
+    return yaw, pitch
+
+
 def shoot(spec, plan):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     art.mesh_cache.clear()
@@ -302,17 +447,27 @@ def shoot(spec, plan):
     art.job = plan
     art.FPS = fps
     art.setup()
-    scene.view_settings.exposure = 0.36
+    scene.view_settings.exposure = 0.60
     sh = scene.display.shading
+    sh.studio_light = "paint.sl"
     sh.show_shadows = True
-    sh.shadow_intensity = 0.26
-    sh.studiolight_rotate_z = 0.4
-    sh.show_specular_highlight = False
+    sh.shadow_intensity = 0.12
+    sh.studiolight_rotate_z = 0.1
+    sh.show_specular_highlight = True
     sh.cavity_ridge_factor = 0.72
     sh.cavity_valley_factor = 0.82
     scene.display.light_direction = (0.46, 0.39, 0.8)
     sh.background_color = art.rgb("B7D0D2")[:3]
-    city(plan["places"][shot["place"]])
+    place = plan["places"][shot["place"]]
+    light = place.get("light", "daylight")
+    if light != "daylight":
+        sh.studio_light = "outdoor.sl" if light == "late_sun" else "studio.sl"
+        scene.view_settings.exposure = 0.48 if light == "late_sun" else -0.10
+        sh.studiolight_rotate_z = 1.5 if light == "late_sun" else -0.85
+    city(place)
+    street_life(place, spec["clock"], frames, fps)
+    for poly in art.mesh("sphere").polygons:
+        poly.use_smooth = True
     rigs = {}
     targets = {}
     actors = {a["id"]: a for a in shot["actors"]}
@@ -329,8 +484,9 @@ def shoot(spec, plan):
     for a in shot["actors"]:
         i = a["id"]
         look = plan["looks"][i]
+        noticed = [e["end"] for e in shot["events"] if e["id"] == a["look_at"]]
         rigs[i] = perform(
-            a,
+            dict(a, notice=noticed),
             look,
             plan["assets"][i]["path"],
             plan["motions"],
@@ -342,6 +498,13 @@ def shoot(spec, plan):
         targets[i] = (rigs[i]["root"], 1.57 * look["height"])
     props = [p for p in plan["props"] if p["place"] == shot["place"]]
     targets.update(place_props(spec, props, rigs, frames))
+    for accent in shot.get("accents", []):
+        frame = 1 + round(accent["at"] * (frames - 1))
+        obj, height = targets[accent["focus"]]
+        scene.frame_set(frame)
+        origin = obj.evaluated_get(bpy.context.evaluated_depsgraph_get()).matrix_world.translation.copy()
+        origin.z += height
+        contact_accent(accent["kind"], origin, frame, fps, frames)
     scene.frame_start = 1
     scene.frame_end = frames
     for idx, c in enumerate(shot["cameras"]):
@@ -361,7 +524,10 @@ def shoot(spec, plan):
         lens.type = "PERSP"
         lens.sensor_fit = "HORIZONTAL"
         lens.lens = 34
-        for k in sorted({f, end, *range(f, end + 1, 6)}):
+        yaw_offset, pitch_offset = camera_clearance(scene, c, f, end, targets, rigs, plan["looks"])
+        move = c.get("move", "arc" if c["drift"] else "follow")
+        samples = [f] if move == "hold" else sorted({f, end, *range(f, end + 1, 3)})
+        for k in samples:
             scene.frame_set(k)
             graph = bpy.context.evaluated_depsgraph_get()
             locs = [
@@ -372,9 +538,15 @@ def shoot(spec, plan):
             if len(c["focus"]) == 1 and c["focus"][0] in rigs and c["size"] <= 2.3:
                 aim.z += 0.43 * plan["looks"][c["focus"][0]]["height"]
             v = (k - f) / max(1, end - f)
-            angle = radians(c["angle"] + c["drift"] * (ease(v) - 0.5))
-            el = radians(c["elevation"])
-            width = c["size"] * (1 - 0.045 * ease(v))
+            angle = radians(
+                c["angle"] + yaw_offset + (c["drift"] * (ease(v) - 0.5) if move == "arc" else 0)
+            )
+            el = radians(c["elevation"] + pitch_offset)
+            width = camera_width(c["size"], v, move)
+            if len(locs) > 1:
+                right = Vector((cos(angle), sin(angle), 0))
+                span = max(abs((loc - aim).dot(right)) for loc in locs) * 2
+                width = max(width, span + 1.08)
             distance = width * lens.lens / lens.sensor_width
             cam.location = aim + distance * Vector((sin(angle) * cos(el), -cos(angle) * cos(el), sin(el)))
             cam.rotation_euler = (aim - cam.location).to_track_quat("-Z", "Y").to_euler()

@@ -217,7 +217,7 @@ def main():
     stage_message('Job: '+str(job))
     with job_lock(job):
         if not a.resume:
-            source = ((ROOT/'example' if a.prop_id else ROOT/'example'/'floor-ten') if a.demo else a.from_plan)
+            source = ((ROOT/'example' if a.prop_id else ROOT/'example'/'last-clap') if a.demo else a.from_plan)
             if source:
                 for name in ['story', 'direction']:
                     shutil.copyfile(source/(name+'.json'), job/(name+'.json'))

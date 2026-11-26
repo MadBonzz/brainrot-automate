@@ -36,6 +36,14 @@ def read_motions():
                     raise ValueError(f'Invalid support interval {name}/{segment}')
                 previous = stop
             motions[name] = recipe
+    # The last key is often neutral. Choose an authored silhouette for a sustained pose.
+    for recipe in motions.values():
+        energy = {}
+        for channels in recipe["channels"].values():
+            for curve in channels.values():
+                for frame, value in curve:
+                    energy[frame] = energy.get(frame, 0) + abs(value)
+        recipe["hold_frame"] = max(energy, key=energy.get, default=recipe["frames"])
     return motions
 
 

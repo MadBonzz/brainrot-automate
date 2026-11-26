@@ -142,7 +142,7 @@ def stamp(s):
     cs = max(0, round(s*100))
     return f'{cs//360000}:{(cs//6000)%60:02}:{(cs//100)%60:02}.{cs%100:02}'
 
-def make_captions(path, captions):
+def make_captions(path, captions, introductions=()):
     header = """[Script Info]
 ScriptType: v4.00+
 PlayResX: 1080
@@ -151,11 +151,15 @@ WrapStyle: 2
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Narration,Arial,69,&H00FFFFFF,&H000000FF,&H00171B22,&H80000000,-1,0,0,0,100,100,0,0,1,5,2,2,95,95,300,1
+Style: Identity,Arial,46,&H0000E9FF,&H000000FF,&H00252226,&H80000000,-1,0,0,0,100,100,0,0,1,4,1,7,75,75,205,1
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
     with path.open('w', encoding='utf-8-sig') as f:
         f.write(header)
+        for begin, end, label in introductions:
+            label = re.sub(r"[{}\\\r\n]", "", label)
+            f.write(f'Dialogue: 1,{stamp(begin)},{stamp(end)},Identity,,0,0,0,,{label}\n')
         for a, b, t, top in captions:
             t = t.replace('\\', '').replace('{', '').replace('}', '').replace('\n', ' ')
             if top:

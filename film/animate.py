@@ -14,7 +14,8 @@ from storage import copy_file, restore_shot
 
 palette = dict(navy='26364F', teal='347D80', mint='A6E7CD', gold='EDB667', rust='C56742',
                red='C64D52', cream='F6E4C4', charcoal='263039', lavender='BBABDB', blue='669CBF',
-               brown='80533F', skin='DDA780', skin2='A7755B', ink='26212C', steel='849AA5',
+               coral='FF634C', marigold='FFB91C', peacock='008D98', raspberry='E93778',
+               cobalt='365AC9', seafoam='5CD9B5', violet='9055CC', brown='80533F', skin='DDA780', skin2='A7755B', ink='26212C', steel='849AA5',
                haze='657C98', mahogany='4A3641', floor='586D78', sky='829ABD', ivory='FFF4D9')
 mesh_cache = {}
 serial = 0

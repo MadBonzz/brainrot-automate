@@ -24,7 +24,17 @@ def costume(base, look):
                 break
     spine = joints["spine"]
     uniform = look["uniform"]
-    if uniform == "apron":
+    if uniform == "gown":
+        # Gathered skirt with layered hem and a short overskirt.
+        for z, w, depth, h, color in [
+            (-0.26, 1.04, 0.72, 0.82, "ivory"),
+            (-0.56, 1.18, 0.82, 0.30, "ivory"),
+            (-0.67, 1.23, 0.86, 0.12, "cream"),
+            (0.08, 0.81, 0.60, 0.10, "raspberry"),
+        ]:
+            part((0, 0, z), (w, depth, h), color, spine, "cylinder")
+        part((0.26, -0.29, 0.07), (0.24, 0.12, 0.16), "raspberry", spine, "sphere")
+    elif uniform == "apron":
         part((0, -0.291, 0.22), (0.69, 0.03, 0.57), "cream", spine)
         part((0, -0.308, 0.23), (0.35, 0.025, 0.15), "gold", spine)
     elif uniform in ("satchel", "sash"):
@@ -59,6 +69,16 @@ def costume(base, look):
             piece((0, -0.35, 0.57), (0.86, 0.49, 0.08), "navy" if hat == "cap" else coat)
         piece((-0.06 if hat == "beret" else 0, 0.01, 0.7), (0.85, 0.72, 0.30), coat, "sphere")
         piece((0, -0.4, 0.66), (0.13, 0.04, 0.10), "gold")
+    if hat == "veil":
+        part((0, 0.36, 0.12), (0.91, 0.10, 1.08), "FFF4DD", head, angle=(-0.13, 0, 0))
+        for j in range(7):
+            a = j * pi / 6
+            piece(
+                (0.40 * cos(a), -0.28, 0.59 + 0.15 * sin(a)),
+                (0.18, 0.17, 0.17),
+                "raspberry" if j % 2 else "ivory",
+                "sphere",
+            )
     if hat == "crown":
         piece((0, 0, 0.64), (0.93, 0.78, 0.16), "gold")
         for x in [-0.33, 0, 0.33]:
@@ -92,6 +112,11 @@ def sign(text, xyz, width, height, color="navy", ink="ivory", parent=None):
 
 
 def city(place):
+    if place["kit"] in ("fairground", "glasshouse"):
+        from festival import district
+
+        district(place)
+        return
     if place["kit"] in ("harbor", "boathouse"):
         coast(place)
         return
@@ -358,7 +383,11 @@ def practical(spec):
 
     lettering = None
     center = 0.56
-    if kind in ("board", "signal"):
+    if kind in ("raincloud", "bouquet", "cistern", "cake"):
+        from festival import weather_prop
+
+        center = weather_prop(kind, b, root)
+    elif kind in ("board", "signal"):
         b((0, 0.04, 0.39), (0.15, 0.23, 0.78), "navy")
         b((0, 0.04, 0.06), (0.72, 0.49, 0.12), "navy")
         b((0, 0, 0.99), (2.23, 0.20, 1.11), col)

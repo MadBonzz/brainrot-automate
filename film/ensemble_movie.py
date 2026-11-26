@@ -116,8 +116,24 @@ def synchronized(shot, line, marks, speed, length):
         for k in ("start", "end"):
             if k in item:
                 item[k] = mapped(item[k])
-    for sound in result["sounds"]:
-        sound["at"] = mapped(sound["at"])
+    for cue in [*result["sounds"], *result.get("accents", [])]:
+        cue["at"] = mapped(cue["at"])
+    return result
+
+
+def sync_dialogue(shot, line, marks, speed, length):
+    if not shot.get("dialogue"):
+        return shot
+    result = deepcopy(shot)
+    actors = {a["id"]: a for a in result["actors"]}
+    times = [time / speed / length for word, time in marks for _ in ensemble.tokens(word)]
+    for speaker, indices in ensemble.dialogue_ranges(line, shot["dialogue"], actors):
+        syllables = actors[speaker].setdefault("syllables", [])
+        for i in indices:
+            start = times[i]
+            stop = times[i + 1] if i + 1 < len(times) else 1
+            width = min(0.24 / length, max(0.012 / length, stop - start))
+            syllables.append([start + width * 0.5, width * 0.5])
     return result
 
 
@@ -180,9 +196,10 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
     witness = next(a["id"] for a in story["cast"] if a["id"] != story["lead"])
     for k, a in looks.items():
         role = "lead" if k == story["lead"] else "witness" if k == witness else "ensemble"
-        identity = names.get(role) or (
-            k + "-" + assets.digest({j: v for j, v in a.items() if j not in ("badge", "height")})[:10]
-        )
+        outfit = {j: v for j, v in a.items() if j not in ("badge", "height")}
+        if a["uniform"] == "gown":
+            outfit["costume_revision"] = 2
+        identity = names.get(role) or (k + "-" + assets.digest(outfit)[:10])
         cast.append(
             dict(
                 id=k,
@@ -202,6 +219,8 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
     versions = hashlib.sha256()
     for path in [
         HERE / "ensemble_render.py",
+        HERE / "festival.py",
+        HERE / "shot_rhythm.py",
         HERE / "world_art.py",
         HERE / "animate.py",
         *sorted((HERE / "props").glob("*.py")),
@@ -212,6 +231,7 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
     speech = array("h")
     captions = []
     effects = []
+    introductions = []
     offset = 0
     for n, (shot, count, (raw, marks)) in enumerate(zip(d["shots"], counts, utterances), 1):
         length = count / fps
@@ -234,7 +254,17 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
             )
             raw = audio.read_wave(dst / "paced.wav")
         shot = synchronized(shot, story["beats"][n - 1]["line"], marks, speed, length)
+        shot = sync_dialogue(shot, story["beats"][n - 1]["line"], marks, speed, length)
         begin = offset / fps
+        for card in story.get("introductions", []):
+            if card["beat"] != n:
+                continue
+            at = ensemble.phrase_starts(story["beats"][n - 1]["line"], [dict(at=0.5, words=card["words"])])[
+                0
+            ]
+            token_times = [t / speed for word, t in marks for _ in ensemble.tokens(word)]
+            start = begin + token_times[at]
+            introductions.append((start, min(begin + length, start + 1.75), card["label"]))
         effects.extend((begin + length * fx["at"], fx["kind"]) for fx in shot["sounds"])
         captions_for_line(captions, marks, begin, len(raw) / audio.RATE, speed)
         speech.extend(raw[: count * (audio.RATE // fps)])
@@ -286,8 +316,9 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
     planning.save(dst / "timeline.json", plan)
     command = [*src, str(HERE / "ensemble_render.py"), "--"]
     if storyboard:
+        planning.save(dst / "blocking-review.json", ensemble_review.directing_stats(plan))
         return render_storyboard(dst, plan, command, ffmpeg)
-    audio.make_captions(dst / "lines.ass", captions)
+    audio.make_captions(dst / "lines.ass", captions, introductions)
     audio.soundtrack(dst / "mix.wav", speech, effects, "wonder", root)
     cached = sum(Path(s["clip"]).is_file() for s in shots)
     print(

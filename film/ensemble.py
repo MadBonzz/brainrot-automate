@@ -19,23 +19,29 @@ STORY = obj(
     cast=arr(obj(id=S, job=S, want=S)),
     beats=arr(obj(role=enum(ROLES), because=I, witness=S, visible=S, line=S)),
 )
+STORY["properties"]["introductions"] = arr(obj(beat=I, actor=S, words=S, label=S))
+STORY["properties"]["beats"]["items"]["properties"]["also_because"] = arr(I)
 V = arr(N)
 LOOK = obj(
     id=S,
     coat=p.COLOR,
     skin=enum("amber umber rose bronze"),
     hair=p.COLOR,
-    hat=enum("none cap beret bun crown visor curls helmet bow"),
-    uniform=enum("jacket apron sash satchel tunic bandleader"),
+    hat=enum("none cap beret bun crown visor curls helmet bow veil"),
+    uniform=enum("jacket apron sash satchel tunic bandleader gown"),
     badge=S,
     height=N,
 )
 PLACE = obj(
-    id=S, kit=enum("arcade depot theater garden harbor boathouse"), sign=S, trim=p.COLOR, wall=p.COLOR
+    id=S,
+    kit=enum("arcade depot theater garden harbor boathouse fairground glasshouse"),
+    sign=S,
+    trim=p.COLOR,
+    wall=p.COLOR,
 )
 PART = obj(shape=enum("box sphere cylinder cone ring sail"), at=V, size=V, rotation=V, color=p.COLOR)
 PROP_KINDS = (
-    "clock radio lantern signal mark custom lamp drum mirror hatch board door parcel trophy trumpet goose bench stand "
+    "raincloud bouquet cistern cake clock radio lantern signal mark custom lamp drum mirror hatch board door parcel trophy trumpet goose bench stand "
     + " ".join(CATALOG)
 )
 PROP = obj(id=S, kind=enum(PROP_KINDS), place=S, at=V, scale=N, color=p.COLOR, text=S, parts=arr(PART))
@@ -54,6 +60,11 @@ ACTOR = obj(
 )
 EVENT = obj(id=S, anchor=S, to=V, text=S, spin=N, start=N, end=N)
 CAM = obj(start=N, focus=arr(S), size=N, angle=N, elevation=N, drift=N)
+# These keys may be absent in saved plans. Fresh model output supplies them explicitly.
+PLACE["properties"]["light"] = enum("daylight late_sun night")
+PLACE["properties"]["life"] = enum("quiet shoppers workers audience")
+CAM["properties"]["move"] = enum("hold follow arc punch reveal")
+CUE["properties"]["play"] = enum("accent sustain cycle")
 SOUND = obj(kind=enum("bell knock click rumble honk brass clatter"), at=N)
 SYNC = obj(at=N, words=S)
 SHOT = obj(
@@ -65,6 +76,8 @@ SHOT = obj(
     events=arr(EVENT),
     cameras=arr(CAM),
 )
+SHOT["properties"]["accents"] = arr(obj(kind=enum("splash petals dust glint"), focus=S, at=N))
+SHOT["properties"]["dialogue"] = arr(obj(actor=S, words=S))
 DIRECTION = obj(looks=arr(LOOK), places=arr(PLACE), props=arr(PROP), shots=arr(SHOT))
 
 
@@ -82,6 +95,14 @@ def check_story(story):
     beats = story["beats"]
     if not 4 <= len(cast) <= 10 or story["lead"] not in cast:
         raise ValueError("Give the lead and 3–9 other townspeople distinct jobs and wants.")
+    for card in story.get("introductions", []):
+        if (
+            card["actor"] not in cast
+            or not 1 <= card["beat"] <= len(beats)
+            or not 0 < len(card["label"]) <= 28
+        ):
+            raise ValueError("A cast introduction needs a known actor, beat, and label of 1–28 characters.")
+        phrase_starts(beats[card["beat"] - 1]["line"], [dict(at=0.5, words=card["words"])])
     order = [b["role"] for b in beats]
     if not all(r in order for r in ROLES.split()) or order[0] != "rule" or order[-1] != "callback":
         raise ValueError("Open with the rule, include all eight story functions, close on the callback.")
@@ -97,23 +118,38 @@ def check_story(story):
             b["role"] in ("attempt", "choice", "outcome", "callback") and not b["because"]
         ):
             raise ValueError(f"Beat {n} needs a valid earlier cause (one-based index).")
+        extra = b.get("also_because", [])
+        if any(not 0 < parent < n or parent == b["because"] for parent in extra) or len(set(extra)) != len(
+            extra
+        ):
+            raise ValueError(f"Beat {n} needs distinct, earlier secondary causes.")
         if b["witness"] not in cast or not all(b[k].strip() for k in ("visible", "line")):
             raise ValueError(f"Beat {n} needs a cast member, visible evidence and a spoken line.")
         if b["role"] == "choice" and b["witness"] != story["lead"]:
             raise ValueError("The protagonist must make the choice on screen.")
 
-    def ancestors(index):
-        result = []
-        while index:
-            beat = beats[index - 1]
-            result.append(beat["role"])
-            index = beat["because"]
-        return result
+    def ancestors(beat):
+        pending = [beat["because"], *beat.get("also_because", [])]
+        seen = set()
+        while pending:
+            index = pending.pop()
+            if index and index not in seen:
+                seen.add(index)
+                parent = beats[index - 1]
+                pending.extend([parent["because"], *parent.get("also_because", [])])
+        return {beats[index - 1]["role"] for index in seen}
 
     for b in beats:
-        chain = ancestors(b["because"])
+        chain = ancestors(b)
         if b["role"] == "choice" and "clue" not in chain:
             raise ValueError("Connect each choice to earlier on-screen evidence by its because chain.")
+        if (
+            b["role"] == "choice"
+            and "also_because" in b
+            and story["seconds"] >= 45
+            and "attempt" not in chain
+        ):
+            raise ValueError("Connect the decision to both a failed attempt and evidence of the exception.")
         if b["role"] == "outcome" and "choice" not in chain:
             raise ValueError("The ending must be caused by the protagonist’s decision.")
     if len({b["witness"] for b in beats}) < 4:
@@ -140,6 +176,21 @@ def phrase_starts(line, sync):
         previous_fraction = mark["at"]
         indices.append(previous)
     return indices
+
+
+def dialogue_ranges(line, cues, actors):
+    words = tokens(line)
+    used = set()
+    for cue in cues:
+        phrase = tokens(cue["words"])
+        starts = [i for i in range(len(words)) if phrase and words[i : i + len(phrase)] == phrase]
+        if cue["actor"] not in actors or len(starts) != 1:
+            raise ValueError("Dialogue needs a visible speaker and a unique verbatim phrase from the line.")
+        indices = range(starts[0], starts[0] + len(phrase))
+        if used.intersection(indices):
+            raise ValueError("Two speakers cannot own the same spoken words.")
+        used.update(indices)
+        yield cue["actor"], indices
 
 
 def interval(x):
@@ -186,6 +237,9 @@ def check_direction(d, story, partial=False):
     for n, (s, b) in enumerate(zip(d["shots"], story["beats"]), 1):
         phrase_starts(b["line"], s["sync"])
         actors = unique(s["actors"], f"beat {n} actors")
+        if any(c["actor"] not in actors for c in story.get("introductions", []) if c["beat"] == n):
+            raise ValueError(f"Beat {n} must stage the cast member introduced here.")
+        list(dialogue_ranges(b["line"], s.get("dialogue", []), actors))
         if s["transition"] == "continuous":
             if n == 1 or d["shots"][n - 2]["place"] != s["place"]:
                 raise ValueError(f"Beat {n} needs a cutaway or ellipsis.")
@@ -206,6 +260,11 @@ def check_direction(d, story, partial=False):
                 interval(c)
         if any(not 0 <= fx["at"] < 1 for fx in s["sounds"]):
             raise ValueError("Sound cues must fall within the beat.")
+        if any(
+            accent["focus"] not in actors | local or not 0 <= accent["at"] < 1
+            for accent in s.get("accents", [])
+        ):
+            raise ValueError(f"Beat {n} needs an onstage target and time for each visual accent.")
         last = {}
         for e in s["events"]:
             vector(e["to"], 3)
@@ -236,40 +295,79 @@ def check_direction(d, story, partial=False):
 STORY_REVIEW = obj(verdict=enum("pass revise"), problem=S, correction=S)
 
 
+TREATMENT = obj(
+    lead_goal=S,
+    other_person=S,
+    other_goal=S,
+    interference=S,
+    everyday_object=S,
+    first_read=S,
+    second_read=S,
+    price=S,
+    public_change=S,
+    joke_setup=S,
+    joke_return=S,
+)
+
+
+def check_treatment(treatment):
+    if any(not value.strip() for value in treatment.values()):
+        raise ValueError("Give every treatment beat a concrete, filmable detail.")
+    for a, b in [("lead_goal", "other_goal"), ("first_read", "second_read"), ("joke_setup", "joke_return")]:
+        if tokens(treatment[a]) == tokens(treatment[b]):
+            raise ValueError(f"The treatment repeats {a} for {b}.")
+
+
 def screenplay(job, prompt, seconds):
     # Authored plans and resumes are already directed. Fresh model drafts get an independent editorial read.
     if (job / "story.json").is_file():
         return p.stage(job, "story", STORY, prompt, check_story)
-    draft = p.stage(job, "story-draft", STORY, prompt, check_story, {"seconds": seconds})
-    rubric = """Act as a script editor. Trace the opening law, public demonstration, failed attempt,
-visible clue, protagonist's informed choice, irreversible cost and consequence using the actual spoken
-lines. Check the numbers, ownership, time and geography. Flag a solution that requires a fact first
-introduced at the climax, a joke that could go in any other story, interchangeable bystanders,
-or a last line that merely explains the lesson. Give one concrete correction. Pass if the story works."""
-    note = p.stage(job, "story-review", STORY_REVIEW, rubric + "\n" + json.dumps(draft), lambda _: None)
-    if note["verdict"] == "pass":
-        p.save(job / "story.json", draft)
-        return draft
-    return p.stage(
+    treatment = p.stage(
         job,
-        "story",
-        STORY,
-        prompt + "\nRevise this draft: " + json.dumps(draft) + "\nEditorial note: " + json.dumps(note),
-        check_story,
-        {"seconds": seconds},
+        "treatment",
+        TREATMENT,
+        prompt + " Before scripting, pitch two people who need incompatible outcomes from the same law. "
+        "Give the supporting person a good reason to act. Plant one specific object in everyday use. "
+        "Show how the lead's first intervention changes someone else's options, how the object later "
+        "changes meaning, and what the lead gives up. Design a second use for an opening sight gag.",
+        check_treatment,
     )
+    prompt += "\nStage this chain of events in the spoken story and images: " + json.dumps(treatment)
+    draft = p.stage(job, "story-draft", STORY, prompt, check_story, {"seconds": seconds})
+    rubric = """Read the spoken lines as a first-time viewer. Find the early personal hook and public
+demonstration, a second person's countermove, what the lead misunderstood, a planted physical detail,
+and the later event which changes its meaning. Could the viewer predict the solution given the evidence?
+Check the cost to each party and the second use of the joke. Quote or identify the weakest specific
+beat and propose a filmable repair. Flag disconnected scenes, padding and a surprise rule at the end."""
+    for revision in range(3):
+        note = p.stage(
+            job, f"story-edit-{revision}", STORY_REVIEW, rubric + "\n" + json.dumps(draft), lambda _: None
+        )
+        if note["verdict"] == "pass":
+            p.save(job / "story.json", draft)
+            return draft
+        if revision < 2:
+            draft = p.stage(
+                job,
+                f"story-rewrite-{revision + 1}",
+                STORY,
+                prompt + "\nDraft: " + json.dumps(draft) + "\nEdit: " + json.dumps(note),
+                check_story,
+                {"seconds": seconds},
+            )
+    raise ValueError("Story still needs editorial work: " + note["correction"])
 
 
 def plan(job, idea, seconds, names=None, prop_id=None, prop_model=None):
     prompt = f"""Write an original {seconds}-second first-person animated social fable. Premise: {idea or "Invent a fresh town."}
-Use about {round(seconds * 2.05)} spoken words. Give each beat 1–2 short spoken sentences.
-Start inside the impossible rule. Show a public example and a ridiculous, logical civic custom; give
+Use about {round(seconds * 2.45)} spoken words. Give each beat 1–2 short spoken sentences.
+In the first two sentences combine the public rule with a personal contradiction or immediate mishap. Start inside the impossible rule. Show a public example and a ridiculous, logical civic custom; give
 at least four distinct people jobs, wants and actions. Give the protagonist a specific personal goal, a failed
 ordinary attempt, an observable counterexample, and a costly decision that uses that evidence. Resolve
 the goal on screen. End on a changed version of an earlier joke. An extra rule announced at the climax
-is cheating. Keep what is counted, who knows it, and prop ownership consistent. Use all functions
+is cheating. Keep what is counted, who knows it, and prop ownership consistent. For a named character whose relationship is hard to infer, an optional introductions entry can flash a short role caption keyed to unique spoken words. Use an empty list when the scene already explains the role. Use all functions
 {ROLES}. because is a one-based earlier beat, or zero for an independent setup. witness is the ID
-of the visible actor carrying the beat, the lead for choice. Encode causal effects in visible."""
+of the visible actor carrying the beat, the lead for choice. Use also_because for other earlier causes. The final decision should combine a failed approach with independently planted evidence. Encode causal effects in visible."""
     if names:
         prompt += (
             "\nRequested casting: "
@@ -282,7 +380,15 @@ of the visible actor carrying the beat, the lead for choice. Encode causal effec
         )
     story = screenplay(job, prompt, seconds)
     direction_prompt = f"""Direct this story in a vertical block-built world. Return reusable kit, cast, props and blocking.
-Stage the public rule, failed attempt, counterexample and cost as visible changes. For a reveal, sync its authored timing fraction to a unique short spoken phrase. All gesture, object, sound and camera timings follow these anchors. Use multiple cuts during long beats,
+Stage the public rule, failed attempt, counterexample and cost as visible changes. For a reveal, sync its authored timing fraction to a unique short spoken phrase. Use the opening 12 seconds for an image of the mechanism, one public example and a personal stake.
+Cut when information changes: aim around 1–2 seconds in rapid passages, then hold longer for a difficult
+choice or a joke. Compose foreground evidence, the acting pair and background work at different depths.
+Set place.life to shoppers, workers, audience or quiet. Set place.light to daylight, late_sun or night according to the emotional turn. Fairground has market awnings, back lanes and a
+Ferris wheel; glasshouse has greenhouse arches, seedling beds and a water tower. Use saturated accents
+for plot objects. Practical raincloud drops rain below its base (stage near z=3.5); bouquet supports
+CLOSED, OPEN and CLAP; cistern supports EMPTY, HALF and FULL. Use dialogue entries only for verbatim lines spoken by a visible character; leave voice-over unassigned. Set cue.play to accent for a single
+native-speed action, cycle for repeating work, sustain to hold a pose. Camera move hold locks the frame,
+follow tracks the target, arc orbits, punch closes in quickly and reveal opens out. Use brief splash, dust, petals or glint accents at physical contacts and discoveries. Attach each to an onstage focus ID. Reserve them for events a viewer should notice. All timings follow anchors. Use multiple cuts during long beats,
 e.g. wide proof, insert, delayed reaction. A supporting actor should continue a different task while someone speaks.
 Use the same coordinates across cuts in one place. Set look_at to a visible actor or prop ID, or empty for a neutral gaze. Actors face -Y at 0 degrees. X is screen right. Floor Z=0.
 Actors are 2.5 units tall. Typical X range -3 to 3, Y range -1 to 3. Actor at/to are [x,y].

@@ -40,18 +40,21 @@ uv run movie.py
 uv run movie.py --idea "Every mirror in a railway station is one train ahead." --seconds 90
 ```
 
-Each command creates a fresh episode. The default length is 45 seconds. The writer drafts a first-person story with a public rule, a failed attempt, an observable exception and a consequential choice. A separate editorial pass checks the logic and humor. The director defines the cast and physical world once, then blocks three beats per call with the prior character marks and prop state. The runner checkpoints each response. Final output is 1080 × 1920 at 30 fps.
+Each command creates a fresh episode. The default length is 45 seconds. The writer first develops competing motives, an everyday object, two readings of the same evidence and a returning joke. It then drafts a first-person story with a public rule, a failed attempt, an observable exception and a consequential choice. A separate editor checks the logic and humor and rereads revisions. A decision can have multiple earlier causes. The director defines the cast and physical world once, then blocks three beats per call with the prior character marks and prop state. The runner checkpoints each response. Final output is 1080 × 1920 at 30 fps.
 
-**Render the two included two-minute films** with these commands. They use the same directing and rendering path as generated plans and can run offline after installation.
+**Render the three included two-minute films** with these commands. They use the same directing and rendering path as generated plans and can run offline after installation.
 
 ```powershell
 uv run movie.py --demo --quality review
+uv run movie.py --from-plan example/floor-ten --quality review
 uv run movie.py --from-plan example/bell-bay --quality review
 ```
 
+The default demo, *The Last Clap at Our Wedding*, puts eight named residents at a fair and a nursery. Its raincloud, spring-loaded bouquet and wheeled tank carry the story from the opening accident to the last gag. The [timecoded reference study](docs/shorts-reference-study.md) records the 13 films examined and how they informed this episode.
+
 *Taking Separate Lifts* casts nine people in a municipal lift, a freight depot and a rooftop orchestra. *The Quietest Drum in Bell Bay* casts seven in a harbor where paired lanterns form temporary bridges. Each folder contains the spoken script, the cast's motives, the causal links between beats, and the complete camera and performance direction.
 
-To review compositions before a long render, append `--storyboard`. The runner samples the middle of every camera shot and writes contact sheets and individual frames. Edit the saved job and use `--resume <job-folder>` to render it. Each completed ensemble movie includes a `render-review.json` with the decoded frame count, audio and video duration checks and repeated-frame measurements from the raw animation clips.
+To review compositions before a long render, append `--storyboard`. The runner samples the middle of every camera shot and writes contact sheets and individual frames. The accompanying blocking review reports edit timing, camera treatments and sustained overlaps between actors. Edit the saved job and use `--resume <job-folder>` to render it. Each completed ensemble movie includes a `render-review.json` with the decoded frame count, audio and video duration checks and repeated-frame measurements from the raw animation clips.
 
 ## Reuse a character across episodes
 
@@ -71,12 +74,12 @@ The job's `cast.json` records the resolved paths and hashes. Use `--cast-dir` to
 
 | Component | What the director controls |
 |---|---|
-| World | Architecture, palette, signs, custom landmarks and reusable instruments, machines, buildings and practical props. Location kits cover a civic arcade, freight depot, rooftop theater, garden, coastal harbor and barbershop or boathouse. |
+| World | Architecture, palette, signs, custom landmarks and reusable instruments, machines, buildings and practical props. Location kits cover a civic arcade, freight depot, rooftop theater, garden, coastal harbor, barbershop or boathouse, fairground and glasshouse. Each place can specify shoppers, an audience, workers or a quiet background, as well as daylight, late sun or night. |
 | Ensemble | The actor's start and end marks, facing, eyeline, reaction, costume and one or more timed performances. Adjacent continuous setups must agree on the actors' marks. A cutaway or a time jump can establish new positions. |
-| Motion | Walk cycles follow distance traveled. Bodies turn into the path and settle into the final facing. A shared pose library layers independently timed gestures over gait, breathing, eye blinks and head motion. Passing poses interpolate continuously, and a gesture can recover into the next action. |
+| Motion | Walk cycles follow distance traveled. Bodies turn into the path and settle into the final facing. A shared pose library layers independently timed gestures over gait, breathing, eye blinks and head motion. Cues use native-speed accents, repeated cycles or held poses. On-screen dialogue drives mouth timing. Splashes, dust, petals and glints can mark a physical contact. |
 | Props | Objects keep world positions, text and ownership across shots and returns to a location. Objects can transfer between hands, move into a chute or attach to an actor. Named models can be reused across episodes with `--prop-id`. |
-| Camera | Multiple perspective cuts per spoken beat. Each can follow one actor, several subjects, a moving prop or a fixed point. Framing, elevation, angle and orbit adjust independently. |
-| Timing | Map a reveal to an exact spoken phrase. The director's camera, sound, gesture and mechanism cues follow the narration clock. Windows can supply word boundaries. Linux and macOS estimate word onsets within each recorded line. |
+| Camera | Multiple perspective cuts per spoken beat. Each can follow one actor, several subjects, a moving prop or a fixed point. Choose a locked hold, follow, orbit, punch-in or pullback. Close shots check foreground occlusion at three points. |
+| Timing | Map a reveal to an exact spoken phrase. The director's camera, sound, gesture and mechanism cues follow the narration clock. A short cast label can appear on the first spoken mention when the viewer needs a relationship explained. Windows can supply word boundaries. Linux and macOS estimate word onsets within each recorded line. |
 | Reuse | Shared character files, motion recipes, prop designs, voices, scores and rendered clips. The shot cache includes the state carried into the shot and the versions of the Blender code and visible assets. |
 
 ### Reuse and review a prop

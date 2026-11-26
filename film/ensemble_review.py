@@ -1,7 +1,9 @@
 """Measure the native animation before captions and verify the delivered MP4."""
 
 from fractions import Fraction
-from itertools import groupby
+from itertools import groupby, combinations
+from math import dist
+from statistics import median
 import json
 from pathlib import Path
 import subprocess
@@ -41,6 +43,49 @@ def correct_clip(file, probe, w, h, fps, frames):
         ) == (w, h, fps, frames)
     except (ValueError, KeyError, StopIteration, subprocess.CalledProcessError):
         return False
+
+
+def directing_stats(timeline):
+    """Exact editorial timing plus advisory overlap checks for reviewing the boards."""
+    fps = timeline["fps"]
+    durations = []
+    opening = []
+    overlaps = []
+    modes = set()
+    busiest = 0
+    for i, s in enumerate(timeline["shots"], 1):
+        shot = s["shot"]
+        starts = [round(c["start"] * (s["frames"] - 1)) for c in shot["cameras"]]
+        for f, g, c in zip(starts, starts[1:] + [s["frames"]], shot["cameras"]):
+            durations.append((g - f) / fps)
+            if s["clock"] + f / fps < 15:
+                opening.append(round(s["clock"] + f / fps, 2))
+            modes.add(c.get("move", "arc" if c["drift"] else "follow"))
+        busiest = max(busiest, len(shot["actors"]))
+
+        def position(actor, t):
+            u = max(0, min(1, (t - actor["start"]) / (actor["end"] - actor["start"])))
+            u = u * u * (3 - 2 * u)
+            return [x + u * (y - x) for x, y in zip(actor["at"], actor["to"])]
+
+        for a, b in combinations(shot["actors"], 2):
+            scale = min(timeline["looks"][actor["id"]]["height"] for actor in (a, b))
+            distances = [dist(position(a, k / 24), position(b, k / 24)) for k in range(25)]
+            # A sustained overlap of the torsos warrants a look even if a hug was intentional.
+            flags = [d < 0.48 * scale for d in distances]
+            longest = max((sum(1 for _ in group) for value, group in groupby(flags) if value), default=0)
+            if longest >= 4:
+                overlaps.append(
+                    dict(setup=i, actors=[a["id"], b["id"]], min_distance=round(min(distances), 2))
+                )
+    return dict(
+        median_shot_seconds=round(median(durations), 2),
+        longest_shot_seconds=round(max(durations), 2),
+        opening_15s_shot_starts=opening,
+        camera_moves=sorted(modes),
+        peak_named_actors=busiest,
+        sustained_actor_overlaps=overlaps,
+    )
 
 
 def audit(timeline, movie, ffmpeg="ffmpeg", ffprobe="ffprobe"):
@@ -113,6 +158,7 @@ def audit(timeline, movie, ffmpeg="ffmpeg", ffprobe="ffprobe"):
         check=True,
     )
     return dict(
+        direction=directing_stats(timeline),
         frames=total,
         fps=timeline["fps"],
         width=stream["width"],

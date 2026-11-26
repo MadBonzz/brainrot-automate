@@ -1,0 +1,226 @@
+{
+  "title": "The Last Clap at Our Wedding",
+  "seconds": 120,
+  "rule": "The town cloud rains over the source of the most recent clap.",
+  "loophole": "A quiet wooden clap beats a crowd if it comes later.",
+  "cost": "Pip spends the umbrella takings to bring the irrigation tank to Nell. Nell chooses a soaked wedding dress.",
+  "lead": "pip",
+  "cast": [
+    {
+      "id": "pip",
+      "job": "umbrella seller",
+      "want": "Give Nell the weather she has provided for thirty other brides."
+    },
+    {
+      "id": "nell",
+      "job": "professional decoy applauder and bride",
+      "want": "Hear the applause her late mother promised her."
+    },
+    {
+      "id": "raf",
+      "job": "market gardener and father",
+      "want": "Save his seedlings and carry his wife’s promise into the ceremony."
+    },
+    {
+      "id": "gus",
+      "job": "tailor and groom",
+      "want": "Marry Nell and keep her dry without missing the bouquet toss."
+    },
+    {
+      "id": "vi",
+      "job": "aunt and retired choir director",
+      "want": "Give her niece a proper round of applause."
+    },
+    {
+      "id": "sol",
+      "job": "baker",
+      "want": "Deliver a wedding cake that people can still slice."
+    },
+    {
+      "id": "brass",
+      "job": "bandleader",
+      "want": "Put on the town’s loudest ovation."
+    },
+    {
+      "id": "mo",
+      "job": "trumpeter",
+      "want": "Back the bandleader and watch the wedding."
+    }
+  ],
+  "beats": [
+    {
+      "role": "rule",
+      "because": 0,
+      "witness": "vi",
+      "line": "In Ovation, applause brings rain. At my sister's wedding rehearsal, Aunt Vi clapped over the cake. The baker handed out straws.",
+      "visible": "Vi claps by the tiered cake. The rain column crosses the fair; Sol catches the plate.",
+      "also_because": []
+    },
+    {
+      "role": "custom",
+      "because": 1,
+      "witness": "nell",
+      "line": "Brides usually hire Nell to clap in a potato field. She's stood in the rain for thirty strangers. Today she was the bride.",
+      "visible": "Nell demonstrates the field job with rain overhead. Cut to her floral veil in company.",
+      "also_because": []
+    },
+    {
+      "role": "desire",
+      "because": 2,
+      "witness": "pip",
+      "line": "I promised her a dry wedding. Dad wanted the rain too. His strawberry tank was empty. In that heat, the seedlings had one afternoon.",
+      "visible": "Pip sees the cart’s empty basin; Raf checks the low plants and shows him a handful.",
+      "also_because": []
+    },
+    {
+      "role": "attempt",
+      "because": 3,
+      "witness": "brass",
+      "line": "I booked a standing ovation at the nursery. Two trumpets, eight rows of hands, one man applauding with a fish. The cloud came running.",
+      "visible": "The band leads the ovation beside the cart. The cloud arrives over its opening.",
+      "also_because": []
+    },
+    {
+      "role": "attempt",
+      "because": 4,
+      "witness": "nell",
+      "line": "The band finished. Eighty pairs of hands went down. Then Nell came out. One tiny clap beside her elbow. The rain went straight down her dress.",
+      "visible": "Nell walks under the flower arch and carries the closed bouquet. Rain races away from the nursery toward her.",
+      "also_because": [
+        1
+      ]
+    },
+    {
+      "role": "custom",
+      "because": 5,
+      "witness": "gus",
+      "line": "I accused Gus. He held up both hands. They were in socks. He'd taken the dress code personally.",
+      "visible": "Gus slowly presents two raspberry mittens. Nell looks from one to the other.",
+      "also_because": []
+    },
+    {
+      "role": "clue",
+      "because": 5,
+      "witness": "pip",
+      "line": "It clapped again. Nobody touched Nell. Except her bouquet, which had never expressed an opinion before.",
+      "visible": "Pip leans in; the flowers separate enough to reveal a pair of wooden fingers.",
+      "also_because": [
+        1
+      ]
+    },
+    {
+      "role": "clue",
+      "because": 7,
+      "witness": "raf",
+      "line": "Two little wooden hands. Mum used them to cheer from her hospital bed. Dad had glued a new spring in. There was still glue on his thumb.",
+      "visible": "Raf takes the mechanical flowers, opens the hands and shows Nell his thumb.",
+      "also_because": [
+        2
+      ]
+    },
+    {
+      "role": "clue",
+      "because": 8,
+      "witness": "raf",
+      "line": "He'd promised Nell she'd hear Mum's clap at her wedding. Now he was trying to snap the spring so she could stay dry. I caught his wrist.",
+      "visible": "Pip intercepts Raf’s raised hand before he can silence the spring. Nell sees the mechanism.",
+      "also_because": []
+    },
+    {
+      "role": "clue",
+      "because": 9,
+      "witness": "pip",
+      "line": "Wait. Vi had beaten a whole choir with one clap. Maybe the cloud didn't care who was loudest. Maybe it only cared who was last.",
+      "visible": "Pip points to Vi at the cake, then back to the hands; the audience has seen both clues before.",
+      "also_because": [
+        1,
+        7
+      ]
+    },
+    {
+      "role": "clue",
+      "because": 10,
+      "witness": "pip",
+      "line": "I tried one quiet clap by the tank. Rain. The flowers clicked on the other side of the yard. The cloud doubled back. Dad hadn't broken anything.",
+      "visible": "One cloud crosses between two simultaneously visible sources. It reverses only after the wooden hands meet.",
+      "also_because": [
+        4,
+        7
+      ]
+    },
+    {
+      "role": "choice",
+      "because": 11,
+      "witness": "pip",
+      "line": "I could put the flowers beside the strawberries. Nell would get a dry wedding. She'd never hear the one person she'd been waiting for.",
+      "visible": "Pip starts toward the seedlings with the bouquet, looks back at Nell and deliberately stops.",
+      "also_because": [
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "role": "choice",
+      "because": 11,
+      "witness": "pip",
+      "line": "I gave her the flowers. Then I paid the band my whole summer's umbrella money to wheel Dad's tank across the square. If the cloud came to Nell, the tank could too.",
+      "visible": "Pip gives Nell the bouquet and pays the driver. The empty cart rolls under the wedding arch.",
+      "also_because": [
+        12,
+        3
+      ]
+    },
+    {
+      "role": "outcome",
+      "because": 13,
+      "witness": "nell",
+      "line": "'Thirty weddings in a potato field,' Nell said, stepping into the tank. 'I think I'd like to get wet at mine.' Gus tucked the rings into a sock.",
+      "visible": "Nell steps into the open cart at the flower arch. Her bouquet rises above the rim. Gus looks down at his mitten.",
+      "also_because": [
+        2,
+        8
+      ]
+    },
+    {
+      "role": "outcome",
+      "because": 14,
+      "witness": "raf",
+      "line": "At 'I do,' Dad wound the spring. The wooden hands clapped for my sister. Everyone else danced with their hands in their pockets.",
+      "visible": "The wooden palms close. Rain arrives at Nell inside the tank; feet keep time around her.",
+      "also_because": [
+        11
+      ]
+    },
+    {
+      "role": "outcome",
+      "because": 15,
+      "witness": "sol",
+      "line": "By the last dance the tank was full. Dad's strawberries had their summer. My sister had her clap. The baker served the cake in teacups.",
+      "visible": "Sol serves his soggy cake while the cart fills to its gold band. Raf and Nell dance either side of its rim.",
+      "also_because": [
+        3,
+        4
+      ]
+    },
+    {
+      "role": "callback",
+      "because": 15,
+      "witness": "gus",
+      "line": "Then Nell tossed the bouquet. Gus caught it. Both socks filled up.",
+      "visible": "The bouquet arcs to Gus. His delighted grin changes as the rain column leaves Nell and lands on his mittens.",
+      "also_because": [
+        6,
+        7
+      ]
+    }
+  ],
+  "introductions": [
+    {
+      "beat": 6,
+      "actor": "gus",
+      "words": "Gus",
+      "label": "GUS  /  THE GROOM"
+    }
+  ]
+}

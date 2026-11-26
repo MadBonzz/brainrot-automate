@@ -29,7 +29,7 @@ CAMERAS = json.loads((PRESETS/"cameras.json").read_text(encoding="utf8"))
 S = {"type": "string"}
 N = {"type": "number"}
 I = {"type": "integer"}
-COLOR = choices("navy teal mint gold rust red cream charcoal lavender blue brown")
+COLOR = choices("navy teal mint gold rust red cream charcoal lavender blue brown coral marigold peacock raspberry cobalt seafoam violet")
 STORY = obj(title=S, rule=S, planted_clue=S, payoff=S, beats=arr(S))
 PIECE = obj(shape=choices("box sphere cylinder cone"), x=N, y=N, z=N, width=N, depth=N, height=N, color=COLOR)
 PROP = obj(kind=choices(" ".join(["clock","signal","radio","lantern","custom",*CATALOG])), label=S, color=COLOR, parts=arr(PIECE))
@@ -55,13 +55,22 @@ def check(value, schema, field="result"):
     if not good[typ] or ("enum" in schema and value not in schema["enum"]):
         raise ValueError(f"Invalid {field}: {value!r}")
     if typ == "object":
-        if set(value) != set(schema["properties"]):
+        if not set(schema["required"]) <= set(value) <= set(schema["properties"]):
             raise ValueError(f"Wrong fields at {field}")
-        for key, child in schema["properties"].items():
-            check(value[key], child, f"{field}.{key}")
+        for key in value:
+            check(value[key], schema["properties"][key], f"{field}.{key}")
     if typ == "array":
         for i, item in enumerate(value):
             check(item, schema["items"], f"{field}[{i}]")
+
+
+def provider_schema(schema):
+    """Existing files may omit new direction fields. Request all of them in strict CLI output."""
+    if schema['type'] == 'object':
+        return obj(**{key: provider_schema(value) for key, value in schema['properties'].items()})
+    if schema['type'] == 'array':
+        return arr(provider_schema(schema['items']))
+    return schema
 
 
 def generate(prompt, schema, job):
@@ -72,7 +81,7 @@ def generate(prompt, schema, job):
     with tempfile.TemporaryDirectory(dir=job) as temp:
         work = Path(temp).resolve()
         fmt, result = work / "schema.json", work / "result.json"
-        save(fmt, schema)
+        save(fmt, provider_schema(schema))
         cmd = [exe, "exec", "-c", 'model_provider="openai"', "--ephemeral", "--skip-git-repo-check", "--sandbox", "read-only", "--output-schema",
                str(fmt), "-o", str(result), "-"]
         env = os.environ.copy()

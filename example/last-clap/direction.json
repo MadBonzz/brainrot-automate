@@ -1,0 +1,5431 @@
+{
+  "looks": [
+    {
+      "id": "pip",
+      "coat": "cobalt",
+      "skin": "bronze",
+      "hair": "charcoal",
+      "hat": "cap",
+      "uniform": "satchel",
+      "badge": "",
+      "height": 0.91
+    },
+    {
+      "id": "nell",
+      "coat": "cream",
+      "skin": "bronze",
+      "hair": "brown",
+      "hat": "veil",
+      "uniform": "gown",
+      "badge": "",
+      "height": 1.0
+    },
+    {
+      "id": "raf",
+      "coat": "peacock",
+      "skin": "umber",
+      "hair": "charcoal",
+      "hat": "beret",
+      "uniform": "apron",
+      "badge": "",
+      "height": 1.08
+    },
+    {
+      "id": "gus",
+      "coat": "violet",
+      "skin": "rose",
+      "hair": "brown",
+      "hat": "curls",
+      "uniform": "sash",
+      "badge": "",
+      "height": 1.07
+    },
+    {
+      "id": "vi",
+      "coat": "raspberry",
+      "skin": "umber",
+      "hair": "charcoal",
+      "hat": "bun",
+      "uniform": "tunic",
+      "badge": "",
+      "height": 0.94
+    },
+    {
+      "id": "sol",
+      "coat": "seafoam",
+      "skin": "rose",
+      "hair": "brown",
+      "hat": "helmet",
+      "uniform": "apron",
+      "badge": "",
+      "height": 1.0
+    },
+    {
+      "id": "brass",
+      "coat": "coral",
+      "skin": "amber",
+      "hair": "brown",
+      "hat": "visor",
+      "uniform": "bandleader",
+      "badge": "",
+      "height": 1.05
+    },
+    {
+      "id": "mo",
+      "coat": "marigold",
+      "skin": "umber",
+      "hair": "charcoal",
+      "hat": "cap",
+      "uniform": "bandleader",
+      "badge": "",
+      "height": 0.95
+    }
+  ],
+  "places": [
+    {
+      "id": "square",
+      "kit": "fairground",
+      "sign": "OVATION   /   JUBILEE FAIR",
+      "trim": "raspberry",
+      "wall": "coral",
+      "life": "shoppers"
+    },
+    {
+      "id": "nursery",
+      "kit": "glasshouse",
+      "sign": "RAF’S   /   STRAWBERRY NURSERY",
+      "trim": "peacock",
+      "wall": "seafoam",
+      "life": "workers"
+    }
+  ],
+  "props": [
+    {
+      "id": "storm",
+      "kind": "raincloud",
+      "place": "square",
+      "at": [
+        -1.02,
+        0.65,
+        3.26
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "shower",
+      "kind": "raincloud",
+      "place": "nursery",
+      "at": [
+        -5.4,
+        1.2,
+        3.3
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "cake",
+      "kind": "cake",
+      "place": "square",
+      "at": [
+        1.3,
+        0.6,
+        0.86
+      ],
+      "scale": 1.18,
+      "color": "peacock",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "table",
+      "kind": "stand",
+      "place": "square",
+      "at": [
+        1.3,
+        0.62,
+        0
+      ],
+      "scale": 0.98,
+      "color": "raspberry",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "flowers",
+      "kind": "bouquet",
+      "place": "square",
+      "at": [
+        -0.02,
+        0.62,
+        0.94
+      ],
+      "scale": 1.18,
+      "color": "raspberry",
+      "text": "CLOSED",
+      "parts": []
+    },
+    {
+      "id": "urn",
+      "kind": "cistern",
+      "place": "square",
+      "at": [
+        -7.3,
+        0.24,
+        0
+      ],
+      "scale": 1.2,
+      "color": "peacock",
+      "text": "EMPTY",
+      "parts": []
+    },
+    {
+      "id": "tank",
+      "kind": "cistern",
+      "place": "nursery",
+      "at": [
+        1.0,
+        0.16,
+        0
+      ],
+      "scale": 1.2,
+      "color": "peacock",
+      "text": "EMPTY",
+      "parts": []
+    },
+    {
+      "id": "bedleft",
+      "kind": "custom",
+      "place": "nursery",
+      "at": [
+        -2.7,
+        0.94,
+        0
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [
+            0,
+            0,
+            0.22
+          ],
+          "size": [
+            1.65,
+            0.8,
+            0.44
+          ],
+          "color": "brown",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.46,
+            0,
+            0.49
+          ],
+          "size": [
+            0.5,
+            0.48,
+            0.3
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.0,
+            0,
+            0.49
+          ],
+          "size": [
+            0.5,
+            0.48,
+            0.3
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.46,
+            0,
+            0.49
+          ],
+          "size": [
+            0.5,
+            0.48,
+            0.3
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.45,
+            -0.12,
+            0.57
+          ],
+          "size": [
+            0.19,
+            0.17,
+            0.19
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.0,
+            -0.12,
+            0.57
+          ],
+          "size": [
+            0.19,
+            0.17,
+            0.19
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.45,
+            -0.12,
+            0.57
+          ],
+          "size": [
+            0.19,
+            0.17,
+            0.19
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bedright",
+      "kind": "custom",
+      "place": "nursery",
+      "at": [
+        2.7,
+        0.94,
+        0
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [
+            0,
+            0,
+            0.22
+          ],
+          "size": [
+            1.65,
+            0.8,
+            0.44
+          ],
+          "color": "brown",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.46,
+            0,
+            0.49
+          ],
+          "size": [
+            0.5,
+            0.48,
+            0.3
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.0,
+            0,
+            0.49
+          ],
+          "size": [
+            0.5,
+            0.48,
+            0.3
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.46,
+            0,
+            0.49
+          ],
+          "size": [
+            0.5,
+            0.48,
+            0.3
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.45,
+            -0.12,
+            0.57
+          ],
+          "size": [
+            0.19,
+            0.17,
+            0.19
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.0,
+            -0.12,
+            0.57
+          ],
+          "size": [
+            0.19,
+            0.17,
+            0.19
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.45,
+            -0.12,
+            0.57
+          ],
+          "size": [
+            0.19,
+            0.17,
+            0.19
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "archl",
+      "kind": "custom",
+      "place": "square",
+      "at": [
+        -1.5,
+        2,
+        0
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "cylinder",
+          "at": [
+            0,
+            0,
+            1.47
+          ],
+          "size": [
+            0.15,
+            0.15,
+            2.94
+          ],
+          "color": "cream",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "at": [
+            0,
+            0,
+            0.12
+          ],
+          "size": [
+            0.5,
+            0.5,
+            0.25
+          ],
+          "color": "peacock",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.11,
+            0,
+            0.55
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.11,
+            0,
+            0.8500000000000001
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "coral",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.11,
+            0,
+            1.15
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.11,
+            0,
+            1.45
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.11,
+            0,
+            1.75
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "coral",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.11,
+            0,
+            2.05
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.11,
+            0,
+            2.3499999999999996
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.11,
+            0,
+            2.6500000000000004
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "coral",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.11,
+            0,
+            2.95
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "archr",
+      "kind": "custom",
+      "place": "square",
+      "at": [
+        1.5,
+        2,
+        0
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "cylinder",
+          "at": [
+            0,
+            0,
+            1.47
+          ],
+          "size": [
+            0.15,
+            0.15,
+            2.94
+          ],
+          "color": "cream",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "at": [
+            0,
+            0,
+            0.12
+          ],
+          "size": [
+            0.5,
+            0.5,
+            0.25
+          ],
+          "color": "peacock",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.11,
+            0,
+            0.55
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.11,
+            0,
+            0.8500000000000001
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "coral",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.11,
+            0,
+            1.15
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.11,
+            0,
+            1.45
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.11,
+            0,
+            1.75
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "coral",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.11,
+            0,
+            2.05
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.11,
+            0,
+            2.3499999999999996
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.11,
+            0,
+            2.6500000000000004
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "coral",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.11,
+            0,
+            2.95
+          ],
+          "size": [
+            0.31,
+            0.28,
+            0.35
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "garland",
+      "kind": "custom",
+      "place": "square",
+      "at": [
+        0,
+        2,
+        2.88
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            3.12,
+            0.13,
+            0.12
+          ],
+          "color": "cream",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -1.3800000000000001,
+            0,
+            0.18
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -1.1500000000000001,
+            0,
+            0.125
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "coral",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.92,
+            0,
+            0.08
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.6900000000000001,
+            0,
+            0.045
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.46,
+            0,
+            0.02
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            -0.23,
+            0,
+            0.005
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "coral",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.0,
+            0,
+            0.0
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.23,
+            0,
+            0.005
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.46,
+            0,
+            0.02
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.6900000000000001,
+            0,
+            0.045
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "coral",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.92,
+            0,
+            0.08
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            1.1500000000000001,
+            0,
+            0.125
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            1.3800000000000001,
+            0,
+            0.18
+          ],
+          "size": [
+            0.36,
+            0.29,
+            0.34
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "horn",
+      "kind": "trumpet",
+      "place": "nursery",
+      "at": [
+        -2.58,
+        0.6,
+        0.9
+      ],
+      "scale": 0.8,
+      "color": "peacock",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "hornfair",
+      "kind": "trumpet",
+      "place": "square",
+      "at": [
+        -3.9,
+        1.2,
+        0.9
+      ],
+      "scale": 0.8,
+      "color": "peacock",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "sockl",
+      "kind": "custom",
+      "place": "square",
+      "at": [
+        5.84,
+        0.28,
+        0.6
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "sphere",
+          "at": [
+            0,
+            0,
+            -0.09
+          ],
+          "size": [
+            0.39,
+            0.55,
+            0.63
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0,
+            0,
+            0.19
+          ],
+          "size": [
+            0.41,
+            0.51,
+            0.14
+          ],
+          "color": "cream",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0,
+            0,
+            0.11
+          ],
+          "size": [
+            0.41,
+            0.51,
+            0.065
+          ],
+          "color": "cobalt",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.09,
+            -0.14,
+            -0.29
+          ],
+          "size": [
+            0.35,
+            0.41,
+            0.26
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sockr",
+      "kind": "custom",
+      "place": "square",
+      "at": [
+        6.16,
+        0.28,
+        0.6
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "sphere",
+          "at": [
+            0,
+            0,
+            -0.09
+          ],
+          "size": [
+            0.39,
+            0.55,
+            0.63
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0,
+            0,
+            0.19
+          ],
+          "size": [
+            0.41,
+            0.51,
+            0.14
+          ],
+          "color": "cream",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0,
+            0,
+            0.11
+          ],
+          "size": [
+            0.41,
+            0.51,
+            0.065
+          ],
+          "color": "cobalt",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.09,
+            -0.14,
+            -0.29
+          ],
+          "size": [
+            0.35,
+            0.41,
+            0.26
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ladder",
+      "kind": "custom",
+      "place": "square",
+      "at": [
+        -3.4,
+        0.3,
+        0
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [
+            -0.26,
+            0,
+            0.68
+          ],
+          "size": [
+            0.06,
+            0.08,
+            1.38
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "at": [
+            0.26,
+            0,
+            0.68
+          ],
+          "size": [
+            0.06,
+            0.08,
+            1.38
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "at": [
+            0,
+            0,
+            0.17
+          ],
+          "size": [
+            0.54,
+            0.07,
+            0.055
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "at": [
+            0,
+            0,
+            0.42000000000000004
+          ],
+          "size": [
+            0.54,
+            0.07,
+            0.055
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "at": [
+            0,
+            0,
+            0.67
+          ],
+          "size": [
+            0.54,
+            0.07,
+            0.055
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "at": [
+            0,
+            0,
+            0.92
+          ],
+          "size": [
+            0.54,
+            0.07,
+            0.055
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "at": [
+            0,
+            0,
+            1.17
+          ],
+          "size": [
+            0.54,
+            0.07,
+            0.055
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fish",
+      "kind": "custom",
+      "place": "nursery",
+      "at": [
+        3.45,
+        0.05,
+        1
+      ],
+      "scale": 0.88,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "sphere",
+          "at": [
+            0,
+            0,
+            0.12
+          ],
+          "size": [
+            0.5,
+            0.19,
+            0.23
+          ],
+          "color": "seafoam",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sail",
+          "at": [
+            -0.28,
+            0,
+            0.13
+          ],
+          "size": [
+            0.22,
+            0.12,
+            0.22
+          ],
+          "color": "peacock",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "sphere",
+          "at": [
+            0.17,
+            -0.1,
+            0.14
+          ],
+          "size": [
+            0.052,
+            0.035,
+            0.052
+          ],
+          "color": "navy",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "secondhorn",
+      "kind": "trumpet",
+      "place": "nursery",
+      "at": [
+        -1.95,
+        0.58,
+        0.9
+      ],
+      "scale": 0.76,
+      "color": "peacock",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "tips",
+      "kind": "custom",
+      "place": "square",
+      "at": [
+        -1.55,
+        0.2,
+        1.05
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "cylinder",
+          "at": [
+            0,
+            0,
+            0.0
+          ],
+          "size": [
+            0.24,
+            0.24,
+            0.035
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0,
+            0,
+            0.03
+          ],
+          "size": [
+            0.24,
+            0.24,
+            0.035
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0,
+            0,
+            0.06
+          ],
+          "size": [
+            0.24,
+            0.24,
+            0.035
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0,
+            0,
+            0.09
+          ],
+          "size": [
+            0.24,
+            0.24,
+            0.035
+          ],
+          "color": "marigold",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cups",
+      "kind": "custom",
+      "place": "square",
+      "at": [
+        1.59,
+        0.34,
+        0.92
+      ],
+      "scale": 0.77,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "cylinder",
+          "at": [
+            0.0,
+            0.0,
+            0.1
+          ],
+          "size": [
+            0.18,
+            0.18,
+            0.2
+          ],
+          "color": "cream",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.23,
+            0.0,
+            0.1
+          ],
+          "size": [
+            0.18,
+            0.18,
+            0.2
+          ],
+          "color": "cream",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.46,
+            0.0,
+            0.1
+          ],
+          "size": [
+            0.18,
+            0.18,
+            0.2
+          ],
+          "color": "cream",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.0,
+            0.18,
+            0.1
+          ],
+          "size": [
+            0.18,
+            0.18,
+            0.2
+          ],
+          "color": "cream",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.23,
+            0.18,
+            0.1
+          ],
+          "size": [
+            0.18,
+            0.18,
+            0.2
+          ],
+          "color": "cream",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.46,
+            0.18,
+            0.1
+          ],
+          "size": [
+            0.18,
+            0.18,
+            0.2
+          ],
+          "color": "cream",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.0,
+            0.0,
+            0.202
+          ],
+          "size": [
+            0.12,
+            0.12,
+            0.018
+          ],
+          "color": "brown",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.23,
+            0.0,
+            0.202
+          ],
+          "size": [
+            0.12,
+            0.12,
+            0.018
+          ],
+          "color": "brown",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.46,
+            0.0,
+            0.202
+          ],
+          "size": [
+            0.12,
+            0.12,
+            0.018
+          ],
+          "color": "brown",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.0,
+            0.18,
+            0.202
+          ],
+          "size": [
+            0.12,
+            0.12,
+            0.018
+          ],
+          "color": "brown",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.23,
+            0.18,
+            0.202
+          ],
+          "size": [
+            0.12,
+            0.12,
+            0.018
+          ],
+          "color": "brown",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.46,
+            0.18,
+            0.202
+          ],
+          "size": [
+            0.12,
+            0.12,
+            0.018
+          ],
+          "color": "brown",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "straws",
+      "kind": "custom",
+      "place": "square",
+      "at": [
+        1.03,
+        0.37,
+        1.58
+      ],
+      "scale": 1,
+      "color": "peacock",
+      "text": "",
+      "parts": [
+        {
+          "shape": "cylinder",
+          "at": [
+            0.0,
+            0,
+            0.24
+          ],
+          "size": [
+            0.033,
+            0.033,
+            0.49
+          ],
+          "color": "peacock",
+          "rotation": [
+            0,
+            -9,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.08,
+            0,
+            0.24
+          ],
+          "size": [
+            0.033,
+            0.033,
+            0.49
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.16,
+            0,
+            0.24
+          ],
+          "size": [
+            0.033,
+            0.033,
+            0.49
+          ],
+          "color": "peacock",
+          "rotation": [
+            0,
+            9,
+            0
+          ]
+        },
+        {
+          "shape": "cylinder",
+          "at": [
+            0.24,
+            0,
+            0.24
+          ],
+          "size": [
+            0.033,
+            0.033,
+            0.49
+          ],
+          "color": "raspberry",
+          "rotation": [
+            0,
+            18,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "testflowers",
+      "kind": "bouquet",
+      "place": "nursery",
+      "at": [
+        -2,
+        0.2,
+        0.74
+      ],
+      "scale": 1.18,
+      "color": "raspberry",
+      "text": "OPEN",
+      "parts": []
+    }
+  ],
+  "shots": [
+    {
+      "place": "square",
+      "transition": "cutaway",
+      "actors": [
+        {
+          "id": "vi",
+          "look_at": "cake",
+          "at": [
+            0.48,
+            1
+          ],
+          "to": [
+            0.48,
+            1
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "clap_three_times",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "sol",
+          "look_at": "cake",
+          "at": [
+            2.45,
+            0.75
+          ],
+          "to": [
+            2.45,
+            0.75
+          ],
+          "facing": -29,
+          "end_facing": -29,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "worried",
+          "cues": [
+            {
+              "action": "catch_and_cushion",
+              "start": 0.06,
+              "end": 0.7,
+              "play": "accent"
+            },
+            {
+              "action": "recoil",
+              "play": "accent",
+              "start": 0.71,
+              "end": 0.94
+            }
+          ]
+        },
+        {
+          "id": "nell",
+          "look_at": "cake",
+          "at": [
+            -0.86,
+            0.24
+          ],
+          "to": [
+            -0.86,
+            0.24
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "surprised",
+          "cues": [
+            {
+              "action": "recoil",
+              "start": 0.55,
+              "end": 0.94,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "storm",
+          "at": [
+            -2.14,
+            0.31
+          ],
+          "to": [
+            -2.14,
+            0.31
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "point",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "gus",
+          "look_at": "storm",
+          "at": [
+            3.55,
+            1
+          ],
+          "to": [
+            3.55,
+            1
+          ],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "double_take",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "storm",
+          "to": [
+            1.24,
+            0.6,
+            3.32
+          ],
+          "start": 0.28,
+          "end": 0.55,
+          "text": "",
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "flowers",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0,
+          "end": 0.018,
+          "text": "CLOSED",
+          "anchor": "nell@wrist1",
+          "spin": 0
+        },
+        {
+          "id": "storm",
+          "to": [
+            -7.1,
+            0.35,
+            3.32
+          ],
+          "start": 0.91,
+          "end": 0.99,
+          "text": "",
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "storm",
+            "nell"
+          ],
+          "size": 3.65,
+          "angle": -12,
+          "elevation": 1,
+          "drift": 12,
+          "move": "punch"
+        },
+        {
+          "start": 0.098,
+          "focus": [
+            "storm",
+            "vi",
+            "cake"
+          ],
+          "size": 6.9,
+          "angle": -4,
+          "elevation": 17,
+          "drift": 12,
+          "move": "arc"
+        },
+        {
+          "start": 0.21,
+          "focus": [
+            "vi"
+          ],
+          "size": 2.1,
+          "angle": 36,
+          "elevation": 3,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.46,
+          "focus": [
+            "cake",
+            "storm"
+          ],
+          "size": 2.85,
+          "angle": 6,
+          "elevation": 5,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.76,
+          "focus": [
+            "sol",
+            "cake"
+          ],
+          "size": 2.23,
+          "angle": 9,
+          "elevation": 4,
+          "drift": 12,
+          "move": "hold"
+        }
+      ],
+      "sync": [
+        {
+          "at": 0.3,
+          "words": "Aunt Vi"
+        },
+        {
+          "at": 0.74,
+          "words": "The baker"
+        }
+      ],
+      "sounds": [
+        {
+          "at": 0.43,
+          "kind": "clatter"
+        }
+      ],
+      "accents": [
+        {
+          "kind": "splash",
+          "focus": "cake",
+          "at": 0.55
+        }
+      ]
+    },
+    {
+      "place": "nursery",
+      "transition": "cutaway",
+      "actors": [
+        {
+          "id": "nell",
+          "look_at": "shower",
+          "at": [
+            -0.56,
+            0.25
+          ],
+          "to": [
+            -0.56,
+            0.25
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "clap_three_times",
+              "start": 0.06,
+              "end": 0.69,
+              "play": "cycle"
+            },
+            {
+              "action": "wipe_brow",
+              "play": "accent",
+              "start": 0.7,
+              "end": 0.96
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "nell",
+          "at": [
+            -1.85,
+            0.52
+          ],
+          "to": [
+            -1.85,
+            0.52
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "compose_a_snapshot",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "raf",
+          "look_at": "bedright",
+          "at": [
+            1.84,
+            0.74
+          ],
+          "to": [
+            1.84,
+            0.74
+          ],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "lift_a_crate",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "shower",
+          "to": [
+            -0.54,
+            0.35,
+            3.32
+          ],
+          "start": 0.03,
+          "end": 0.24,
+          "text": "",
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "nell",
+            "shower"
+          ],
+          "size": 3.35,
+          "angle": -10,
+          "elevation": 2,
+          "drift": 12,
+          "move": "reveal"
+        },
+        {
+          "start": 0.29,
+          "focus": [
+            "pip",
+            "nell"
+          ],
+          "size": 3.2,
+          "angle": 9,
+          "elevation": 7,
+          "drift": 12,
+          "move": "arc"
+        },
+        {
+          "start": 0.67,
+          "focus": [
+            "nell"
+          ],
+          "size": 1.72,
+          "angle": 0,
+          "elevation": 3,
+          "drift": 12,
+          "move": "hold"
+        }
+      ],
+      "sync": [],
+      "sounds": []
+    },
+    {
+      "place": "nursery",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "pip",
+          "look_at": "raf",
+          "at": [
+            -1.2,
+            0.2
+          ],
+          "to": [
+            -1.2,
+            0.2
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "me_then_you",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "raf",
+          "look_at": "bedright",
+          "at": [
+            2.03,
+            0.34
+          ],
+          "to": [
+            2.03,
+            0.34
+          ],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "present_both_sides",
+              "start": 0.06,
+              "end": 0.71,
+              "play": "accent"
+            },
+            {
+              "action": "wipe_brow",
+              "play": "accent",
+              "start": 0.72,
+              "end": 0.94
+            }
+          ]
+        },
+        {
+          "id": "sol",
+          "look_at": "bedright",
+          "at": [
+            3.55,
+            0.82
+          ],
+          "to": [
+            3.55,
+            0.82
+          ],
+          "facing": -15,
+          "end_facing": -15,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "inspect_sleeve",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "shower",
+          "to": [
+            -7.1,
+            0.35,
+            3.32
+          ],
+          "start": 0.04,
+          "end": 0.19,
+          "text": "",
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "pip"
+          ],
+          "size": 1.65,
+          "angle": -6,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.25,
+          "focus": [
+            "raf",
+            "bedright"
+          ],
+          "size": 3.18,
+          "angle": 12,
+          "elevation": 7,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.49,
+          "focus": [
+            "tank"
+          ],
+          "size": 2.65,
+          "angle": -11,
+          "elevation": 36,
+          "drift": 12,
+          "move": "punch"
+        },
+        {
+          "start": 0.77,
+          "focus": [
+            "bedright",
+            "raf"
+          ],
+          "size": 2.63,
+          "angle": 3,
+          "elevation": 14,
+          "drift": 12,
+          "move": "hold"
+        }
+      ],
+      "sync": [],
+      "sounds": []
+    },
+    {
+      "place": "nursery",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "brass",
+          "look_at": "tank",
+          "at": [
+            -1.95,
+            0.62
+          ],
+          "to": [
+            -1.95,
+            0.62
+          ],
+          "facing": 20,
+          "end_facing": 20,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "conduct_downbeat",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "cycle"
+            }
+          ]
+        },
+        {
+          "id": "mo",
+          "look_at": "brass",
+          "at": [
+            -3.18,
+            0.47
+          ],
+          "to": [
+            -3.18,
+            0.47
+          ],
+          "facing": 27,
+          "end_facing": 27,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "play_a_trumpet",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "sustain"
+            }
+          ]
+        },
+        {
+          "id": "raf",
+          "look_at": "shower",
+          "at": [
+            2.28,
+            0.55
+          ],
+          "to": [
+            2.28,
+            0.55
+          ],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "beckon_twice",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "brass",
+          "at": [
+            -0.4,
+            -0.15
+          ],
+          "to": [
+            -0.4,
+            -0.15
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "clap_three_times",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "cycle"
+            }
+          ]
+        },
+        {
+          "id": "vi",
+          "look_at": "brass",
+          "at": [
+            0.92,
+            1.22
+          ],
+          "to": [
+            0.92,
+            1.22
+          ],
+          "facing": 0,
+          "end_facing": 0,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "clap_three_times",
+              "start": 0.015,
+              "end": 0.98,
+              "play": "cycle"
+            }
+          ]
+        },
+        {
+          "id": "gus",
+          "look_at": "brass",
+          "at": [
+            3.42,
+            0.09
+          ],
+          "to": [
+            3.42,
+            0.09
+          ],
+          "facing": 0,
+          "end_facing": 0,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "clap_three_times",
+              "start": 0.015,
+              "end": 0.69,
+              "play": "cycle"
+            },
+            {
+              "action": "clap_three_times",
+              "play": "cycle",
+              "start": 0.7,
+              "end": 0.97
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "horn",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.01,
+          "end": 0.045,
+          "text": "",
+          "anchor": "mo@wrist1",
+          "spin": 0
+        },
+        {
+          "id": "shower",
+          "to": [
+            1.02,
+            0.16,
+            3.32
+          ],
+          "start": 0.55,
+          "end": 0.85,
+          "text": "",
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "tank",
+          "to": [
+            1,
+            0.16,
+            0
+          ],
+          "start": 0.77,
+          "end": 0.98,
+          "text": "HALF",
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "fish",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.01,
+          "end": 0.045,
+          "text": "",
+          "anchor": "gus@wrist1",
+          "spin": 0
+        },
+        {
+          "id": "secondhorn",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.01,
+          "end": 0.045,
+          "text": "",
+          "anchor": "brass@wrist-1",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "brass",
+            "mo",
+            "raf",
+            "gus"
+          ],
+          "size": 8.1,
+          "angle": -19,
+          "elevation": 27,
+          "drift": 12,
+          "move": "arc"
+        },
+        {
+          "start": 0.22,
+          "focus": [
+            "mo",
+            "brass"
+          ],
+          "size": 2.45,
+          "angle": 12,
+          "elevation": 4,
+          "drift": 12,
+          "move": "punch"
+        },
+        {
+          "start": 0.45,
+          "focus": [
+            "pip",
+            "vi"
+          ],
+          "size": 2.7,
+          "angle": -9,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.72,
+          "focus": [
+            "shower",
+            "tank"
+          ],
+          "size": 3.85,
+          "angle": 5,
+          "elevation": 4,
+          "drift": 12,
+          "move": "follow"
+        }
+      ],
+      "sync": [
+        {
+          "at": 0.72,
+          "words": "The cloud"
+        }
+      ],
+      "sounds": [
+        {
+          "at": 0.22,
+          "kind": "brass"
+        }
+      ]
+    },
+    {
+      "place": "square",
+      "transition": "cutaway",
+      "actors": [
+        {
+          "id": "nell",
+          "look_at": "storm",
+          "at": [
+            -2.3,
+            -0.12
+          ],
+          "to": [
+            -0.36,
+            0.26
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.02,
+          "end": 0.48,
+          "mood": "surprised",
+          "cues": [
+            {
+              "action": "shiver_and_release",
+              "start": 0.56,
+              "end": 0.95,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "gus",
+          "look_at": "flowers",
+          "at": [
+            1.06,
+            0.0
+          ],
+          "to": [
+            1.06,
+            0.0
+          ],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "step_back_and_peek",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "storm",
+          "at": [
+            -2.4,
+            1
+          ],
+          "to": [
+            -2.4,
+            1
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "double_take",
+              "start": 0.46,
+              "end": 0.72,
+              "play": "accent"
+            },
+            {
+              "action": "point",
+              "play": "sustain",
+              "start": 0.73,
+              "end": 0.94
+            }
+          ]
+        },
+        {
+          "id": "vi",
+          "look_at": "nell",
+          "at": [
+            2.7,
+            0.91
+          ],
+          "to": [
+            2.7,
+            0.91
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "quiet_please",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "flowers",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.012,
+          "end": 0.045,
+          "text": "CLOSED",
+          "anchor": "nell@wrist1",
+          "spin": 0
+        },
+        {
+          "id": "storm",
+          "to": [
+            -0.36,
+            0.26,
+            3.32
+          ],
+          "start": 0.37,
+          "end": 0.68,
+          "text": "",
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "nell"
+          ],
+          "size": 3.7,
+          "angle": 40,
+          "elevation": 5,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.25,
+          "focus": [
+            "gus"
+          ],
+          "size": 1.92,
+          "angle": 16,
+          "elevation": 7,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.47,
+          "focus": [
+            "storm",
+            "nell"
+          ],
+          "size": 3.88,
+          "angle": -3,
+          "elevation": 4,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.77,
+          "focus": [
+            "nell"
+          ],
+          "size": 1.73,
+          "angle": 13,
+          "elevation": 1,
+          "drift": 12,
+          "move": "punch"
+        }
+      ],
+      "sync": [
+        {
+          "at": 0.26,
+          "words": "Then Nell"
+        },
+        {
+          "at": 0.5,
+          "words": "One tiny"
+        },
+        {
+          "at": 0.74,
+          "words": "straight down"
+        }
+      ],
+      "sounds": [
+        {
+          "at": 0.32,
+          "kind": "click"
+        }
+      ],
+      "accents": [
+        {
+          "kind": "splash",
+          "focus": "nell",
+          "at": 0.65
+        }
+      ]
+    },
+    {
+      "place": "square",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "gus",
+          "look_at": "pip",
+          "at": [
+            0.85,
+            0.15
+          ],
+          "to": [
+            0.85,
+            0.15
+          ],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "present_both_sides",
+              "start": 0.06,
+              "end": 0.69,
+              "play": "sustain"
+            },
+            {
+              "action": "shrug_and_offer",
+              "play": "accent",
+              "start": 0.7,
+              "end": 0.94
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "gus",
+          "at": [
+            -0.82,
+            0.16
+          ],
+          "to": [
+            -0.82,
+            0.16
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "point",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "nell",
+          "look_at": "sockl",
+          "at": [
+            -2.16,
+            0.5
+          ],
+          "to": [
+            -2.16,
+            0.5
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "double_take",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "sockl",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.01,
+          "end": 0.045,
+          "text": "",
+          "anchor": "gus@wrist-1",
+          "spin": 0
+        },
+        {
+          "id": "sockr",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.01,
+          "end": 0.045,
+          "text": "",
+          "anchor": "gus@wrist1",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "pip",
+            "gus"
+          ],
+          "size": 3.12,
+          "angle": -6,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.32,
+          "focus": [
+            "sockr"
+          ],
+          "size": 1.18,
+          "angle": 4,
+          "elevation": 2,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.64,
+          "focus": [
+            "gus"
+          ],
+          "size": 1.62,
+          "angle": -4,
+          "elevation": 1,
+          "drift": 12,
+          "move": "punch"
+        }
+      ],
+      "sync": [
+        {
+          "at": 0.38,
+          "words": "They were"
+        }
+      ],
+      "sounds": []
+    },
+    {
+      "place": "square",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "nell",
+          "look_at": "flowers",
+          "at": [
+            -0.25,
+            0.14
+          ],
+          "to": [
+            -0.25,
+            0.14
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "listen_then_signal",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "sustain"
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "flowers",
+          "at": [
+            -1.39,
+            0.23
+          ],
+          "to": [
+            -1.02,
+            0.27
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "step_back_and_peek",
+              "start": 0.06,
+              "end": 0.61,
+              "play": "accent"
+            },
+            {
+              "action": "double_take",
+              "play": "accent",
+              "start": 0.62,
+              "end": 0.92
+            }
+          ]
+        },
+        {
+          "id": "gus",
+          "look_at": "flowers",
+          "at": [
+            1.1,
+            0.52
+          ],
+          "to": [
+            1.1,
+            0.52
+          ],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "quiet_please",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "flowers",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.25,
+          "end": 0.37,
+          "text": "CLAP",
+          "anchor": "nell@wrist1",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "nell",
+            "pip"
+          ],
+          "size": 2.8,
+          "angle": -8,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.3,
+          "focus": [
+            "flowers"
+          ],
+          "size": 1.28,
+          "angle": 1,
+          "elevation": 5,
+          "drift": 12,
+          "move": "punch"
+        },
+        {
+          "start": 0.65,
+          "focus": [
+            "pip"
+          ],
+          "size": 1.5,
+          "angle": 8,
+          "elevation": 4,
+          "drift": 12,
+          "move": "hold"
+        }
+      ],
+      "sync": [
+        {
+          "at": 0.36,
+          "words": "her bouquet"
+        }
+      ],
+      "sounds": [
+        {
+          "at": 0.26,
+          "kind": "click"
+        }
+      ],
+      "accents": [
+        {
+          "kind": "glint",
+          "focus": "flowers",
+          "at": 0.4
+        }
+      ]
+    },
+    {
+      "place": "square",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "raf",
+          "look_at": "flowers",
+          "at": [
+            0.64,
+            0.19
+          ],
+          "to": [
+            0.64,
+            0.19
+          ],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "inspect_sleeve",
+              "start": 0.52,
+              "end": 0.78,
+              "play": "accent"
+            },
+            {
+              "action": "palms_together_thanks",
+              "play": "sustain",
+              "start": 0.79,
+              "end": 0.96
+            }
+          ]
+        },
+        {
+          "id": "nell",
+          "look_at": "flowers",
+          "at": [
+            -0.53,
+            0.22
+          ],
+          "to": [
+            -0.53,
+            0.22
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "reach",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "raf",
+          "at": [
+            -1.92,
+            0.39
+          ],
+          "to": [
+            -1.92,
+            0.39
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "listen_then_signal",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "flowers",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.08,
+          "end": 0.28,
+          "text": "OPEN",
+          "anchor": "raf@wrist-1",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "flowers"
+          ],
+          "size": 1.32,
+          "angle": -5,
+          "elevation": 8,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.23,
+          "focus": [
+            "nell",
+            "raf"
+          ],
+          "size": 2.73,
+          "angle": -23,
+          "elevation": -3,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.5,
+          "focus": [
+            "raf"
+          ],
+          "size": 1.62,
+          "angle": -5,
+          "elevation": 3,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.77,
+          "focus": [
+            "flowers",
+            "raf"
+          ],
+          "size": 2.02,
+          "angle": 9,
+          "elevation": 8,
+          "drift": 12,
+          "move": "follow"
+        }
+      ],
+      "sync": [],
+      "sounds": []
+    },
+    {
+      "place": "square",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "raf",
+          "look_at": "flowers",
+          "at": [
+            0.66,
+            0.19
+          ],
+          "to": [
+            0.66,
+            0.19
+          ],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "open_a_jar",
+              "start": 0.36,
+              "end": 0.77,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "raf",
+          "at": [
+            -1.45,
+            0.16
+          ],
+          "to": [
+            -0.27,
+            0.17
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.48,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "reach",
+              "start": 0.66,
+              "end": 0.95,
+              "play": "sustain"
+            }
+          ]
+        },
+        {
+          "id": "nell",
+          "look_at": "raf",
+          "at": [
+            -1.7,
+            0.96
+          ],
+          "to": [
+            -1.7,
+            0.96
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "worried",
+          "cues": [
+            {
+              "action": "cover_ears",
+              "start": 0.06,
+              "end": 0.66,
+              "play": "accent"
+            },
+            {
+              "action": "reach",
+              "play": "sustain",
+              "start": 0.67,
+              "end": 0.94
+            }
+          ]
+        }
+      ],
+      "events": [],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "raf",
+            "nell"
+          ],
+          "size": 3.15,
+          "angle": 9,
+          "elevation": 7,
+          "drift": 12,
+          "move": "arc"
+        },
+        {
+          "start": 0.32,
+          "focus": [
+            "nell"
+          ],
+          "size": 1.49,
+          "angle": -7,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.57,
+          "focus": [
+            "flowers"
+          ],
+          "size": 1.3,
+          "angle": 3,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.79,
+          "focus": [
+            "pip",
+            "raf"
+          ],
+          "size": 2.59,
+          "angle": -5,
+          "elevation": 6,
+          "drift": 12,
+          "move": "hold"
+        }
+      ],
+      "sync": [],
+      "sounds": []
+    },
+    {
+      "place": "square",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "pip",
+          "look_at": "vi",
+          "at": [
+            -0.82,
+            0.08
+          ],
+          "to": [
+            -0.82,
+            0.08
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "count_and_confirm",
+              "start": 0.06,
+              "end": 0.67,
+              "play": "accent"
+            },
+            {
+              "action": "listen_then_signal",
+              "play": "accent",
+              "start": 0.68,
+              "end": 0.95
+            }
+          ]
+        },
+        {
+          "id": "vi",
+          "look_at": "cake",
+          "at": [
+            0.7,
+            0.8
+          ],
+          "to": [
+            0.7,
+            0.8
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "clap_three_times",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "nell",
+          "look_at": "pip",
+          "at": [
+            -1.83,
+            0.66
+          ],
+          "to": [
+            -1.83,
+            0.66
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "listen_then_signal",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "raf",
+          "look_at": "vi",
+          "at": [
+            2.45,
+            0.6
+          ],
+          "to": [
+            2.45,
+            0.6
+          ],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "look",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "pip"
+          ],
+          "size": 1.67,
+          "angle": -11,
+          "elevation": 2,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.19,
+          "focus": [
+            "vi",
+            "cake"
+          ],
+          "size": 2.48,
+          "angle": 7,
+          "elevation": 7,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.48,
+          "focus": [
+            "flowers"
+          ],
+          "size": 1.36,
+          "angle": 9,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.75,
+          "focus": [
+            "pip"
+          ],
+          "size": 1.58,
+          "angle": 1,
+          "elevation": 3,
+          "drift": 12,
+          "move": "punch"
+        }
+      ],
+      "sync": [],
+      "sounds": []
+    },
+    {
+      "place": "nursery",
+      "transition": "cutaway",
+      "actors": [
+        {
+          "id": "pip",
+          "look_at": "shower",
+          "at": [
+            0.66,
+            -0.48
+          ],
+          "to": [
+            0.66,
+            -0.48
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "clap_three_times",
+              "start": 0.06,
+              "end": 0.26,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "raf",
+          "look_at": "testflowers",
+          "at": [
+            -2.06,
+            0.28
+          ],
+          "to": [
+            -2.06,
+            0.28
+          ],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "turn_a_crank",
+              "start": 0.39,
+              "end": 0.6,
+              "play": "accent"
+            },
+            {
+              "action": "beckon_twice",
+              "play": "accent",
+              "start": 0.74,
+              "end": 0.94
+            }
+          ]
+        },
+        {
+          "id": "brass",
+          "look_at": "tank",
+          "at": [
+            -3.13,
+            1.31
+          ],
+          "to": [
+            -3.13,
+            1.31
+          ],
+          "facing": 20,
+          "end_facing": 20,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "conduct_downbeat",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "cycle"
+            }
+          ]
+        },
+        {
+          "id": "mo",
+          "look_at": "brass",
+          "at": [
+            -3.18,
+            0.47
+          ],
+          "to": [
+            -3.18,
+            0.47
+          ],
+          "facing": 27,
+          "end_facing": 27,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "play_a_trumpet",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "sustain"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "shower",
+          "to": [
+            -2.0,
+            0.35,
+            3.32
+          ],
+          "start": 0,
+          "end": 0.02,
+          "text": "",
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "shower",
+          "to": [
+            0.85,
+            0.35,
+            3.32
+          ],
+          "start": 0.13,
+          "end": 0.29,
+          "text": "",
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "testflowers",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.38,
+          "end": 0.47,
+          "text": "CLAP",
+          "anchor": "raf@wrist1",
+          "spin": 0
+        },
+        {
+          "id": "shower",
+          "to": [
+            -2.04,
+            0.35,
+            3.32
+          ],
+          "start": 0.53,
+          "end": 0.77,
+          "text": "",
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "pip",
+            "tank"
+          ],
+          "size": 2.75,
+          "angle": 5,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.25,
+          "focus": [
+            "tank",
+            "shower",
+            "testflowers"
+          ],
+          "size": 5.1,
+          "angle": 0,
+          "elevation": 24,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.49,
+          "focus": [
+            "testflowers"
+          ],
+          "size": 1.23,
+          "angle": -5,
+          "elevation": 8,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.71,
+          "focus": [
+            "raf",
+            "shower"
+          ],
+          "size": 3.32,
+          "angle": 11,
+          "elevation": 4,
+          "drift": 12,
+          "move": "follow"
+        }
+      ],
+      "sync": [
+        {
+          "at": 0.3,
+          "words": "Rain"
+        },
+        {
+          "at": 0.51,
+          "words": "clicked"
+        }
+      ],
+      "sounds": [
+        {
+          "at": 0.51,
+          "kind": "click"
+        }
+      ],
+      "accents": [
+        {
+          "kind": "splash",
+          "focus": "tank",
+          "at": 0.3
+        }
+      ]
+    },
+    {
+      "place": "nursery",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "pip",
+          "look_at": "bedright",
+          "at": [
+            -0.71,
+            -0.15
+          ],
+          "to": [
+            1.2,
+            -0.12
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.03,
+          "end": 0.56,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "shoulder_a_bag",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            },
+            {
+              "action": "halt_at_the_corner",
+              "start": 0.54,
+              "end": 0.93,
+              "play": "sustain"
+            }
+          ]
+        },
+        {
+          "id": "nell",
+          "look_at": "pip",
+          "at": [
+            -2.6,
+            0.48
+          ],
+          "to": [
+            -2.6,
+            0.48
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "worried",
+          "cues": [
+            {
+              "action": "hands_behind_the_back",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "raf",
+          "look_at": "pip",
+          "at": [
+            2.72,
+            0.25
+          ],
+          "to": [
+            2.72,
+            0.25
+          ],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "look",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "testflowers",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.01,
+          "end": 0.11,
+          "text": "OPEN",
+          "anchor": "pip@wrist1",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "pip"
+          ],
+          "size": 3.8,
+          "angle": 45,
+          "elevation": 4,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.3,
+          "focus": [
+            "bedright",
+            "testflowers"
+          ],
+          "size": 3.2,
+          "angle": 30,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.57,
+          "focus": [
+            "nell"
+          ],
+          "size": 1.5,
+          "angle": -4,
+          "elevation": 3,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.8,
+          "focus": [
+            "pip"
+          ],
+          "size": 1.66,
+          "angle": 9,
+          "elevation": 4,
+          "drift": 12,
+          "move": "hold"
+        }
+      ],
+      "sync": [],
+      "sounds": []
+    },
+    {
+      "place": "square",
+      "transition": "cutaway",
+      "actors": [
+        {
+          "id": "pip",
+          "look_at": "nell",
+          "at": [
+            -1.4,
+            0.05
+          ],
+          "to": [
+            -1.4,
+            0.05
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "pass_a_parcel",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "nell",
+          "look_at": "flowers",
+          "at": [
+            -0.31,
+            0.12
+          ],
+          "to": [
+            -0.31,
+            0.12
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "catch_and_cushion",
+              "start": 0.06,
+              "end": 0.73,
+              "play": "accent"
+            },
+            {
+              "action": "inspect_sleeve",
+              "play": "accent",
+              "start": 0.74,
+              "end": 0.95
+            }
+          ]
+        },
+        {
+          "id": "brass",
+          "look_at": "urn",
+          "at": [
+            -3.32,
+            0.35
+          ],
+          "to": [
+            -1.34,
+            1.0
+          ],
+          "facing": 15,
+          "end_facing": 15,
+          "start": 0.35,
+          "end": 0.82,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "push_a_heavy_door",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "sustain"
+            }
+          ]
+        },
+        {
+          "id": "gus",
+          "look_at": "urn",
+          "at": [
+            2.82,
+            0.64
+          ],
+          "to": [
+            2.82,
+            0.64
+          ],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "beckon_twice",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "flowers",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.06,
+          "end": 0.23,
+          "text": "OPEN",
+          "anchor": "nell@wrist1",
+          "spin": 0
+        },
+        {
+          "id": "urn",
+          "to": [
+            -0.12,
+            0.04,
+            0
+          ],
+          "start": 0.33,
+          "end": 0.83,
+          "text": "EMPTY",
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "tips",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.01,
+          "end": 0.045,
+          "text": "",
+          "anchor": "pip@wrist-1",
+          "spin": 0
+        },
+        {
+          "id": "tips",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.27,
+          "end": 0.44,
+          "text": "",
+          "anchor": "brass@wrist1",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "flowers",
+            "pip",
+            "nell"
+          ],
+          "size": 2.62,
+          "angle": -8,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.27,
+          "focus": [
+            "tips",
+            "brass"
+          ],
+          "size": 3.2,
+          "angle": 6,
+          "elevation": 7,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.5,
+          "focus": [
+            "urn"
+          ],
+          "size": 3.4,
+          "angle": 27,
+          "elevation": 18,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.78,
+          "focus": [
+            "nell",
+            "urn"
+          ],
+          "size": 3.46,
+          "angle": -4,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        }
+      ],
+      "sync": [],
+      "sounds": [],
+      "accents": [
+        {
+          "kind": "dust",
+          "focus": "urn",
+          "at": 0.67
+        }
+      ]
+    },
+    {
+      "place": "square",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "nell",
+          "look_at": "urn",
+          "at": [
+            -1.55,
+            0.1
+          ],
+          "to": [
+            -0.12,
+            0.1
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.11,
+          "end": 0.59,
+          "mood": "proud",
+          "cues": [
+            {
+              "action": "stride_over_gap",
+              "start": 0.17,
+              "end": 0.55,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "nell",
+          "at": [
+            -2.15,
+            0.43
+          ],
+          "to": [
+            -2.15,
+            0.43
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "present_both_sides",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "gus",
+          "look_at": "sockr",
+          "at": [
+            1.83,
+            0.14
+          ],
+          "to": [
+            1.83,
+            0.14
+          ],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "inspect_sleeve",
+              "start": 0.63,
+              "end": 0.82,
+              "play": "accent"
+            },
+            {
+              "action": "hands_behind_the_back",
+              "play": "sustain",
+              "start": 0.83,
+              "end": 0.97
+            }
+          ]
+        },
+        {
+          "id": "raf",
+          "look_at": "nell",
+          "at": [
+            2.79,
+            0.9
+          ],
+          "to": [
+            2.79,
+            0.9
+          ],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "palms_together_thanks",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "nell",
+            "urn"
+          ],
+          "size": 3.26,
+          "angle": 8,
+          "elevation": 11,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.35,
+          "focus": [
+            "nell"
+          ],
+          "size": 1.53,
+          "angle": 18,
+          "elevation": 7,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.61,
+          "focus": [
+            "flowers",
+            "urn"
+          ],
+          "size": 2.68,
+          "angle": 1,
+          "elevation": 16,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.82,
+          "focus": [
+            "gus",
+            "sockr"
+          ],
+          "size": 1.86,
+          "angle": -6,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        }
+      ],
+      "sync": [],
+      "sounds": [],
+      "dialogue": [
+        {
+          "actor": "nell",
+          "words": "Thirty weddings in a potato field"
+        },
+        {
+          "actor": "nell",
+          "words": "I think I'd like to get wet at mine"
+        }
+      ]
+    },
+    {
+      "place": "square",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "nell",
+          "look_at": "raf",
+          "at": [
+            -0.13,
+            0.12
+          ],
+          "to": [
+            -0.13,
+            0.12
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "proud",
+          "cues": [
+            {
+              "action": "heel_toe_rock",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "cycle"
+            }
+          ]
+        },
+        {
+          "id": "raf",
+          "look_at": "flowers",
+          "at": [
+            1.08,
+            0.34
+          ],
+          "to": [
+            1.08,
+            0.34
+          ],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "turn_a_crank",
+              "start": 0.04,
+              "end": 0.33,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "nell",
+          "at": [
+            -1.65,
+            0.43
+          ],
+          "to": [
+            -1.65,
+            0.43
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "alternating_heel_digs",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "cycle"
+            }
+          ]
+        },
+        {
+          "id": "gus",
+          "look_at": "nell",
+          "at": [
+            2.55,
+            0.19
+          ],
+          "to": [
+            2.55,
+            0.19
+          ],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "charleston_kick",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "cycle"
+            }
+          ]
+        },
+        {
+          "id": "brass",
+          "look_at": "nell",
+          "at": [
+            -2.76,
+            1.12
+          ],
+          "to": [
+            -2.76,
+            1.12
+          ],
+          "facing": 17,
+          "end_facing": 17,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "box_step",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "cycle"
+            }
+          ]
+        },
+        {
+          "id": "mo",
+          "look_at": "nell",
+          "at": [
+            3.62,
+            1.23
+          ],
+          "to": [
+            3.62,
+            1.23
+          ],
+          "facing": -25,
+          "end_facing": -25,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "heel_toe_rock",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "cycle"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "flowers",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.18,
+          "end": 0.25,
+          "text": "CLAP",
+          "anchor": "nell@wrist1",
+          "spin": 0
+        },
+        {
+          "id": "storm",
+          "to": [
+            -0.12,
+            0.14,
+            3.32
+          ],
+          "start": 0.25,
+          "end": 0.57,
+          "text": "",
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "urn",
+          "to": [
+            -0.12,
+            0.04,
+            0
+          ],
+          "start": 0.5,
+          "end": 0.98,
+          "text": "HALF",
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "raf",
+            "flowers"
+          ],
+          "size": 2.12,
+          "angle": -6,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.22,
+          "focus": [
+            "flowers"
+          ],
+          "size": 1.18,
+          "angle": 8,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.46,
+          "focus": [
+            "nell",
+            "urn",
+            "storm"
+          ],
+          "size": 3.46,
+          "angle": -6,
+          "elevation": 4,
+          "drift": 12,
+          "move": "follow"
+        },
+        {
+          "start": 0.74,
+          "focus": [
+            "pip",
+            "nell",
+            "gus"
+          ],
+          "size": 6.9,
+          "angle": 10,
+          "elevation": 24,
+          "drift": 12,
+          "move": "reveal"
+        }
+      ],
+      "sync": [
+        {
+          "at": 0.26,
+          "words": "wooden hands"
+        }
+      ],
+      "sounds": [
+        {
+          "at": 0.25,
+          "kind": "click"
+        },
+        {
+          "at": 0.78,
+          "kind": "bell"
+        }
+      ],
+      "accents": [
+        {
+          "kind": "petals",
+          "focus": "nell",
+          "at": 0.61
+        }
+      ]
+    },
+    {
+      "place": "square",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "sol",
+          "look_at": "cake",
+          "at": [
+            2.45,
+            0.75
+          ],
+          "to": [
+            2.45,
+            0.75
+          ],
+          "facing": -29,
+          "end_facing": -29,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "worried",
+          "cues": [
+            {
+              "action": "catch_and_cushion",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "nell",
+          "look_at": "raf",
+          "at": [
+            -0.13,
+            0.12
+          ],
+          "to": [
+            -0.13,
+            0.12
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "body_wave",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "cycle"
+            }
+          ]
+        },
+        {
+          "id": "raf",
+          "look_at": "nell",
+          "at": [
+            -1.56,
+            0.43
+          ],
+          "to": [
+            -1.56,
+            0.43
+          ],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "formal_bow",
+              "start": 0.06,
+              "end": 0.62,
+              "play": "accent"
+            },
+            {
+              "action": "victory_double_pump",
+              "play": "accent",
+              "start": 0.63,
+              "end": 0.93
+            }
+          ]
+        },
+        {
+          "id": "vi",
+          "look_at": "cake",
+          "at": [
+            3.39,
+            0.84
+          ],
+          "to": [
+            3.39,
+            0.84
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "ladle_and_serve",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "nell",
+          "at": [
+            -2.7,
+            0.27
+          ],
+          "to": [
+            -2.7,
+            0.27
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "heel_toe_rock",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "cycle"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "urn",
+          "to": [
+            -0.12,
+            0.04,
+            0
+          ],
+          "start": 0.06,
+          "end": 0.38,
+          "text": "FULL",
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "urn"
+          ],
+          "size": 2.82,
+          "angle": 8,
+          "elevation": 24,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.27,
+          "focus": [
+            "raf",
+            "nell"
+          ],
+          "size": 3.1,
+          "angle": -5,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.57,
+          "focus": [
+            "sol",
+            "cake"
+          ],
+          "size": 2.64,
+          "angle": 9,
+          "elevation": 9,
+          "drift": 12,
+          "move": "arc"
+        },
+        {
+          "start": 0.83,
+          "focus": [
+            "cake"
+          ],
+          "size": 1.75,
+          "angle": -3,
+          "elevation": 14,
+          "drift": 12,
+          "move": "hold"
+        }
+      ],
+      "sync": [],
+      "sounds": []
+    },
+    {
+      "place": "square",
+      "transition": "ellipsis",
+      "actors": [
+        {
+          "id": "nell",
+          "look_at": "gus",
+          "at": [
+            -0.42,
+            0.27
+          ],
+          "to": [
+            -0.42,
+            0.27
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "wind_up_and_toss",
+              "start": 0.02,
+              "end": 0.45,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "gus",
+          "look_at": "flowers",
+          "at": [
+            2.34,
+            0.1
+          ],
+          "to": [
+            2.34,
+            0.1
+          ],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "surprised",
+          "cues": [
+            {
+              "action": "catch_and_cushion",
+              "start": 0.23,
+              "end": 0.62,
+              "play": "accent"
+            },
+            {
+              "action": "shiver_and_release",
+              "start": 0.65,
+              "end": 0.97,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "pip",
+          "look_at": "gus",
+          "at": [
+            -1.9,
+            0.57
+          ],
+          "to": [
+            -1.9,
+            0.57
+          ],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "double_take",
+              "start": 0.57,
+              "end": 0.92,
+              "play": "accent"
+            }
+          ]
+        },
+        {
+          "id": "vi",
+          "look_at": "gus",
+          "at": [
+            3.65,
+            0.8
+          ],
+          "to": [
+            3.65,
+            0.8
+          ],
+          "facing": 12,
+          "end_facing": 12,
+          "start": 0.08,
+          "end": 0.79,
+          "mood": "calm",
+          "cues": [
+            {
+              "action": "cover_ears",
+              "start": 0.06,
+              "end": 0.78,
+              "play": "accent"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "flowers",
+          "to": [
+            0.76,
+            0.1,
+            3.07
+          ],
+          "start": 0.19,
+          "end": 0.38,
+          "text": "CLAP",
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "flowers",
+          "to": [
+            0,
+            -0.1,
+            -0.05
+          ],
+          "start": 0.39,
+          "end": 0.54,
+          "text": "CLAP",
+          "anchor": "gus@wrist1",
+          "spin": 0
+        },
+        {
+          "id": "storm",
+          "to": [
+            2.32,
+            0.12,
+            3.32
+          ],
+          "start": 0.55,
+          "end": 0.81,
+          "text": "",
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": [
+            "nell",
+            "flowers"
+          ],
+          "size": 2.25,
+          "angle": -10,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.2,
+          "focus": [
+            "nell",
+            "gus",
+            "flowers"
+          ],
+          "size": 4.4,
+          "angle": 0,
+          "elevation": 7,
+          "drift": 12,
+          "move": "hold"
+        },
+        {
+          "start": 0.49,
+          "focus": [
+            "gus",
+            "flowers"
+          ],
+          "size": 2.25,
+          "angle": 6,
+          "elevation": 2,
+          "drift": 12,
+          "move": "punch"
+        },
+        {
+          "start": 0.72,
+          "focus": [
+            "gus",
+            "storm"
+          ],
+          "size": 3.15,
+          "angle": -5,
+          "elevation": -4,
+          "drift": 12,
+          "move": "hold"
+        }
+      ],
+      "sync": [
+        {
+          "at": 0.5,
+          "words": "Gus caught"
+        },
+        {
+          "at": 0.72,
+          "words": "Both socks"
+        }
+      ],
+      "sounds": [
+        {
+          "at": 0.59,
+          "kind": "click"
+        }
+      ],
+      "accents": [
+        {
+          "kind": "splash",
+          "focus": "sockr",
+          "at": 0.83
+        }
+      ]
+    }
+  ]
+}
