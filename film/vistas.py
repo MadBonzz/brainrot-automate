@@ -20,6 +20,7 @@ KINDS = [
     "red_border",
     "cell_tower",
     "dark_shop",
+    "torch_detail",
     "endless_hall",
     "lift_square",
     "clock_town",
@@ -79,11 +80,13 @@ def run_blender(pieces, folder, blender, plan):
     with tempfile.TemporaryDirectory(dir=folder) as temp:
         job = Path(temp) / "views.json"
         data = {k: plan[k] for k in ("width", "height", "fps")}
-        if any(v["kind"] == "reaction" for v in pieces):
+        stage_views = [v for v in pieces if v["kind"] in ("reaction", "torch_detail")]
+        if stage_views:
             data.update({k: plan[k] for k in ("assets", "looks", "places", "props", "motions")})
             data["takes"] = {
-                str(v["beat"]): plan["shots"][v["beat"] - 1] for v in pieces if v["kind"] == "reaction"
+                str(v["beat"]): plan["shots"][v["beat"] - 1] for v in stage_views
             }
+        entry = "torch_view.py" if any(v["kind"] == "torch_detail" for v in pieces) else "vista_render.py"
         job.write_text(json.dumps(dict(data, pieces=pieces)), encoding="utf8")
         with (folder / "location-views.log").open("a") as log:
             subprocess.run(
@@ -96,7 +99,7 @@ def run_blender(pieces, folder, blender, plan):
                     "--python-exit-code",
                     "1",
                     "--python",
-                    str(HERE / "vista_render.py"),
+                    str(HERE / entry),
                     "--",
                     str(job),
                 ],
@@ -185,11 +188,17 @@ def capture(plan, folder, root, blender, probe):
         version.update(path.read_bytes())
     version.update(subprocess.check_output([blender, "--version"]).splitlines()[0])
     w, h, fps = (plan[k] for k in ("width", "height", "fps"))
+    torch_version = sha256((HERE / "torch_view.py").read_bytes()).hexdigest() if any(
+        v["kind"] == "torch_detail" for v in plan["vistas"]
+    ) else None
     missing = {}
     by_beat = defaultdict(list)
     for view in plan["vistas"]:
         frames = view["stop"] - view["start"]
         identity = [version.hexdigest(), view["kind"], view.get("text", ""), frames, w, h, fps]
+        if view["kind"] == "torch_detail":
+            take = plan["shots"][view["beat"] - 1]
+            identity.extend([Path(take["shared"]).stem, view["camera"], view["start"], torch_version])
         if view["kind"] == "reaction":
             take = plan["shots"][view["beat"] - 1]
             identity.extend(

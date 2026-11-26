@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from film import character_props, vistas
 
@@ -23,6 +24,25 @@ class SecondUnitTests(unittest.TestCase):
         self.assertGreater(cutaways[1]["start"], 89)
         self.assertEqual(cutaways[1]["stop"], 150)
         self.assertIn("reactions", authored["cameras"][1])
+
+    def test_torch_footage_is_specific_to_the_stage_camera_and_performance(self):
+        stage = dict(cameras=[dict(start=0, focus=["prop"]), dict(start=0.5, focus=["actor"])])
+        authored = copy.deepcopy(stage)
+        for camera in authored["cameras"]:
+            camera["vista"] = "torch_detail"
+        clean, views = vistas.extract(authored, 1, 41)
+        self.assertEqual(clean, stage)
+        with tempfile.TemporaryDirectory() as work:
+            root = Path(work)
+            take = dict(shared="first.mp4")
+            plan = dict(shots=[take], vistas=views, fps=30, width=720, height=1280)
+            with patch.object(vistas.subprocess, "check_output", return_value=b"Blender"), patch.object(
+                vistas, "run_blender"
+            ), patch.object(vistas.ensemble_review, "correct_clip", return_value=False):
+                first = vistas.capture(plan, root, root, "blender", "ffprobe")[1]
+                take["shared"] = "second.mp4"
+                second = vistas.capture(plan, root, root, "blender", "ffprobe")[1]
+            self.assertEqual(len({view["output"] for view in [*first, *second]}), 4)
 
     def test_detail_requires_readable_type_and_a_short_angle_keeps_the_original(self):
         with self.assertRaisesRegex(ValueError, "inscription"):
