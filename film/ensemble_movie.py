@@ -7,7 +7,7 @@ import json
 import subprocess
 import time
 from pathlib import Path
-from . import assets, audio, planning, storage, ensemble_review, ensemble, grading, vistas, character_props, blocking
+from . import assets, audio, planning, storage, ensemble_review, ensemble, grading, vistas, character_props, blocking, portrait
 
 HERE = Path(__file__).resolve().parent
 
@@ -236,6 +236,55 @@ def render_storyboard(dst, plan, command, ffmpeg):
     return out
 
 
+def encode_picture(dst, plan, angles, ffmpeg):
+    fps = plan["fps"]
+    finish_filters = [f"setpts=N/({fps}*TB)", *grading.filters(plan)]
+    finish_filters.extend(portrait.filters(angles, plan["width"], plan["height"], fps))
+    finish_filters.append("ass=lines.ass")
+    audio.run(
+        [
+            ffmpeg,
+            "-loglevel",
+            "error",
+            "-y",
+            "-filter_threads",
+            "2",
+            "-threads",
+            "2",
+            "-f",
+            "concat",
+            "-safe",
+            "1",
+            "-i",
+            "clips.txt",
+            "-i",
+            "mix.wav",
+            "-vf",
+            ",".join(finish_filters),
+            "-r",
+            str(fps),
+            "-c:v",
+            "libx264",
+            "-threads",
+            "4",
+            "-preset",
+            "veryfast",
+            "-crf",
+            "18",
+            "-pix_fmt",
+            "yuv420p",
+            "-c:a",
+            "aac",
+            "-b:a",
+            "128k",
+            "-movflags",
+            "+faststart",
+            "movie.partial.mp4",
+        ],
+        cwd=dst,
+    )
+
+
 def render(
     job, story, d, quality, blender, ffmpeg, root, directory, names, storyboard=False, prepare_only=False
 ):
@@ -429,45 +478,10 @@ def render(
         "\n".join("file " + Path(s["clip"]).relative_to(dst).as_posix() for s in edit["shots"]) + "\n"
     )
     # Matroska/MP4 fragment time bases can round each cut by a fraction of a frame. Re-clock exact frame order.
-    audio.run(
-        [
-            ffmpeg,
-            "-loglevel",
-            "error",
-            "-y",
-            "-f",
-            "concat",
-            "-safe",
-            "1",
-            "-i",
-            "clips.txt",
-            "-i",
-            "mix.wav",
-            "-vf",
-            ",".join([f"setpts=N/({fps}*TB)", *grading.filters(plan), "ass=lines.ass"]),
-            "-r",
-            str(fps),
-            "-c:v",
-            "libx264",
-            "-threads",
-            "4",
-            "-preset",
-            "veryfast",
-            "-crf",
-            "18",
-            "-pix_fmt",
-            "yuv420p",
-            "-c:a",
-            "aac",
-            "-b:a",
-            "128k",
-            "-movflags",
-            "+faststart",
-            "movie.partial.mp4",
-        ],
-        cwd=dst,
-    )
+    angles = portrait.angles(edit) if story.get("framing", "portrait") == "portrait" else []
+    encode_picture(dst, plan, angles, ffmpeg)
     proof = ensemble_review.audit(edit, dst / "movie.partial.mp4", ffmpeg, ffprobe)
+    proof.update(portrait.review(edit, angles))
     if location_views:
         planning.save(dst / "picture-edit.json", edit)
     else:
