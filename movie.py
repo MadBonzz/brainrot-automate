@@ -15,7 +15,7 @@ import subprocess
 import sys
 import time
 
-from film import assets, audio, planning, storage
+from film import assets, audio, planning, storage, ensemble, ensemble_movie
 from film.prop_timing import prop_end, next_state
 from film.performances import motion_end
 
@@ -42,7 +42,7 @@ def word(text):
     return ''.join(c for c in text.casefold() if c.isalnum() or c in "'’").replace('’', "'")
 
 def render(job, story, design, quality, blender, ffmpeg, asset_root, cast_directory, names):
-    width, height, fps=(360, 640, 12) if quality == 'preview' else (1080, 1920, 24)
+    width,height,fps={'preview':(360,640,12),'review':(720,1280,24),'final':(1080,1920,24)}[quality]
     target = job/quality
     target.mkdir(exist_ok=True)
     speech = array('h')
@@ -165,7 +165,7 @@ def args():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--idea', help='Optional premise. Codex invents one if omitted.')
     p.add_argument('--seconds', type=int, default=45, help='Approximate writing target, 12–180 seconds.')
-    p.add_argument('--quality', choices=['preview', 'final'], default='final')
+    p.add_argument('--quality', choices=['preview', 'review', 'final'], default='final')
     group = p.add_mutually_exclusive_group()
     group.add_argument('--demo', action='store_true', help='Render the included saved example without any model calls.')
     group.add_argument('--resume', type=Path, help='Reuse a prior job and valid completed stages.')
@@ -179,6 +179,7 @@ def args():
     p.add_argument('--witness', type=assets.character_id, help='Use or create this character when a witness appears.')
     p.add_argument('--asset-dir', type=Path, help='Folder shared by episodes for reusable assets (default: assets in this project).')
     p.add_argument('--cast-dir', type=Path, help='Shared character folder (default: assets/characters in this project).')
+    p.add_argument('--storyboard',action='store_true',help='Render a contact sheet of every ensemble camera setup and stop before full-frame rendering.')
     p.add_argument('--out', type=Path, default=Path('movies'), help='Parent folder for new jobs.')
     return p.parse_args()
 
@@ -189,11 +190,12 @@ def main():
         print('\n'.join(sorted(planning.MOTIONS)))
         return
     if a.list_prop_kinds:
-        print('\n'.join(sorted(planning.PROP['properties']['kind']['enum'])))
+        print('\n'.join(sorted(set(planning.PROP['properties']['kind']['enum']) | set(ensemble.PROP_KINDS.split()))))
         return
     if a.list_props:
         directory = ((a.asset_dir or default_assets)/'props/named').resolve()
-        print('\n'.join(sorted(p.stem for p in directory.glob('*.json'))) or '(no named props)')
+        files={p.stem for folder in (directory,directory.with_name('ensemble-named')) for p in folder.glob('*.json')}
+        print('\n'.join(sorted(files)) or '(no named props)')
         return
     if a.list_cast:
         directory = (a.cast_dir or ((a.asset_dir or default_assets)/'characters')).resolve()
@@ -215,11 +217,13 @@ def main():
     stage_message('Job: '+str(job))
     with job_lock(job):
         if not a.resume:
-            source = ROOT/'example' if a.demo else a.from_plan
+            source = ((ROOT/'example' if a.prop_id else ROOT/'example'/'floor-ten') if a.demo else a.from_plan)
             if source:
                 for name in ['story', 'direction']:
                     shutil.copyfile(source/(name+'.json'), job/(name+'.json'))
-            planning.save(job/'request.json', dict(idea=a.idea, seconds=a.seconds))
+            legacy = ('loophole' not in json.loads((job/'story.json').read_text(encoding='utf8'))
+                      if source else False)
+            planning.save(job/'request.json', dict(idea=a.idea, seconds=a.seconds, format=1 if legacy else 2))
         request = json.loads((job/'request.json').read_text(encoding='utf8'))
         names = dict(request.get('characters', {}))
         names.update({role:getattr(a, role) for role in ('lead', 'witness') if getattr(a, role)})
@@ -230,6 +234,18 @@ def main():
         request.update(characters=names, asset_root=str(asset_root), cast_override=str(directory) if override else None, prop_id=prop_id)
         planning.save(job/'request.json', request)
         stage_message('Preparing story and shot direction…')
+        if request.get('format',1)==2:
+            model_path,model=ensemble_movie.named_model(asset_root,prop_id) if prop_id else (None,None)
+            story,design=ensemble.plan(job,request['idea'],request['seconds'],names,prop_id,model)
+            if prop_id:
+                ensemble_movie.bind_model(model_path,model,prop_id,design)
+                planning.check(design,ensemble.DIRECTION)
+                ensemble.check_direction(design,story)
+                planning.save(job/'direction.json',design)
+            print(story['title'],flush=True)
+            ensemble_movie.render(job,story,design,a.quality,blender,ffmpeg,asset_root,directory,names,a.storyboard)
+            return
+        if a.storyboard:raise ValueError('Storyboard review takes an ensemble plan.')
         prop_path = asset_root/'props/named'/(assets.character_id(prop_id)+'.json') if prop_id else None
         saved_prop = json.loads(prop_path.read_text(encoding='utf8')) if prop_path and prop_path.is_file() else None
         story, design=planning.plan(job, request['idea'], request['seconds'], names, prop_id, saved_prop)

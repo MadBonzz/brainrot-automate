@@ -86,7 +86,7 @@ def generate(prompt, schema, job):
                               cwd=work, env=env, capture_output=True)
         if proc.returncode or not result.exists():
             detail = (proc.stderr or proc.stdout).strip().splitlines()
-            raise RuntimeError("Codex generation failed. Check codex login status and your plan limits.\n"
+            raise RuntimeError("Codex generation failed. The CLI reported:\n"
                                + "\n".join(detail[-8:]))
         return json.loads(result.read_text(encoding="utf-8-sig"))
 

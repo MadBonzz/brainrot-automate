@@ -1,0 +1,362 @@
+"""Compile blocking, narration and persistent set state into independently reusable shots."""
+
+from array import array
+from copy import deepcopy
+import hashlib
+import json
+import subprocess
+import time
+from pathlib import Path
+from . import assets, audio, planning, storage, ensemble_review, ensemble
+
+HERE = Path(__file__).resolve().parent
+
+
+def named_model(root, prop_id):
+    dest = root / "props" / "ensemble-named" / (assets.character_id(prop_id) + ".json")
+    if dest.is_file():
+        return dest, json.loads(dest.read_text(encoding="utf8"))
+    legacy = root / "props" / "named" / (prop_id + ".json")
+    if not legacy.is_file():
+        return dest, None
+    old = json.loads(legacy.read_text(encoding="utf8"))
+    parts = (
+        [
+            dict(
+                shape=p["shape"],
+                at=[p[k] for k in ("x", "y", "z")],
+                size=[p[k] for k in ("width", "depth", "height")],
+                rotation=[0, 0, 0],
+                color=p["color"],
+            )
+            for p in old["parts"]
+        ]
+        if old["kind"] == "custom"
+        else []
+    )
+    return dest, dict(kind=old["kind"], color=old["color"], text=old["label"], parts=parts)
+
+
+def bind_model(path, model, prop_id, design):
+    prop = next((item for item in design["props"] if item["id"] == prop_id), None)
+    if prop is None:
+        raise ValueError(f"The authored episode has no prop named {prop_id}.")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with assets.creation_lock(path.parent):
+        if path.is_file():
+            model = json.loads(path.read_text(encoding="utf8"))
+        if model:
+            prop.update(model)
+        else:
+            model = {k: prop[k] for k in ("kind", "color", "text", "parts")}
+        if not path.is_file():
+            planning.save(path, model)
+
+
+def timings(lines, seconds, fps):
+    # Give each spoken sentence a breath. Quantize cumulative boundaries once to avoid duration drift.
+    weights = [n / audio.RATE + 0.52 for n in lines]
+    scale = seconds * fps / sum(weights)
+    prior = 0
+    running = 0
+    result = []
+    for n in weights:
+        running += n
+        nxt = round(running * scale)
+        result.append(nxt - prior)
+        prior = nxt
+    if min(result) < 3:
+        raise ValueError("Too much dialogue for this episode duration.")
+    return result
+
+
+def captions_for_line(out, marks, offset, length, speed):
+    chunks = []
+    words = []
+    begin = 0
+    for i, (word, t) in enumerate(marks):
+        if not words:
+            begin = t
+        words.append(word)
+        if len(words) >= 5 or len(" ".join(words)) > 24 or word[-1] in ".,!?" or i == len(marks) - 1:
+            chunks.append((begin, " ".join(words)))
+            words = []
+    for i, (t, phrase) in enumerate(chunks):
+        end = chunks[i + 1][0] / speed if i + 1 < len(chunks) else length
+        out.append((offset + t / speed, offset + end, phrase, False))
+
+
+def synchronized(shot, line, marks, speed, length):
+    if not shot.get("sync"):
+        return shot
+    # Backends report whitespace tokens. Match the spoken phrase against the normalized word stream.
+    times = [time for word, time in marks for _ in ensemble.tokens(word)]
+    where = ensemble.phrase_starts(line, shot["sync"])
+    knots = [
+        (0, 0),
+        *[
+            (m["at"], max(0.001, min(0.999, times[i] / speed / length)))
+            for m, i in zip(shot["sync"], where)
+        ],
+        (1, 1),
+    ]
+    if any(b[1] <= a[1] for a, b in zip(knots, knots[1:])):
+        raise ValueError("Spoken cue anchors share a timestamp.")
+
+    def mapped(t):
+        for (x, a), (y, b) in zip(knots, knots[1:]):
+            if t <= y:
+                return a + (b - a) * (t - x) / (y - x)
+        return 1
+
+    result = deepcopy(shot)
+    timed = [*result["actors"], *result["events"], *result["cameras"]]
+    timed.extend(c for a in result["actors"] for c in a["cues"])
+    for item in timed:
+        for k in ("start", "end"):
+            if k in item:
+                item[k] = mapped(item[k])
+    for sound in result["sounds"]:
+        sound["at"] = mapped(sound["at"])
+    return result
+
+
+def render_storyboard(dst, plan, command, ffmpeg):
+    out = dst / "storyboard"
+    out.mkdir(exist_ok=True)
+    data = deepcopy(plan)
+    data.update(plates=True, width=288, height=512)
+    paths = []
+    for index, s in enumerate(data["shots"], 1):
+        s["clip"] = str(out / f"setup-{index:03d}.mp4")
+        starts = [c["start"] for c in s["shot"]["cameras"]] + [1]
+        s["sample_frames"] = [
+            1 + round((a + b) / 2 * (s["frames"] - 1)) for a, b in zip(starts, starts[1:])
+        ]
+        paths.extend((index, f) for f in s["sample_frames"])
+    planning.save(out / "plates.json", data)
+    with (out / "blender.log").open("w") as log:
+        subprocess.run(
+            [*command, str(out / "plates.json")], stdout=log, stderr=subprocess.STDOUT, check=True
+        )
+    for page, start in enumerate(range(0, len(paths), 12), 1):
+        take = paths[start : start + 12]
+        (out / "stills.txt").write_text("".join(f"file setup-{n:03d}-{f}.png\n" for n, f in take))
+        audio.run(
+            [
+                ffmpeg,
+                "-v",
+                "error",
+                "-y",
+                "-f",
+                "concat",
+                "-safe",
+                "1",
+                "-i",
+                "stills.txt",
+                "-vf",
+                f"scale=180:320,tile=4x3:nb_frames={len(take)}:padding=3:margin=3",
+                "-frames:v",
+                "1",
+                f"page-{page:02d}.jpg",
+            ],
+            cwd=out,
+        )
+    print(f"{len(paths)} camera compositions: {out}", flush=True)
+    return out
+
+
+def render(job, story, d, quality, blender, ffmpeg, root, directory, names, storyboard=False):
+    fps = 30
+    ffprobe = str(Path(ffmpeg).with_name("ffprobe" + Path(ffmpeg).suffix))
+    w, h = {"preview": (432, 768), "review": (720, 1280), "final": (1080, 1920)}[quality]
+    dst = job / quality
+    dst.mkdir(exist_ok=True)
+    clips = dst / "shots"
+    clips.mkdir(exist_ok=True)
+    src = [blender, "-b", "-t", "4", "-noaudio", "--factory-startup", "--python-exit-code", "1", "--python"]
+    looks = {a["id"]: a for a in d["looks"]}
+    cast = []
+    witness = next(a["id"] for a in story["cast"] if a["id"] != story["lead"])
+    for k, a in looks.items():
+        role = "lead" if k == story["lead"] else "witness" if k == witness else "ensemble"
+        identity = names.get(role) or (
+            k + "-" + assets.digest({j: v for j, v in a.items() if j not in ("badge", "height")})[:10]
+        )
+        cast.append(
+            dict(
+                id=k,
+                kind="character",
+                path=str(directory / (identity + ".blend")),
+                role=role,
+                coat=a["coat"],
+                look=a,
+            )
+        )
+    files = assets.ensure_models(job, directory, cast, [*src, str(HERE / "animate.py"), "--"])
+    planning.save(job / "cast.json", files)
+    utterances = [audio.narration(b["line"], job, ffmpeg, root) for b in story["beats"]]
+    counts = timings([len(raw) for raw, _ in utterances], story["seconds"], fps)
+    states = {p["id"]: dict(to=p["at"], text=p["text"], spin=0, anchor="") for p in d["props"]}
+    places = {p["id"]: p for p in d["places"]}
+    versions = hashlib.sha256()
+    for path in [
+        HERE / "ensemble_render.py",
+        HERE / "world_art.py",
+        HERE / "animate.py",
+        *sorted((HERE / "props").glob("*.py")),
+    ]:
+        versions.update(path.read_bytes())
+    engine = subprocess.check_output([blender, "--version"], text=True).splitlines()[0]
+    shots = []
+    speech = array("h")
+    captions = []
+    effects = []
+    offset = 0
+    for n, (shot, count, (raw, marks)) in enumerate(zip(d["shots"], counts, utterances), 1):
+        length = count / fps
+        available = max(0.08, length - min(0.32, length * 0.12))
+        speed = max(1, (len(raw) / audio.RATE) / available)
+        if speed > 1.005:
+            audio.write_wave(dst / "line.wav", raw)
+            audio.run(
+                [
+                    ffmpeg,
+                    "-loglevel",
+                    "error",
+                    "-y",
+                    "-i",
+                    str(dst / "line.wav"),
+                    "-af",
+                    f"atempo={speed:.8f}",
+                    str(dst / "paced.wav"),
+                ]
+            )
+            raw = audio.read_wave(dst / "paced.wav")
+        shot = synchronized(shot, story["beats"][n - 1]["line"], marks, speed, length)
+        begin = offset / fps
+        effects.extend((begin + length * fx["at"], fx["kind"]) for fx in shot["sounds"])
+        captions_for_line(captions, marks, begin, len(raw) / audio.RATE, speed)
+        speech.extend(raw[: count * (audio.RATE // fps)])
+        offset += count
+        speech.extend(array("h", [0]) * (round(offset * audio.RATE / fps) - len(speech)))
+        local = [p for p in d["props"] if p["place"] == shot["place"]]
+        before = {p["id"]: states[p["id"]] for p in local}
+        for e in shot["events"]:
+            states[e["id"]] = {k: e[k] for k in ("to", "text", "spin", "anchor")}
+        ids = [a["id"] for a in shot["actors"]]
+        recipes = {c["action"]: planning.MOTIONS[c["action"]] for a in shot["actors"] for c in a["cues"]}
+        key = assets.digest(
+            [
+                versions.hexdigest(),
+                engine,
+                w,
+                h,
+                fps,
+                count,
+                begin,
+                shot,
+                before,
+                places[shot["place"]],
+                local,
+                [[looks[i], files[i]["sha256"]] for i in ids],
+                recipes,
+            ]
+        )
+        clip = clips / f"{n:03d}-{key[:12]}.mp4"
+        shared = root / "ensemble-shots" / (key + ".mp4")
+        if clip.exists() and not ensemble_review.correct_clip(clip, ffprobe, w, h, fps, count):
+            clip.unlink()
+        if not clip.is_file() and ensemble_review.correct_clip(shared, ffprobe, w, h, fps, count):
+            storage.copy_file(shared, clip)
+        shots.append(
+            dict(shot=shot, before=before, clock=begin, frames=count, clip=str(clip), shared=str(shared))
+        )
+    plan = dict(
+        width=w,
+        height=h,
+        fps=fps,
+        assets=files,
+        looks=looks,
+        places=places,
+        props=d["props"],
+        motions=planning.MOTIONS,
+        shots=shots,
+    )
+    planning.save(dst / "timeline.json", plan)
+    command = [*src, str(HERE / "ensemble_render.py"), "--"]
+    if storyboard:
+        return render_storyboard(dst, plan, command, ffmpeg)
+    audio.make_captions(dst / "lines.ass", captions)
+    audio.soundtrack(dst / "mix.wav", speech, effects, "wonder", root)
+    cached = sum(Path(s["clip"]).is_file() for s in shots)
+    print(
+        f"{len(shots)} setups, {sum(len(s['shot']['cameras']) for s in shots)} camera shots, {offset} frames. {cached} setups cached.",
+        flush=True,
+    )
+    if cached < len(shots):
+        with (dst / "blender.log").open("w") as log:
+            proc = subprocess.Popen(
+                [*command, str(dst / "timeline.json")], stdout=log, stderr=subprocess.STDOUT
+            )
+            try:
+                done = cached
+                while proc.poll() is None:
+                    completed = sum(Path(s["clip"]).is_file() for s in shots)
+                    if completed != done:
+                        print(f"  Rendered setups {completed}/{len(shots)}", flush=True)
+                        done = completed
+                    time.sleep(1)
+            except BaseException:
+                proc.terminate()
+                proc.wait()
+                raise
+            if proc.returncode:
+                raise RuntimeError(f"Blender stopped. See {dst / 'blender.log'}.")
+    (dst / "clips.txt").write_text(
+        "\n".join("file " + Path(s["clip"]).relative_to(dst).as_posix() for s in shots) + "\n"
+    )
+    # Matroska/MP4 fragment time bases can round each cut by a fraction of a frame. Re-clock exact frame order.
+    audio.run(
+        [
+            ffmpeg,
+            "-loglevel",
+            "error",
+            "-y",
+            "-f",
+            "concat",
+            "-safe",
+            "1",
+            "-i",
+            "clips.txt",
+            "-i",
+            "mix.wav",
+            "-vf",
+            f"setpts=N/({fps}*TB),ass=lines.ass",
+            "-r",
+            str(fps),
+            "-c:v",
+            "libx264",
+            "-threads",
+            "4",
+            "-preset",
+            "veryfast",
+            "-crf",
+            "18",
+            "-pix_fmt",
+            "yuv420p",
+            "-c:a",
+            "aac",
+            "-b:a",
+            "128k",
+            "-movflags",
+            "+faststart",
+            "movie.partial.mp4",
+        ],
+        cwd=dst,
+    )
+    proof = ensemble_review.audit(plan, dst / "movie.partial.mp4", ffmpeg, ffprobe)
+    planning.save(dst / "render-review.json", proof)
+    (dst / "movie.partial.mp4").replace(dst / "movie.mp4")
+    print(f"Finished: {dst / 'movie.mp4'} ({offset / fps:.2f}s)", flush=True)
+    return dst / "movie.mp4"

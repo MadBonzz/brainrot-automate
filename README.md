@@ -1,6 +1,6 @@
 # Shortfilm
 
-Generate an original, narrated, vertical block-animation short with a ChatGPT subscription and local tools. You can start with an idea or a blank prompt. The output is an H.264 MP4 with AAC narration, word captions, original synthesized background music, and sound effects.
+Generate an original, narrated, vertical block-animation short with a ChatGPT subscription and local tools. You can start with an idea or a blank prompt. The output is an H.264 MP4 with AAC narration, phrase captions, synthesized music and timed sound effects.
 
 ## Windows setup
 
@@ -40,9 +40,18 @@ uv run movie.py
 uv run movie.py --idea "Every mirror in a railway station is one train ahead." --seconds 90
 ```
 
-Each command creates a **new** movie. With no premise, Codex invents the story. The default target is about 45 seconds. For pacing closer to the reference Shorts, use `--seconds 155`. Actual duration is determined by the narration and directed pauses. The default final render is 1080 × 1920 at 24 fps.
+Each command creates a fresh episode. The default length is 45 seconds. The writer drafts a first-person story with a public rule, a failed attempt, an observable exception and a consequential choice. A separate editorial pass checks the logic and humor. The director defines the cast and physical world once, then blocks three beats per call with the prior character marks and prop state. The runner checkpoints each response. Final output is 1080 × 1920 at 30 fps.
 
-The path is printed at the end, typically `movies/<job>/final/movie.mp4`. A job also contains its request, story, direction, voice files, reusable shot clips, captions, and timeline. The two creative calls produce and validate structured JSON. A malformed plan can trigger a repair call. Blender and FFmpeg render locally.
+**Render the two included two-minute films** with these commands. They use the same directing and rendering path as generated plans and can run offline after installation.
+
+```powershell
+uv run movie.py --demo --quality review
+uv run movie.py --from-plan example/bell-bay --quality review
+```
+
+*Taking Separate Lifts* casts nine people in a municipal lift, a freight depot and a rooftop orchestra. *The Quietest Drum in Bell Bay* casts seven in a harbor where paired lanterns form temporary bridges. Each folder contains the spoken script, the cast's motives, the causal links between beats, and the complete camera and performance direction.
+
+To review compositions before a long render, append `--storyboard`. The runner samples the middle of every camera shot and writes contact sheets and individual frames. Edit the saved job and use `--resume <job-folder>` to render it. Each completed ensemble movie includes a `render-review.json` with the decoded frame count, audio and video duration checks and repeated-frame measurements from the raw animation clips.
 
 ## Reuse a character across episodes
 
@@ -54,24 +63,21 @@ uv run movie.py --idea "The last train arrives on the roof." --lead jo --witness
 uv run movie.py --list-cast
 ```
 
-On first appearance Blender saves the character's block model, colors, and joint hierarchy to `assets/characters/<id>.blend` in the extracted project. Later episodes load that file, so Mira keeps her appearance even when the new direction suggests another coat. Each shot applies its own movement and expression to a fresh copy. The planner also receives the explicitly assigned character IDs. A witness gets a file when they appear on screen.
+On first appearance Blender saves each named model under `assets/characters/`. The lead flag binds the protagonist. The witness flag binds the first supporting cast member in the story's cast list. Other roles also get persistent model files. Auto-generated IDs include the character name and appearance hash. The badge and height belong to this episode's costume. Existing named models keep their appearance when cast in a different role.
 
-Without flags, the renderer picks an ID from the role and coat, such as `lead-rust`, and saves or reuses it automatically. The built-in generator has two base looks with coat variations. A new ID saves a separate character and can start with the same look as another. To customize a recurring actor, open its file in Blender. Keep the `Character` collection and the tagged joints and facial controls. Put any new accessories in that collection and parent them to the appropriate body part. The renderer uses object colors.
+The job's `cast.json` records the resolved paths and hashes. Use `--cast-dir` to share characters between project copies, or `--asset-dir` to share the whole collection. When customizing a Blender model, preserve the Character collection and tagged joints.
 
-The movie's `cast.json` records the character files used. `--resume` remembers casting and checks for model edits before reusing a shot. To share a cast between project copies, use the same `--cast-dir "path/to/characters"` when starting each movie. To move a cast between computers, copy the folder containing the `.blend` files.
+## How a scene is directed
 
-## Reuse animation, sets, props, and sound
-
-Reuse is on by default. Keep the `assets/` folder when updating the scripts. Use `--asset-dir "path/to/assets"` to share the entire collection between project copies. Each episode records its Blender asset paths and hashes in `assets.json`.
-
-| Asset | How it is reused |
+| Component | What the director controls |
 |---|---|
-| Character animation | The director selects a motion by name for either actor. On first use the renderer turns its pose curves into native Blender Actions and saves them in `assets/motions/`. Future shots attach the same Actions to the corresponding joints. Each actor gets their own start time and placement. Walk cycles repeat. One-time gestures hold their ending pose. |
-| Sets | Each of the four sets has one editable Blender file in `assets/sets/`. Shots load the chosen set and add the episode's sign. |
-| Props | The 54 built-in designs reuse geometry across colors and labels. List them with `--list-prop-kinds`. Custom props reuse matching geometry. Give a clue a name with `--prop-id station-clock` to bring its complete design back in another story. The runner fills in a known prop automatically. `--list-props` shows saved names. |
-| Cameras and visual cues | Six framing presets live in `film/presets/cameras.json`. Camera pushes, facial expressions, and prop reveals use shared rendering code. The episode supplies the framing, timing and rotation. |
-| Audio | Effects and looping music beds are saved as WAV files. An identical narration line can reuse its WAV and word marks on the same machine and voice configuration. Windows detects the voice, Linux uses SLT, and macOS can share lines between jobs when `SHORTFILM_VOICE` names an installed voice. With the macOS system default, voice reuse stays within the job. Captions, fades and the mix follow the new timeline. |
-| Rendered shots | Matching visuals and timing reuse a completed clip across episodes. The signature includes the visible actors, motion and geometry files, camera, cue frame, shot duration, renderer version and resolution. Changing an action refreshes the shots that use it. Music or caption edits can reuse the visual clip when the timing matches. |
+| World | Architecture, palette, signs, custom landmarks and reusable instruments, machines, buildings and practical props. Location kits cover a civic arcade, freight depot, rooftop theater, garden, coastal harbor and barbershop or boathouse. |
+| Ensemble | The actor's start and end marks, facing, eyeline, reaction, costume and one or more timed performances. Adjacent continuous setups must agree on the actors' marks. A cutaway or a time jump can establish new positions. |
+| Motion | Walk cycles follow distance traveled. Bodies turn into the path and settle into the final facing. A shared pose library layers independently timed gestures over gait, breathing, eye blinks and head motion. Passing poses interpolate continuously, and a gesture can recover into the next action. |
+| Props | Objects keep world positions, text and ownership across shots and returns to a location. Objects can transfer between hands, move into a chute or attach to an actor. Named models can be reused across episodes with `--prop-id`. |
+| Camera | Multiple perspective cuts per spoken beat. Each can follow one actor, several subjects, a moving prop or a fixed point. Framing, elevation, angle and orbit adjust independently. |
+| Timing | Map a reveal to an exact spoken phrase. The director's camera, sound, gesture and mechanism cues follow the narration clock. Windows can supply word boundaries. Linux and macOS estimate word onsets within each recorded line. |
+| Reuse | Shared character files, motion recipes, prop designs, voices, scores and rendered clips. The shot cache includes the state carried into the shot and the versions of the Blender code and visible assets. |
 
 ### Reuse and review a prop
 
@@ -108,7 +114,7 @@ Copy a similar entry to add a performance. The `frames` array gives the timing a
 
 For flat-floor moves, `ground` keeps the lowest sole in contact. Optional `plant` intervals such as `"1:8:17"` pin that shoe's center horizontally and keep its sole on the floor over the specified authored frames. `floor` prevents penetration while allowing airborne phases. The renderer upgrades the stock cast with spine, elbow, knee and wrist pivots when loading older character files. Saved originals retain their appearance. The foot solver uses both tagged stock shoes and assumes a flat floor. The pantomimes animate the character. A physical prop that must follow a hand requires staging for that scene.
 
-A late narration cue can extend the shot so the new performance has at least 70% of its authored duration to play. The longer of the lead and witness movements determines the minimum. The original eight presets keep their previous timing.
+In the legacy two-character renderer, a late narration cue can extend the shot so the new performance has at least 70% of its authored duration to play. The longer of the lead and witness movements determines the minimum. The original eight presets keep their previous timing.
 
 ### Review an animation batch without a story or model call
 
@@ -139,16 +145,9 @@ uv run movie.py --demo --quality preview
 uv run movie.py --from-plan ".\example" --quality final
 ```
 
-Preview is 360 × 640 at 12 fps. The preview-to-final command reuses the same generated script, direction, and voice. A resume at the same quality also reuses matching completed shot clips. To change one shot, edit the job's `direction.json` and resume. A text edit that changes a cue word also requires adjusting that shot's anchor. The included example, *One Minute Back*, contains a saved six-shot story and direction. Demo mode skips the CLI so you can check local rendering on its own.
+Ensemble preview renders at 432 × 768, review at 720 × 1280 and final at 1080 × 1920. All three render 30 distinct timeline samples per second. Exact repeats are measured before captions, including intentional stillness. The older *One Minute Back* plan is available via `--from-plan example`. Legacy plans and old jobs retain their original schema and render timing.
 
-## What actually gets generated
-
-- **Story and direction.** Two Codex CLI calls by default. The first writes the complete narration. The second chooses the set, framing, actions, cue words, pauses, palette, prop, music mood, and effects. The semantic validator checks the shot count, actor visibility for witness close-ups, and whether the cue word occurs in the actual line.
-- **Cast and scenery.** Blender loads the cast, set, clue and movement files selected for the shot. The director can design a custom clue from geometry. Prop rotation and visibility persist across cuts.
-- **Audio and captions.** Windows renders voice to WAV through its installed speech voice and uses reported word positions when available. On Linux, an FFmpeg build with `flite` and the SLT voice is required. The macOS and Linux backends estimate individual word timings within each synthesized line. Caption placement moves higher for clue close-ups. Sound and prop changes use the same cue word. Music and foley are synthesized locally; the voice is a basic system voice.
-- **Rendering.** Tested here with Blender 4.3.2 and FFmpeg on Linux. Blender's Workbench renderer renders the frames of each shot, encodes a clip, and releases those PNGs. FFmpeg needs libx264, AAC, and libass support. On Linux the Blender build also needs a working headless graphics context. `blender.log` records failures. Blender, FFmpeg, and speech synthesis are local execution steps. Movie production does not require Roblox Studio, a Roblox account, an asset download, or an upload to YouTube.
-
-The built-in rigs and four sets give the films a consistent block-animation style. Bespoke hand contacts, lip-sync, and elaborate new locations may require extending the rigs or renderer.
+The renderer schedules the story's chosen duration, paces each line to fit, and mixes local narration, foley and music. The exported `movie.mp4` appears inside the job's quality folder. To repeat the delivery checks on an existing ensemble render, use `python -m film.ensemble_review <job/quality>`.
 
 ## Later, switch the LLM
 

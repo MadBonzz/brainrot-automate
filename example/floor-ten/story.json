@@ -1,0 +1,159 @@
+{
+  "title": "Taking Separate Lifts",
+  "seconds": 120,
+  "rule": "The municipal elevator stops at the sum of the passengers and registered freight aboard.",
+  "loophole": "Returned freight subtracts its value. The item goes down a one-way chute at the destination.",
+  "cost": "Kit returns the only trophy he ever won to hear Nia open the concert.",
+  "lead": "kit",
+  "cast": [
+    {"id": "kit", "job": "kid who won the stair race", "want": "Hear his sister play her first solo."},
+    {
+      "id": "nia",
+      "job": "first-chair trumpet, age nine",
+      "want": "Play the opening note with Kit beside her."
+    },
+    {
+      "id": "mum",
+      "job": "platform florist",
+      "want": "Travel with the man whose seven makes ten with her three."
+    },
+    {"id": "dad", "job": "municipal baker", "want": "Claim his conveniently numbered marriage was love."},
+    {"id": "dot", "job": "returns porter", "want": "Get a rejected parcel to floor five."},
+    {"id": "vale", "job": "lift inspector", "want": "Enforce the sum and keep the line moving."},
+    {
+      "id": "mae",
+      "job": "orchestra conductor",
+      "want": "Start on time, even with the trumpet chair empty."
+    },
+    {"id": "ada", "job": "percussionist", "want": "Watch the conductor for the entrance."},
+    {"id": "sol", "job": "harpist", "want": "Keep time until the first trumpet note."}
+  ],
+  "beats": [
+    {
+      "role": "rule",
+      "because": 0,
+      "witness": "vale",
+      "visible": "Inspector points from two riders to the destination display.",
+      "line": "Our elevator has no buttons. It adds up the numbers on the people inside. That is your floor."
+    },
+    {
+      "role": "custom",
+      "because": 1,
+      "witness": "mum",
+      "visible": "Mum shows her three, Dad his seven. They lean in and board together.",
+      "line": "Mum is a three. Dad is a seven. They met on the way to ten. Dad says the maths came second."
+    },
+    {
+      "role": "custom",
+      "because": 1,
+      "witness": "vale",
+      "visible": "A uniformed goose waddles across the platform. The inspector salutes it.",
+      "line": "Our inspector is a zero. So is his supervisor. His supervisor is a goose."
+    },
+    {
+      "role": "desire",
+      "because": 0,
+      "witness": "mae",
+      "visible": "On floor ten Mae prepares an empty solo position and checks the time.",
+      "line": "Today was my sister Nia's first trumpet solo. Roof orchestra. Floor ten. First note at noon."
+    },
+    {
+      "role": "desire",
+      "because": 4,
+      "witness": "kit",
+      "visible": "Nia and Kit compare the sixes on their chests.",
+      "line": "She wanted me there for the first note. Small problem. She is a six. So am I."
+    },
+    {
+      "role": "attempt",
+      "because": 5,
+      "witness": "kit",
+      "visible": "They walk onto the platform together. The destination changes to twelve.",
+      "line": "We got in together. Twelve. Two whole floors above the concert, in municipal cheese storage."
+    },
+    {
+      "role": "attempt",
+      "because": 6,
+      "witness": "nia",
+      "visible": "Nia crouches behind her brother; the register stubbornly reads twelve.",
+      "line": "Nia ducked behind me. Still twelve. Apparently you cannot fool public transport by becoming shorter."
+    },
+    {
+      "role": "clue",
+      "because": 6,
+      "witness": "dot",
+      "visible": "In the freight bay Dot scans her eight; a parcel marked three sits on the counter.",
+      "line": "Next door, Dot from freight was trying to get to five. Dot is an eight. Her parcel was a three."
+    },
+    {
+      "role": "clue",
+      "because": 8,
+      "witness": "dot",
+      "visible": "She slides the rejected parcel onto the returns counter; it receives a minus. Eight minus three becomes five.",
+      "line": "She stamped it RETURN. The plus became a minus. Eight minus three. The dial said five."
+    },
+    {
+      "role": "custom",
+      "because": 9,
+      "witness": "dot",
+      "visible": "The porter glides the returned parcel into the chute until it vanishes below the counter.",
+      "line": "One catch. Returns go down the chute when you arrive. Dot waved goodbye to three kilos of extremely unpopular soap."
+    },
+    {
+      "role": "desire",
+      "because": 9,
+      "witness": "kit",
+      "visible": "On the platform, Kit recognises his racing cup and the two on its bowl.",
+      "line": "Back by the lift stood my stair-racing trophy. I had beaten sixty kids for that thing. By one step."
+    },
+    {
+      "role": "clue",
+      "because": 11,
+      "witness": "nia",
+      "visible": "Nia points from the two on the trophy to their two sixes.",
+      "line": "The trophy had a freight tag. Two. Nia looked at the cup. Then at me. She never actually asked."
+    },
+    {
+      "role": "choice",
+      "because": 12,
+      "witness": "kit",
+      "visible": "Kit takes his cup off its plinth and deliberately hands it over to be marked as a return.",
+      "line": "I picked it up before I could change my mind. One return, please. The inspector asked if it was defective."
+    },
+    {
+      "role": "choice",
+      "because": 13,
+      "witness": "kit",
+      "visible": "The inspector reverses the tag. The engraving now reads minus two.",
+      "line": "Yes, I said. It keeps taking me to the wrong floor. He stamped it. Minus two."
+    },
+    {
+      "role": "outcome",
+      "because": 14,
+      "witness": "nia",
+      "visible": "The siblings board with the return. Twelve minus two changes the destination to ten.",
+      "line": "Both sixes got in. The inspector loaded my return. Twelve minus two. For once, the lift agreed with us."
+    },
+    {
+      "role": "outcome",
+      "because": 15,
+      "witness": "kit",
+      "visible": "At floor ten the trophy disappears into the returns hatch. Kit watches it go.",
+      "line": "At ten, my trophy went down the chute. It made exactly the noise you hope your first trophy never makes."
+    },
+    {
+      "role": "outcome",
+      "because": 16,
+      "witness": "nia",
+      "visible": "The conductor gives a downbeat. Nia lifts her trumpet and plays. Kit claps first.",
+      "line": "Then Nia played the opening note. It cracked halfway through. She grinned and played the other half even louder."
+    },
+    {
+      "role": "callback",
+      "because": 2,
+      "witness": "mum",
+      "visible": "Mum and Dad wait at opposite ends of the platform. Each insists on riding alone.",
+      "line": "Mum and Dad missed the whole concert. They had an argument in the lobby. Apparently they were taking separate lifts."
+    }
+  ]
+}

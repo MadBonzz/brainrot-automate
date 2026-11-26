@@ -1,0 +1,2138 @@
+{
+  "looks": [
+    {
+      "id": "rue",
+      "coat": "rust",
+      "skin": "bronze",
+      "hair": "charcoal",
+      "hat": "cap",
+      "uniform": "bandleader",
+      "badge": "",
+      "height": 0.97
+    },
+    {
+      "id": "bo",
+      "coat": "mint",
+      "skin": "amber",
+      "hair": "brown",
+      "hat": "bow",
+      "uniform": "tunic",
+      "badge": "",
+      "height": 0.76
+    },
+    {
+      "id": "flo",
+      "coat": "teal",
+      "skin": "umber",
+      "hair": "charcoal",
+      "hat": "bun",
+      "uniform": "apron",
+      "badge": "",
+      "height": 1.06
+    },
+    {
+      "id": "quill",
+      "coat": "navy",
+      "skin": "rose",
+      "hair": "cream",
+      "hat": "beret",
+      "uniform": "bandleader",
+      "badge": "",
+      "height": 1.09
+    },
+    {
+      "id": "ned",
+      "coat": "lavender",
+      "skin": "umber",
+      "hair": "charcoal",
+      "hat": "curls",
+      "uniform": "apron",
+      "badge": "",
+      "height": 1.01
+    },
+    {
+      "id": "post",
+      "coat": "blue",
+      "skin": "rose",
+      "hair": "rust",
+      "hat": "visor",
+      "uniform": "satchel",
+      "badge": "",
+      "height": 0.98
+    },
+    {
+      "id": "liv",
+      "coat": "gold",
+      "skin": "bronze",
+      "hair": "brown",
+      "hat": "bun",
+      "uniform": "tunic",
+      "badge": "",
+      "height": 0.93
+    }
+  ],
+  "places": [
+    {"id": "bay", "kit": "harbor", "sign": "BELL BAY  /  WEST QUAY", "trim": "navy", "wall": "rust"},
+    {"id": "shop", "kit": "boathouse", "sign": "NED'S  /  CUT & CURL", "trim": "teal", "wall": "cream"}
+  ],
+  "props": [
+    {
+      "id": "west",
+      "kind": "lamp",
+      "place": "bay",
+      "at": [-2.75, 0.88, 1.04],
+      "scale": 0.93,
+      "color": "navy",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "east",
+      "kind": "lamp",
+      "place": "bay",
+      "at": [2.65, 0.9, 1.03],
+      "scale": 0.96,
+      "color": "navy",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "pegwest",
+      "kind": "custom",
+      "place": "bay",
+      "at": [-2.75, 0.88, 0],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, 0.5],
+          "size": [0.16, 0.17, 1],
+          "rotation": [0, 0, 0],
+          "color": "brown"
+        },
+        {
+          "shape": "box",
+          "at": [0, 0, 1.02],
+          "size": [0.52, 0.47, 0.08],
+          "rotation": [0, 0, 0],
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "id": "pegeast",
+      "kind": "custom",
+      "place": "bay",
+      "at": [2.65, 0.88, 0],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, 0.5],
+          "size": [0.16, 0.17, 1],
+          "rotation": [0, 0, 0],
+          "color": "brown"
+        },
+        {
+          "shape": "box",
+          "at": [0, 0, 1.02],
+          "size": [0.52, 0.47, 0.08],
+          "rotation": [0, 0, 0],
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "id": "span0",
+      "kind": "custom",
+      "place": "bay",
+      "at": [-1.1099999999999999, 0.57, -2.4],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, -0.085],
+          "size": [0.39, 1.21, 0.17],
+          "rotation": [0, 0, 0],
+          "color": "gold"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.53, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        },
+        {
+          "shape": "box",
+          "at": [0, 0.52, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        }
+      ]
+    },
+    {
+      "id": "span1",
+      "kind": "custom",
+      "place": "bay",
+      "at": [-0.74, 0.57, -2.4],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, -0.085],
+          "size": [0.39, 1.21, 0.17],
+          "rotation": [0, 0, 0],
+          "color": "gold"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.53, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        },
+        {
+          "shape": "box",
+          "at": [0, 0.52, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        }
+      ]
+    },
+    {
+      "id": "span2",
+      "kind": "custom",
+      "place": "bay",
+      "at": [-0.37, 0.57, -2.4],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, -0.085],
+          "size": [0.39, 1.21, 0.17],
+          "rotation": [0, 0, 0],
+          "color": "gold"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.53, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        },
+        {
+          "shape": "box",
+          "at": [0, 0.52, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        }
+      ]
+    },
+    {
+      "id": "span3",
+      "kind": "custom",
+      "place": "bay",
+      "at": [0.0, 0.57, -2.4],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, -0.085],
+          "size": [0.39, 1.21, 0.17],
+          "rotation": [0, 0, 0],
+          "color": "gold"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.53, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        },
+        {
+          "shape": "box",
+          "at": [0, 0.52, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        }
+      ]
+    },
+    {
+      "id": "span4",
+      "kind": "custom",
+      "place": "bay",
+      "at": [0.37, 0.57, -2.4],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, -0.085],
+          "size": [0.39, 1.21, 0.17],
+          "rotation": [0, 0, 0],
+          "color": "gold"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.53, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        },
+        {
+          "shape": "box",
+          "at": [0, 0.52, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        }
+      ]
+    },
+    {
+      "id": "span5",
+      "kind": "custom",
+      "place": "bay",
+      "at": [0.74, 0.57, -2.4],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, -0.085],
+          "size": [0.39, 1.21, 0.17],
+          "rotation": [0, 0, 0],
+          "color": "gold"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.53, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        },
+        {
+          "shape": "box",
+          "at": [0, 0.52, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        }
+      ]
+    },
+    {
+      "id": "span6",
+      "kind": "custom",
+      "place": "bay",
+      "at": [1.1099999999999999, 0.57, -2.4],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, -0.085],
+          "size": [0.39, 1.21, 0.17],
+          "rotation": [0, 0, 0],
+          "color": "gold"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.53, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        },
+        {
+          "shape": "box",
+          "at": [0, 0.52, 0.011],
+          "size": [0.36, 0.12, 0.022],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        }
+      ]
+    },
+    {
+      "id": "drum",
+      "kind": "drum",
+      "place": "bay",
+      "at": [3.54, 0.0, 0.58],
+      "scale": 1,
+      "color": "red",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "skin",
+      "kind": "custom",
+      "place": "bay",
+      "at": [3.54, -0.47, 0.58],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "cylinder",
+          "at": [0, 0, 0.49],
+          "size": [0.96, 0.96, 0.07],
+          "rotation": [90, 0, 0],
+          "color": "cream"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.048, 0.49],
+          "size": [0.37, 0.03, 0.09],
+          "rotation": [0, 0, 0],
+          "color": "rust"
+        }
+      ]
+    },
+    {
+      "id": "flag",
+      "kind": "custom",
+      "place": "bay",
+      "at": [1.96, 0.0, 0.66],
+      "scale": 0.75,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "cylinder",
+          "at": [0, 0, 0.49],
+          "size": [0.055, 0.055, 1.0],
+          "rotation": [0, 0, 0],
+          "color": "brown"
+        },
+        {
+          "shape": "box",
+          "at": [0.18, 0, 0.82],
+          "size": [0.34, 0.052, 0.25],
+          "rotation": [0, 0, 0],
+          "color": "red"
+        }
+      ]
+    },
+    {
+      "id": "glint",
+      "kind": "custom",
+      "place": "bay",
+      "at": [3.5, -0.55, -2],
+      "scale": 0.78,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, 0.5],
+          "size": [0.075, 0.035, 0.74],
+          "rotation": [0, 35, 0],
+          "color": "cream"
+        },
+        {
+          "shape": "box",
+          "at": [0.16, 0, 0.47],
+          "size": [0.045, 0.025, 0.48],
+          "rotation": [0, 35, 0],
+          "color": "cream"
+        }
+      ]
+    },
+    {
+      "id": "hairmirror",
+      "kind": "mirror",
+      "place": "shop",
+      "at": [1.15, 0.35, 1.08],
+      "scale": 0.96,
+      "color": "teal",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "shophook",
+      "kind": "stand",
+      "place": "shop",
+      "at": [1.15, 0.35, 0],
+      "scale": 1.16,
+      "color": "navy",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "shoplamp",
+      "kind": "lamp",
+      "place": "shop",
+      "at": [-1.65, 0.32, 1],
+      "scale": 1,
+      "color": "navy",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "table",
+      "kind": "stand",
+      "place": "shop",
+      "at": [-1.65, 0.32, 0],
+      "scale": 1.07,
+      "color": "rust",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "shopspan",
+      "kind": "custom",
+      "place": "shop",
+      "at": [-0.12, 0.14, -1],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "box",
+          "at": [0, 0, 0.16],
+          "size": [1.88, 0.5, 0.18],
+          "rotation": [0, 0, 0],
+          "color": "gold"
+        },
+        {
+          "shape": "box",
+          "at": [0, -0.23, 0.26],
+          "size": [1.8, 0.06, 0.02],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        }
+      ]
+    },
+    {
+      "id": "appointment",
+      "kind": "board",
+      "place": "shop",
+      "at": [3.6, 2.1, 0.2],
+      "scale": 0.84,
+      "color": "rust",
+      "text": "WALK-INS\nWELCOME",
+      "parts": []
+    },
+    {
+      "id": "ship",
+      "kind": "model_sailboat",
+      "place": "bay",
+      "at": [-4.5, 4.7, -0.84],
+      "scale": 2.3,
+      "color": "cream",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "shell",
+      "kind": "custom",
+      "place": "bay",
+      "at": [1.3, -0.4, -1.6],
+      "scale": 1,
+      "color": "gold",
+      "text": "",
+      "parts": [
+        {
+          "shape": "cone",
+          "at": [0, 0, 0.15],
+          "size": [0.32, 0.3, 0.3],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        }
+      ]
+    },
+    {
+      "id": "horn",
+      "kind": "trumpet",
+      "place": "bay",
+      "at": [-3.6, 0.48, 0.95],
+      "scale": 0.68,
+      "color": "teal",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "baton",
+      "kind": "custom",
+      "place": "bay",
+      "at": [-4.4, -0.08, 1.3],
+      "scale": 0.9,
+      "color": "teal",
+      "text": "",
+      "parts": [
+        {
+          "shape": "cylinder",
+          "at": [0, 0, 0.25],
+          "size": [0.055, 0.055, 0.5],
+          "rotation": [0, 0, 0],
+          "color": "cream"
+        }
+      ]
+    },
+    {
+      "id": "gap",
+      "kind": "mark",
+      "place": "bay",
+      "at": [0, 0.57, 0.18],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": []
+    }
+  ],
+  "shots": [
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "flo",
+          "look_at": "east",
+          "at": [-2.62, 1.15],
+          "to": [-2.62, 1.15],
+          "facing": 33,
+          "end_facing": 33,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "post",
+          "look_at": "east",
+          "at": [-1.73, 0.48],
+          "to": [-1.73, 0.48],
+          "facing": 30,
+          "end_facing": 30,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "beckon_twice", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "rue",
+          "look_at": "flo",
+          "at": [3.38, 0.37],
+          "to": [3.38, 0.37],
+          "facing": -14,
+          "end_facing": -14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "wave", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "bo",
+          "look_at": "post",
+          "at": [2.04, 0.49],
+          "to": [2.04, 0.49],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "wave", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "quill",
+          "look_at": "rue",
+          "at": [-3.84, 0.14],
+          "to": [-3.84, 0.14],
+          "facing": 28,
+          "end_facing": 28,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "hands_behind_the_back", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "west",
+          "to": [-2.75, 0.88, 1.04],
+          "text": "",
+          "spin": 90,
+          "anchor": "",
+          "start": 0.06,
+          "end": 0.27
+        },
+        {
+          "id": "east",
+          "to": [2.65, 0.9, 1.03],
+          "text": "",
+          "spin": -90,
+          "anchor": "",
+          "start": 0.03,
+          "end": 0.19
+        },
+        {
+          "id": "span0",
+          "to": [-1.1099999999999999, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.26,
+          "end": 0.3866666666666667
+        },
+        {
+          "id": "span1",
+          "to": [-0.74, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.3022222222222222,
+          "end": 0.4288888888888889
+        },
+        {
+          "id": "span2",
+          "to": [-0.37, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.34444444444444444,
+          "end": 0.47111111111111115
+        },
+        {
+          "id": "span3",
+          "to": [0.0, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.3866666666666667,
+          "end": 0.5133333333333334
+        },
+        {
+          "id": "span4",
+          "to": [0.37, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.4288888888888889,
+          "end": 0.5555555555555556
+        },
+        {
+          "id": "span5",
+          "to": [0.74, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.47111111111111115,
+          "end": 0.5977777777777777
+        },
+        {
+          "id": "span6",
+          "to": [1.1099999999999999, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.5133333333333334,
+          "end": 0.64
+        }
+      ],
+      "sounds": [{"kind": "bell", "at": 0.35}],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": ["west", "east", "gap"],
+          "size": 7.45,
+          "angle": -3,
+          "elevation": 14,
+          "drift": 4
+        },
+        {"start": 0.39, "focus": ["gap"], "size": 3.26, "angle": -7, "elevation": 19, "drift": 4},
+        {"start": 0.75, "focus": ["flo", "west"], "size": 2.52, "angle": 5, "elevation": 6, "drift": 4}
+      ],
+      "transition": "cutaway",
+      "sync": [{"at": 0.26, "words": "a bridge grows"}, {"at": 0.64, "words": "There it is"}]
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "flo",
+          "look_at": "east",
+          "at": [-2.62, 1.15],
+          "to": [-2.62, 1.15],
+          "facing": 33,
+          "end_facing": 33,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "post",
+          "look_at": "",
+          "at": [-1.6, 0.57],
+          "to": [1.68, 0.57],
+          "facing": 75,
+          "end_facing": 88,
+          "start": 0.11,
+          "end": 0.91,
+          "mood": "calm",
+          "cues": [{"action": "shoulder_a_bag", "start": 0.02, "end": 0.26}]
+        },
+        {
+          "id": "rue",
+          "look_at": "post",
+          "at": [3.38, 0.37],
+          "to": [3.38, 0.37],
+          "facing": -14,
+          "end_facing": -14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "beckon_twice", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "bo",
+          "look_at": "post",
+          "at": [2.04, 0.49],
+          "to": [2.04, 0.49],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "wave", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [],
+      "sounds": [],
+      "cameras": [
+        {"start": 0, "focus": ["post"], "size": 2.73, "angle": 4, "elevation": 12, "drift": 4},
+        {"start": 0.39, "focus": ["post", "span3"], "size": 4.5, "angle": -3, "elevation": 16, "drift": 4},
+        {"start": 0.78, "focus": ["flo"], "size": 1.69, "angle": -5, "elevation": 3, "drift": 4}
+      ],
+      "transition": "ellipsis",
+      "sync": []
+    },
+    {
+      "place": "shop",
+      "actors": [
+        {
+          "id": "ned",
+          "look_at": "hairmirror",
+          "at": [1.92, 0.41],
+          "to": [1.92, 0.41],
+          "facing": -28,
+          "end_facing": -28,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "polish_a_window", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "post",
+          "look_at": "shopspan",
+          "at": [-0.79, 0.63],
+          "to": [-0.79, 0.63],
+          "facing": 23,
+          "end_facing": 23,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "surprised",
+          "cues": [{"action": "step_back_and_peek", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "rue",
+          "look_at": "shopspan",
+          "at": [-2.59, 0.39],
+          "to": [-2.59, 0.39],
+          "facing": 27,
+          "end_facing": 27,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "double_take", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "hairmirror",
+          "to": [1.15, 0.35, 1.08],
+          "text": "",
+          "spin": -16,
+          "anchor": "",
+          "start": 0.07,
+          "end": 0.32
+        },
+        {
+          "id": "shopspan",
+          "to": [-0.12, 0.14, 0.03],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.32,
+          "end": 0.5
+        }
+      ],
+      "sounds": [{"kind": "click", "at": 0.34}],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": ["ned", "post", "shoplamp", "hairmirror"],
+          "size": 4.9,
+          "angle": -5,
+          "elevation": 10,
+          "drift": 4
+        },
+        {"start": 0.29, "focus": ["hairmirror"], "size": 1.66, "angle": 3, "elevation": 7, "drift": 4},
+        {
+          "start": 0.59,
+          "focus": ["post", "shopspan"],
+          "size": 2.98,
+          "angle": 1,
+          "elevation": 17,
+          "drift": 4
+        }
+      ],
+      "transition": "cutaway",
+      "sync": []
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "bo",
+          "at": [3.38, 0.37],
+          "to": [3.38, 0.37],
+          "facing": -14,
+          "end_facing": -14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "present_both_sides", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "bo",
+          "look_at": "drum",
+          "at": [2.04, 0.49],
+          "to": [2.04, 0.49],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "proud",
+          "cues": [{"action": "victory_double_pump", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "flo",
+          "look_at": "east",
+          "at": [-2.62, 1.15],
+          "to": [-2.62, 1.15],
+          "facing": 33,
+          "end_facing": 33,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "quill",
+          "look_at": "rue",
+          "at": [-3.84, 0.14],
+          "to": [-3.84, 0.14],
+          "facing": 28,
+          "end_facing": 28,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "conduct_downbeat", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "liv",
+          "look_at": "quill",
+          "at": [-4.78, 1.2],
+          "to": [-4.78, 1.2],
+          "facing": 22,
+          "end_facing": 22,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "strum_air_guitar", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "horn",
+          "to": [0, -0.18, -0.07],
+          "text": "",
+          "spin": 0,
+          "anchor": "liv@wrist1",
+          "start": 0.01,
+          "end": 0.08
+        },
+        {
+          "id": "baton",
+          "to": [0, 0, -0.16],
+          "text": "",
+          "spin": 0,
+          "anchor": "quill@wrist1",
+          "start": 0.01,
+          "end": 0.07
+        },
+        {
+          "id": "flag",
+          "to": [0.02, -0.12, -0.07],
+          "text": "",
+          "spin": 0,
+          "anchor": "bo@wrist1",
+          "start": 0.01,
+          "end": 0.07
+        }
+      ],
+      "sounds": [],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": ["flo", "quill", "rue", "bo"],
+          "size": 8.4,
+          "angle": -3,
+          "elevation": 12,
+          "drift": 4
+        },
+        {
+          "start": 0.39,
+          "focus": ["rue", "bo", "drum"],
+          "size": 3.2,
+          "angle": 3,
+          "elevation": 7,
+          "drift": 4
+        },
+        {"start": 0.75, "focus": ["bo"], "size": 1.53, "angle": -3, "elevation": 4, "drift": 4}
+      ],
+      "transition": "cutaway",
+      "sync": []
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "drum",
+          "at": [3.38, 0.37],
+          "to": [3.38, 0.37],
+          "facing": -14,
+          "end_facing": -14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "clap_three_times", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "bo",
+          "look_at": "quill",
+          "at": [2.04, 0.49],
+          "to": [2.04, 0.49],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "cover_ears", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "quill",
+          "look_at": "",
+          "at": [-3.84, 0.14],
+          "to": [-3.84, 0.14],
+          "facing": 8,
+          "end_facing": 14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "call_across_the_room", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "liv",
+          "look_at": "quill",
+          "at": [-4.78, 1.2],
+          "to": [-4.78, 1.2],
+          "facing": 22,
+          "end_facing": 22,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "strum_air_guitar", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [],
+      "sounds": [],
+      "cameras": [
+        {"start": 0, "focus": ["quill"], "size": 1.76, "angle": 0, "elevation": 4, "drift": 4},
+        {"start": 0.42, "focus": ["drum"], "size": 1.51, "angle": 4, "elevation": 8, "drift": 4},
+        {"start": 0.7, "focus": ["bo"], "size": 1.73, "angle": 1, "elevation": 5, "drift": 4}
+      ],
+      "transition": "continuous",
+      "sync": []
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "east",
+          "at": [3.38, 0.37],
+          "to": [3.38, 0.37],
+          "facing": -14,
+          "end_facing": -14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "surprised",
+          "cues": [{"action": "recoil", "start": 0.36, "end": 0.84}]
+        },
+        {
+          "id": "bo",
+          "look_at": "east",
+          "at": [2.04, 0.49],
+          "to": [2.42, 0.65],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.02,
+          "end": 0.27,
+          "mood": "worried",
+          "cues": [{"action": "balance_recover", "start": 0.26, "end": 0.77}]
+        },
+        {
+          "id": "flo",
+          "look_at": "east",
+          "at": [-2.62, 1.15],
+          "to": [-2.62, 1.15],
+          "facing": 33,
+          "end_facing": 33,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "quill",
+          "look_at": "rue",
+          "at": [-3.84, 0.14],
+          "to": [-3.84, 0.14],
+          "facing": 28,
+          "end_facing": 28,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "double_take", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "east",
+          "to": [1.05, 0.6, -1.62],
+          "text": "",
+          "spin": -119,
+          "anchor": "",
+          "start": 0.28,
+          "end": 0.53
+        },
+        {
+          "id": "span0",
+          "to": [-1.1099999999999999, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.46,
+          "end": 0.56
+        },
+        {
+          "id": "span1",
+          "to": [-0.74, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.49333333333333335,
+          "end": 0.5933333333333334
+        },
+        {
+          "id": "span2",
+          "to": [-0.37, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.5266666666666667,
+          "end": 0.6266666666666667
+        },
+        {
+          "id": "span3",
+          "to": [0.0, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.56,
+          "end": 0.66
+        },
+        {
+          "id": "span4",
+          "to": [0.37, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.5933333333333334,
+          "end": 0.6933333333333334
+        },
+        {
+          "id": "span5",
+          "to": [0.74, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.6266666666666667,
+          "end": 0.7266666666666667
+        },
+        {
+          "id": "span6",
+          "to": [1.1099999999999999, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.66,
+          "end": 0.76
+        }
+      ],
+      "sounds": [{"kind": "click", "at": 0.3}, {"kind": "knock", "at": 0.5}],
+      "cameras": [
+        {"start": 0, "focus": ["bo", "east"], "size": 2.77, "angle": -8, "elevation": 9, "drift": 4},
+        {"start": 0.27, "focus": ["east"], "size": 2.29, "angle": -4, "elevation": 14, "drift": 4},
+        {
+          "start": 0.57,
+          "focus": ["west", "east", "gap"],
+          "size": 6.94,
+          "angle": 0,
+          "elevation": 19,
+          "drift": 4
+        }
+      ],
+      "transition": "continuous",
+      "sync": [{"at": 0.3, "words": "One little clink"}, {"at": 0.53, "words": "very wet"}]
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "flo",
+          "look_at": "rue",
+          "at": [-2.66, 0.71],
+          "to": [-2.66, 0.71],
+          "facing": 30,
+          "end_facing": 30,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "wave", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "quill",
+          "look_at": "",
+          "at": [-3.4, 0.71],
+          "to": [-3.4, 0.71],
+          "facing": 8,
+          "end_facing": 14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "surprised",
+          "cues": [{"action": "recoil", "start": 0.35, "end": 0.85}]
+        },
+        {
+          "id": "rue",
+          "look_at": "west",
+          "at": [3.38, 0.37],
+          "to": [3.38, 0.37],
+          "facing": -14,
+          "end_facing": -14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "scan_the_horizon", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "bo",
+          "look_at": "flo",
+          "at": [1.75, 0.61],
+          "to": [1.75, 0.61],
+          "facing": -15,
+          "end_facing": -15,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "west",
+          "to": [0, -0.17, -0.08],
+          "text": "",
+          "spin": 65,
+          "anchor": "flo@wrist-1",
+          "start": 0.08,
+          "end": 0.25
+        }
+      ],
+      "sounds": [],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": ["flo", "quill", "west"],
+          "size": 3.35,
+          "angle": -4,
+          "elevation": 5,
+          "drift": 4
+        },
+        {"start": 0.49, "focus": ["gap", "west"], "size": 4.28, "angle": 4, "elevation": 18, "drift": 4},
+        {"start": 0.79, "focus": ["quill"], "size": 1.64, "angle": 5, "elevation": 4, "drift": 4}
+      ],
+      "transition": "ellipsis",
+      "sync": []
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "shell",
+          "at": [1.55, 0.3],
+          "to": [1.55, 0.3],
+          "facing": -25,
+          "end_facing": -25,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "worried",
+          "cues": [{"action": "lift_a_crate", "start": 0.05, "end": 0.63}]
+        },
+        {
+          "id": "bo",
+          "look_at": "rue",
+          "at": [2.39, 0.62],
+          "to": [2.39, 0.62],
+          "facing": -18,
+          "end_facing": -18,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "listen_then_signal", "start": 0.41, "end": 0.92}]
+        },
+        {
+          "id": "flo",
+          "look_at": "east",
+          "at": [-2.62, 1.15],
+          "to": [-2.62, 1.15],
+          "facing": 33,
+          "end_facing": 33,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "shell",
+          "to": [0.03, -0.18, -0.09],
+          "text": "",
+          "spin": 0,
+          "anchor": "rue@wrist-1",
+          "start": 0.13,
+          "end": 0.4
+        },
+        {
+          "id": "shell",
+          "to": [0, -0.09, -0.06],
+          "text": "",
+          "spin": 0,
+          "anchor": "bo@wrist1",
+          "start": 0.46,
+          "end": 0.67
+        }
+      ],
+      "sounds": [],
+      "cameras": [
+        {"start": 0, "focus": ["rue", "shell"], "size": 2.73, "angle": -7, "elevation": 16, "drift": 4},
+        {"start": 0.51, "focus": ["bo"], "size": 1.71, "angle": 6, "elevation": 4, "drift": 4}
+      ],
+      "transition": "ellipsis",
+      "sync": []
+    },
+    {
+      "place": "shop",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "hairmirror",
+          "at": [-2.59, 0.39],
+          "to": [-2.59, 0.39],
+          "facing": 27,
+          "end_facing": 27,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "point", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "ned",
+          "look_at": "hairmirror",
+          "at": [1.92, 0.41],
+          "to": [1.92, 0.41],
+          "facing": -28,
+          "end_facing": -28,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "trace_an_arc", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "post",
+          "look_at": "shopspan",
+          "at": [-0.79, 0.63],
+          "to": [-0.79, 0.63],
+          "facing": 23,
+          "end_facing": 23,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "hairmirror",
+          "to": [1.15, 0.35, 1.08],
+          "text": "",
+          "spin": 68,
+          "anchor": "",
+          "start": 0.16,
+          "end": 0.42
+        },
+        {
+          "id": "shopspan",
+          "to": [-0.12, 0.14, -1],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.41,
+          "end": 0.57
+        }
+      ],
+      "sounds": [],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": ["rue", "hairmirror", "shoplamp"],
+          "size": 4.36,
+          "angle": 0,
+          "elevation": 8,
+          "drift": 4
+        },
+        {
+          "start": 0.4,
+          "focus": ["hairmirror", "shopspan"],
+          "size": 2.97,
+          "angle": 4,
+          "elevation": 12,
+          "drift": 4
+        },
+        {"start": 0.77, "focus": ["rue"], "size": 1.63, "angle": 4, "elevation": 4, "drift": 4}
+      ],
+      "transition": "cutaway",
+      "sync": [{"at": 0.41, "words": "turned the mirror"}]
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "drum",
+          "at": [3.38, 0.37],
+          "to": [3.38, 0.37],
+          "facing": -14,
+          "end_facing": -14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "surprised",
+          "cues": [{"action": "step_back_and_peek", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "bo",
+          "look_at": "drum",
+          "at": [2.47, 0.38],
+          "to": [2.47, 0.38],
+          "facing": 24,
+          "end_facing": 24,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "point", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "flo",
+          "look_at": "east",
+          "at": [-2.62, 1.15],
+          "to": [-2.62, 1.15],
+          "facing": 33,
+          "end_facing": 33,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "glint",
+          "to": [3.8, -0.54, 0.7],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.28,
+          "end": 0.42
+        },
+        {
+          "id": "glint",
+          "to": [3.8, -0.54, -2],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.58,
+          "end": 0.73
+        },
+        {
+          "id": "shell",
+          "to": [1.99, 0.9, 0.02],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.02,
+          "end": 0.1
+        }
+      ],
+      "sounds": [],
+      "cameras": [
+        {"start": 0, "focus": ["bo", "drum"], "size": 2.79, "angle": -5, "elevation": 9, "drift": 4},
+        {"start": 0.43, "focus": ["skin"], "size": 1.37, "angle": 2, "elevation": 8, "drift": 4},
+        {"start": 0.76, "focus": ["rue"], "size": 1.75, "angle": -5, "elevation": 3, "drift": 4}
+      ],
+      "transition": "cutaway",
+      "sync": []
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "skin",
+          "at": [3.38, 0.37],
+          "to": [3.38, 0.37],
+          "facing": -14,
+          "end_facing": -14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "worried",
+          "cues": [{"action": "hand_over_hand_pull", "start": 0.11, "end": 0.83}]
+        },
+        {
+          "id": "bo",
+          "look_at": "rue",
+          "at": [2.04, 0.49],
+          "to": [2.04, 0.49],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "cover_ears", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "quill",
+          "look_at": "",
+          "at": [-3.84, 0.14],
+          "to": [-3.84, 0.14],
+          "facing": 8,
+          "end_facing": 14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "signal_timeout", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "flo",
+          "look_at": "east",
+          "at": [-2.62, 1.15],
+          "to": [-2.62, 1.15],
+          "facing": 33,
+          "end_facing": 33,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "skin",
+          "to": [3.1, -0.84, 0.18],
+          "text": "",
+          "spin": 53,
+          "anchor": "",
+          "start": 0.28,
+          "end": 0.53
+        },
+        {
+          "id": "skin",
+          "to": [3.02, -0.88, -0.24],
+          "text": "",
+          "spin": 68,
+          "anchor": "",
+          "start": 0.59,
+          "end": 0.78
+        }
+      ],
+      "sounds": [{"kind": "knock", "at": 0.47}],
+      "cameras": [
+        {"start": 0, "focus": ["rue", "bo", "drum"], "size": 3.71, "angle": 5, "elevation": 8, "drift": 4},
+        {"start": 0.35, "focus": ["skin", "drum"], "size": 1.72, "angle": 4, "elevation": 9, "drift": 4},
+        {"start": 0.75, "focus": ["quill"], "size": 1.66, "angle": 2, "elevation": 4, "drift": 4}
+      ],
+      "transition": "ellipsis",
+      "sync": [{"at": 0.39, "words": "pulled the skin"}]
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "west",
+          "at": [3.38, 0.37],
+          "to": [3.38, 0.37],
+          "facing": -14,
+          "end_facing": -14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "worried",
+          "cues": [{"action": "lift_a_crate", "start": 0.09, "end": 0.74}]
+        },
+        {
+          "id": "bo",
+          "look_at": "flo",
+          "at": [2.04, 0.49],
+          "to": [2.04, 0.49],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "beckon_twice", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "flo",
+          "look_at": "rue",
+          "at": [-2.66, 0.71],
+          "to": [-2.66, 0.71],
+          "facing": 30,
+          "end_facing": 30,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "halt_at_the_corner", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "quill",
+          "look_at": "",
+          "at": [-3.84, 0.14],
+          "to": [-3.84, 0.14],
+          "facing": 8,
+          "end_facing": 14,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "stomp_then_freeze", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "drum",
+          "to": [0.07, -0.42, 0.04],
+          "text": "",
+          "spin": -23,
+          "anchor": "rue@spine",
+          "start": 0.11,
+          "end": 0.49
+        },
+        {
+          "id": "west",
+          "to": [0, -0.16, -0.08],
+          "text": "",
+          "spin": 84,
+          "anchor": "flo@wrist-1",
+          "start": 0.07,
+          "end": 0.45
+        }
+      ],
+      "sounds": [],
+      "cameras": [
+        {"start": 0, "focus": ["rue", "drum"], "size": 2.67, "angle": -11, "elevation": 9, "drift": 4},
+        {"start": 0.44, "focus": ["flo", "west"], "size": 2.2, "angle": 1, "elevation": 6, "drift": 4},
+        {"start": 0.74, "focus": ["quill"], "size": 1.71, "angle": 4, "elevation": 4, "drift": 4}
+      ],
+      "transition": "ellipsis",
+      "sync": []
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "west",
+          "at": [2.34, 0.77],
+          "to": [2.34, 0.77],
+          "facing": -20,
+          "end_facing": -20,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "bo",
+          "look_at": "",
+          "at": [1.6, 0.57],
+          "to": [-1.72, 0.57],
+          "facing": -77,
+          "end_facing": -83,
+          "start": 0.39,
+          "end": 0.96,
+          "mood": "proud",
+          "cues": [{"action": "balance_recover", "start": 0.3, "end": 0.46}]
+        },
+        {
+          "id": "flo",
+          "look_at": "bo",
+          "at": [-2.66, 0.71],
+          "to": [-2.66, 0.71],
+          "facing": 30,
+          "end_facing": 30,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "beckon_twice", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "quill",
+          "look_at": "rue",
+          "at": [-3.84, 0.14],
+          "to": [-3.84, 0.14],
+          "facing": 28,
+          "end_facing": 28,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "hands_behind_the_back", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "span0",
+          "to": [-1.1099999999999999, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.06,
+          "end": 0.18
+        },
+        {
+          "id": "span1",
+          "to": [-0.74, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.1,
+          "end": 0.22
+        },
+        {
+          "id": "span2",
+          "to": [-0.37, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.14,
+          "end": 0.26
+        },
+        {
+          "id": "span3",
+          "to": [0.0, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.18,
+          "end": 0.30000000000000004
+        },
+        {
+          "id": "span4",
+          "to": [0.37, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.22,
+          "end": 0.34
+        },
+        {
+          "id": "span5",
+          "to": [0.74, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.26,
+          "end": 0.38
+        },
+        {
+          "id": "span6",
+          "to": [1.1099999999999999, 0.57, 0],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.30000000000000004,
+          "end": 0.42
+        }
+      ],
+      "sounds": [{"kind": "bell", "at": 0.29}],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": ["gap", "west", "drum"],
+          "size": 6.91,
+          "angle": 1,
+          "elevation": 19,
+          "drift": 4
+        },
+        {"start": 0.48, "focus": ["bo", "span3"], "size": 3.44, "angle": -2, "elevation": 13, "drift": 4},
+        {"start": 0.84, "focus": ["bo", "flo"], "size": 3.75, "angle": 1, "elevation": 10, "drift": 4}
+      ],
+      "transition": "ellipsis",
+      "sync": [{"at": 0.27, "words": "Then six more"}, {"at": 0.59, "words": "one shoe"}]
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "west",
+          "at": [1.54, 0.57],
+          "to": [-1.74, 0.57],
+          "facing": -75,
+          "end_facing": -75,
+          "start": 0.04,
+          "end": 0.84,
+          "mood": "proud",
+          "cues": [{"action": "look", "start": 0.17, "end": 0.7}]
+        },
+        {
+          "id": "bo",
+          "look_at": "rue",
+          "at": [-2.1, 0.51],
+          "to": [-2.1, 0.51],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "proud",
+          "cues": [{"action": "clap_three_times", "start": 0.79, "end": 0.99}]
+        },
+        {
+          "id": "flo",
+          "look_at": "rue",
+          "at": [-2.85, 0.78],
+          "to": [-2.85, 0.78],
+          "facing": 25,
+          "end_facing": 25,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "palms_together_thanks", "start": 0.74, "end": 0.97}]
+        },
+        {
+          "id": "quill",
+          "look_at": "rue",
+          "at": [-3.84, 0.14],
+          "to": [-3.84, 0.14],
+          "facing": 28,
+          "end_facing": 28,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "wipe_brow", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "span0",
+          "to": [-1.1099999999999999, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.738,
+          "end": 0.848
+        },
+        {
+          "id": "span1",
+          "to": [-0.74, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.6499999999999999,
+          "end": 0.7599999999999999
+        },
+        {
+          "id": "span2",
+          "to": [-0.37, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.5619999999999999,
+          "end": 0.6719999999999999
+        },
+        {
+          "id": "span3",
+          "to": [0.0, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.474,
+          "end": 0.584
+        },
+        {
+          "id": "span4",
+          "to": [0.37, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.386,
+          "end": 0.496
+        },
+        {
+          "id": "span5",
+          "to": [0.74, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.298,
+          "end": 0.408
+        },
+        {
+          "id": "span6",
+          "to": [1.1099999999999999, 0.57, -2.4],
+          "text": "",
+          "spin": 0,
+          "anchor": "",
+          "start": 0.21,
+          "end": 0.32
+        }
+      ],
+      "sounds": [],
+      "cameras": [
+        {"start": 0, "focus": ["rue", "span3"], "size": 3.17, "angle": 4, "elevation": 14, "drift": 4},
+        {
+          "start": 0.58,
+          "focus": ["flo", "rue", "bo"],
+          "size": 4.12,
+          "angle": -4,
+          "elevation": 11,
+          "drift": 4
+        },
+        {"start": 0.87, "focus": ["rue"], "size": 1.58, "angle": 4, "elevation": 4, "drift": 4}
+      ],
+      "transition": "ellipsis",
+      "sync": []
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "quill",
+          "at": [-2.07, 0.31],
+          "to": [-2.07, 0.31],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "proud",
+          "cues": [{"action": "shrug_and_offer", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "bo",
+          "look_at": "flo",
+          "at": [-1.6, 0.79],
+          "to": [-1.6, 0.79],
+          "facing": 5,
+          "end_facing": 5,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "wave", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "quill",
+          "look_at": "drum",
+          "at": [-3.46, 0.34],
+          "to": [-3.46, 0.34],
+          "facing": 23,
+          "end_facing": 23,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "mime_binoculars", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "flo",
+          "look_at": "drum",
+          "at": [-4.33, 1.1],
+          "to": [-4.33, 1.1],
+          "facing": 19,
+          "end_facing": 19,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "liv",
+          "look_at": "quill",
+          "at": [-4.78, 1.2],
+          "to": [-4.78, 1.2],
+          "facing": 22,
+          "end_facing": 22,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "strum_air_guitar", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [
+        {
+          "id": "west",
+          "to": [-2.75, 0.88, 1.04],
+          "text": "",
+          "spin": 4,
+          "anchor": "",
+          "start": 0.03,
+          "end": 0.23
+        }
+      ],
+      "sounds": [],
+      "cameras": [
+        {"start": 0, "focus": ["quill", "drum"], "size": 2.76, "angle": 1, "elevation": 8, "drift": 4},
+        {"start": 0.39, "focus": ["quill"], "size": 1.66, "angle": -2, "elevation": 4, "drift": 4},
+        {
+          "start": 0.74,
+          "focus": ["rue", "bo", "quill", "liv"],
+          "size": 5.89,
+          "angle": -3,
+          "elevation": 11,
+          "drift": 4
+        }
+      ],
+      "transition": "ellipsis",
+      "sync": []
+    },
+    {
+      "place": "bay",
+      "actors": [
+        {
+          "id": "rue",
+          "look_at": "drum",
+          "at": [-2.07, 0.31],
+          "to": [-2.07, 0.31],
+          "facing": 0,
+          "end_facing": 0,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "proud",
+          "cues": [{"action": "conduct_downbeat", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "bo",
+          "look_at": "rue",
+          "at": [-1.56, 0.85],
+          "to": [-1.56, 0.85],
+          "facing": -12,
+          "end_facing": -12,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "proud",
+          "cues": [{"action": "victory_double_pump", "start": 0.44, "end": 0.95}]
+        },
+        {
+          "id": "quill",
+          "look_at": "liv",
+          "at": [-3.46, 0.34],
+          "to": [-3.46, 0.34],
+          "facing": 18,
+          "end_facing": 18,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "conduct_downbeat", "start": 0.12, "end": 0.8}]
+        },
+        {
+          "id": "flo",
+          "look_at": "rue",
+          "at": [-4.33, 1.1],
+          "to": [-4.33, 1.1],
+          "facing": 17,
+          "end_facing": 17,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "proud",
+          "cues": [{"action": "clap_three_times", "start": 0.36, "end": 0.97}]
+        },
+        {
+          "id": "liv",
+          "look_at": "quill",
+          "at": [-4.78, 1.2],
+          "to": [-4.78, 1.2],
+          "facing": 22,
+          "end_facing": 22,
+          "start": 0.06,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "strum_air_guitar", "start": 0.12, "end": 0.8}]
+        }
+      ],
+      "events": [],
+      "sounds": [],
+      "cameras": [
+        {"start": 0, "focus": ["rue", "drum"], "size": 2.45, "angle": 1, "elevation": 7, "drift": 4},
+        {"start": 0.45, "focus": ["flo"], "size": 1.66, "angle": 2, "elevation": 4, "drift": 4},
+        {
+          "start": 0.74,
+          "focus": ["rue", "bo", "quill", "flo", "liv"],
+          "size": 6.2,
+          "angle": 0,
+          "elevation": 12,
+          "drift": 4
+        }
+      ],
+      "transition": "ellipsis",
+      "sync": [{"at": 0.45, "words": "Mum says"}]
+    }
+  ]
+}

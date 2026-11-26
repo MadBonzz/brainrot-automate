@@ -664,7 +664,11 @@ def save_asset(entry):
     mesh_cache.clear()
     kind = entry['kind']
     if kind == 'character':
-        build_character(entry['coat'], entry['role']=='witness').name = path.stem
+        base = build_character(entry['coat'], entry['role']=='witness')
+        base.name = path.stem
+        if 'look' in entry:
+            from world_art import costume
+            costume(base,entry['look'])
         save_collection('Character')
     elif kind == 'motions':
         build_motion(entry['name'], entry['recipe'])
@@ -687,6 +691,7 @@ def save_asset(entry):
         draft.replace(path)
 
 if __name__ == '__main__':
+    sys.modules['animate'] = sys.modules[__name__]
     args = sys.argv[sys.argv.index('--')+1:]
     job = json.loads(Path(args[-1]).read_text(encoding='utf8'))
     if args[0] == '--build-assets':

@@ -164,6 +164,19 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 f.write(f'Dialogue: 0,{stamp(a)},{stamp(b)},Narration,,0,0,0,,{t}\n')
 
 def effect(name):
+    if name in ('brass','honk','clatter'):
+        # A failed pickup and a clean answer, or short diegetic punctuation.
+        seq={'brass':[(0,.31,392),(.32,.15,294),(.65,.60,494),(1.25,.48,587)],
+             'honk':[(0,.17,310),(.21,.21,255)],'clatter':[(0,.16,640),(.13,.22,465),(.35,.18,315)]}[name]
+        out=array('h',[0])*round((max(t+d for t,d,f in seq)+.06)*RATE)
+        for t,d,f in seq:
+            for k in range(int(d*RATE)):
+                s=k/RATE;phase=2*math.pi*f*s
+                env=min(1,s/.028,(d-s)/.07)
+                v=sum(math.sin(phase*h)/h for h in (1,2,3,5))
+                if name=='clatter': v=math.sin(phase)+.65*math.sin(phase*2.68);env*=math.exp(-14*s)
+                q=round(t*RATE)+k;out[q]+=round(3000*env*v)
+        return out
     length = {'knock':.23, 'bell':1.35, 'static':.28, 'click':.09, 'rumble':.85}[name]
     rng = random.Random(16)
     out = array('h')

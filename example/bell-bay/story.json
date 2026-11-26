@@ -1,0 +1,135 @@
+{
+  "title": "The Quietest Drum in Bell Bay",
+  "seconds": 120,
+  "rule": "Two lanterns facing each other create a bridge of light over the water. Breaking the pair removes the bridge.",
+  "loophole": "A reflection can supply the second light. Ned accidentally demonstrated this in his shop.",
+  "cost": "Rue tears the head off the ninety-year-old ceremonial drum to expose its reflective interior.",
+  "lead": "rue",
+  "cast": [
+    {
+      "id": "rue",
+      "job": "parade drummer",
+      "want": "Bring her brother back from the east pier in time for the parade."
+    },
+    {"id": "bo", "job": "young flag carrier", "want": "March beside his sister on his first parade."},
+    {"id": "flo", "job": "fish seller and mother", "want": "Keep the west lantern facing the children."},
+    {"id": "quill", "job": "bandmaster", "want": "Make the opening drum loud enough to startle the gulls."},
+    {"id": "ned", "job": "dockside barber", "want": "Cut hair without wetting his customers."},
+    {"id": "post", "job": "postwoman", "want": "Deliver the island post without soaking her bag."},
+    {"id": "liv", "job": "trumpeter", "want": "Get the tune started on time."}
+  ],
+  "beats": [
+    {
+      "role": "rule",
+      "because": 0,
+      "witness": "flo",
+      "visible": "Flo turns the west lamp toward its mate. Seven honey-coloured boards rise across open water.",
+      "line": "In Bell Bay, when two lanterns face each other, a bridge grows between them. Watch the water. There it is."
+    },
+    {
+      "role": "custom",
+      "because": 1,
+      "witness": "post",
+      "visible": "The postwoman walks the completed bridge. Flo holds still until the last shoe clears it.",
+      "line": "Mum holds the west lamp for the postwoman. Turn away halfway through a delivery and the mail comes in slightly more liquid."
+    },
+    {
+      "role": "custom",
+      "because": 1,
+      "witness": "ned",
+      "visible": "Ned turns the barber mirror. A short gold crossing appears between the shop lamp and his mirror.",
+      "line": "Even our barber has a bridge in his shop. It pops up during haircuts. Ned advertises walk-ins, which is incredibly brave."
+    },
+    {
+      "role": "desire",
+      "because": 0,
+      "witness": "rue",
+      "visible": "Across the channel, Rue shows Bo the family drum. The bandmaster raises his baton on the opposite pier.",
+      "line": "Today was my little brother Bo's first harbour parade. My job was to bring him across and play the opening roll."
+    },
+    {
+      "role": "desire",
+      "because": 4,
+      "witness": "quill",
+      "visible": "Quill orders a louder roll. Rue shows off the intact drumhead and Bo covers his ears.",
+      "line": "That drum had opened every parade for ninety years. Bandmaster Quill had one instruction. Louder than last year. Last year three gulls fainted."
+    },
+    {
+      "role": "attempt",
+      "because": 4,
+      "witness": "bo",
+      "visible": "Bo approaches the crossing. An east-pier lantern topples into the water and the span falls away.",
+      "line": "Bo stepped up. His flag caught the east lantern. One little clink, one very wet lantern, and suddenly we lived on an island."
+    },
+    {
+      "role": "attempt",
+      "because": 6,
+      "witness": "flo",
+      "visible": "Flo waves her remaining lamp. The dark gap stays open.",
+      "line": "Mum waved her lantern so hard she hit the bandmaster. Nothing grew. One lantern was still one lantern."
+    },
+    {
+      "role": "attempt",
+      "because": 7,
+      "witness": "rue",
+      "visible": "Rue reaches down at the eastern edge. Only a seashell comes up.",
+      "line": "I tried fishing our lamp out. I got a shell. Bo held it up to his ear. He said the sea sounded embarrassed."
+    },
+    {
+      "role": "clue",
+      "because": 3,
+      "witness": "rue",
+      "visible": "In the barber memory Rue watches the gold boards collapse when Ned turns his mirror away.",
+      "line": "Then I remembered Ned. He had one lantern too. The second light was only there when he turned the mirror toward it."
+    },
+    {
+      "role": "clue",
+      "because": 9,
+      "witness": "bo",
+      "visible": "Bo taps the worn head of the drum and points at a bright sliver of metal inside its rim.",
+      "line": "Bo tapped a split in my drumhead. Something flashed inside. The shell was polished brass. I had polished it every Sunday myself."
+    },
+    {
+      "role": "choice",
+      "because": 10,
+      "witness": "rue",
+      "visible": "Rue stops, takes hold of the drumhead, and pulls it right off in front of the bandmaster.",
+      "line": "I could save the drum, or get Bo to his first parade. I pulled the skin right off. Ninety years of opening rolls, gone."
+    },
+    {
+      "role": "choice",
+      "because": 11,
+      "witness": "rue",
+      "visible": "The bare metal drum turns broadside to the west lamp. Rue signals Flo to hold her light steady.",
+      "line": "I pointed the bare brass at Mum. Hold still, I yelled. For once in his career, Quill took that direction personally."
+    },
+    {
+      "role": "outcome",
+      "because": 12,
+      "witness": "bo",
+      "visible": "Gold boards grow outward in sequence. Bo plants a foot and walks across to Flo.",
+      "line": "A plank came up. Then six more. Bo put one shoe on the light and walked all the way to Mum."
+    },
+    {
+      "role": "outcome",
+      "because": 13,
+      "witness": "rue",
+      "visible": "Rue keeps the bare drum facing west and crosses sideways. Flo pulls the children onto the quay.",
+      "line": "I kept the brass facing west and shuffled after him. Nobody clapped until both my feet were on the dock. I appreciated that."
+    },
+    {
+      "role": "outcome",
+      "because": 14,
+      "witness": "quill",
+      "visible": "On the west quay Quill examines the empty drum and lifts his baton for the parade anyway.",
+      "line": "Quill inspected the empty rim. He tapped it with his baton, like the skin might grow back. Our parade started forty seconds late."
+    },
+    {
+      "role": "callback",
+      "because": 5,
+      "witness": "flo",
+      "visible": "Rue mimes the opening roll on the missing skin. Flo beams and leads the applause.",
+      "line": "I still played the opening roll. Two sticks and a hole. Mum says it was the best our drums have sounded in ninety years."
+    }
+  ]
+}

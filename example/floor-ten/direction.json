@@ -1,0 +1,1645 @@
+{
+  "looks": [
+    {
+      "id": "kit",
+      "coat": "teal",
+      "skin": "amber",
+      "hair": "brown",
+      "hat": "cap",
+      "badge": "6",
+      "height": 0.96,
+      "uniform": "jacket"
+    },
+    {
+      "id": "nia",
+      "coat": "red",
+      "skin": "amber",
+      "hair": "brown",
+      "hat": "bow",
+      "badge": "6",
+      "height": 0.83,
+      "uniform": "tunic"
+    },
+    {
+      "id": "mum",
+      "coat": "lavender",
+      "skin": "bronze",
+      "hair": "charcoal",
+      "hat": "bun",
+      "badge": "3",
+      "height": 0.99,
+      "uniform": "sash"
+    },
+    {
+      "id": "dad",
+      "coat": "gold",
+      "skin": "umber",
+      "hair": "charcoal",
+      "hat": "curls",
+      "badge": "7",
+      "height": 1.04,
+      "uniform": "apron"
+    },
+    {
+      "id": "dot",
+      "coat": "blue",
+      "skin": "umber",
+      "hair": "cream",
+      "hat": "visor",
+      "badge": "8",
+      "height": 1.02,
+      "uniform": "satchel"
+    },
+    {
+      "id": "vale",
+      "coat": "navy",
+      "skin": "rose",
+      "hair": "brown",
+      "hat": "beret",
+      "badge": "0",
+      "height": 1.02,
+      "uniform": "bandleader"
+    },
+    {
+      "id": "mae",
+      "coat": "mint",
+      "skin": "bronze",
+      "hair": "cream",
+      "hat": "bun",
+      "badge": "",
+      "height": 1.06,
+      "uniform": "bandleader"
+    },
+    {
+      "id": "ada",
+      "skin": "umber",
+      "hair": "charcoal",
+      "hat": "curls",
+      "coat": "lavender",
+      "uniform": "tunic",
+      "badge": "",
+      "height": 0.99
+    },
+    {
+      "id": "sol",
+      "skin": "rose",
+      "hair": "rust",
+      "hat": "bun",
+      "coat": "blue",
+      "uniform": "tunic",
+      "badge": "",
+      "height": 0.99
+    }
+  ],
+  "places": [
+    {
+      "id": "lift",
+      "kit": "arcade",
+      "sign": "SUMMERVILLE  /  MUNICIPAL LIFT",
+      "trim": "teal",
+      "wall": "cream"
+    },
+    {"id": "depot", "kit": "depot", "sign": "FREIGHT  /  RETURNS", "trim": "rust", "wall": "cream"},
+    {"id": "hall", "kit": "theater", "sign": "TEN  /  THE ROOF ORCHESTRA", "trim": "red", "wall": "rust"}
+  ],
+  "props": [
+    {
+      "id": "dial",
+      "kind": "board",
+      "place": "lift",
+      "at": [0, 1.15, 2.77],
+      "scale": 1.0,
+      "color": "gold",
+      "text": "FLOOR\n0",
+      "parts": []
+    },
+    {
+      "id": "left",
+      "kind": "door",
+      "place": "lift",
+      "at": [-1.88, 1.0, 0],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "right",
+      "kind": "door",
+      "place": "lift",
+      "at": [1.88, 1.0, 0],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "queue",
+      "kind": "board",
+      "place": "lift",
+      "at": [-3.8, 1.45, 0],
+      "scale": 0.85,
+      "color": "rust",
+      "text": "QUEUE\nHERE",
+      "parts": []
+    },
+    {
+      "id": "honks",
+      "kind": "goose",
+      "place": "lift",
+      "at": [2.47, -0.05, 0],
+      "scale": 0.66,
+      "color": "teal",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "horn",
+      "kind": "trumpet",
+      "place": "lift",
+      "at": [0.82, -0.08, 1.0],
+      "scale": 0.72,
+      "color": "teal",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "paid",
+      "kind": "trophy",
+      "place": "lift",
+      "at": [3.11, 0.03, 0.91],
+      "scale": 1.1,
+      "color": "gold",
+      "text": "2",
+      "parts": []
+    },
+    {
+      "id": "plinth",
+      "kind": "stand",
+      "place": "lift",
+      "at": [3.11, 0.03, 0],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "dispatch",
+      "kind": "board",
+      "place": "depot",
+      "at": [0.76, 1.7, 1.58],
+      "scale": 1.1,
+      "color": "rust",
+      "text": "FREIGHT\n8",
+      "parts": []
+    },
+    {
+      "id": "counter",
+      "kind": "hatch",
+      "place": "depot",
+      "at": [0.65, 0.3, 0],
+      "scale": 1.15,
+      "color": "rust",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "box",
+      "kind": "parcel",
+      "place": "depot",
+      "at": [0.65, 0.3, 1.09],
+      "scale": 1.24,
+      "color": "mint",
+      "text": "3",
+      "parts": []
+    },
+    {
+      "id": "chute",
+      "kind": "board",
+      "place": "depot",
+      "at": [-2.65, 1.3, 0],
+      "scale": 0.78,
+      "color": "gold",
+      "text": "RETURN\nDESK",
+      "parts": []
+    },
+    {
+      "id": "solo",
+      "kind": "trumpet",
+      "place": "hall",
+      "at": [-0.4, 0.1, -2],
+      "scale": 0.76,
+      "color": "teal",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "stand",
+      "kind": "stand",
+      "place": "hall",
+      "at": [1.48, 0.7, 0],
+      "scale": 1,
+      "color": "navy",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "music",
+      "kind": "metronome",
+      "place": "hall",
+      "at": [1.5, 0.68, 0.91],
+      "scale": 0.83,
+      "color": "rust",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "bench",
+      "kind": "bench",
+      "place": "hall",
+      "at": [-2.9, 1.82, 0],
+      "scale": 1.22,
+      "color": "navy",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "exit",
+      "kind": "board",
+      "place": "hall",
+      "at": [2.75, 2.07, 1.6],
+      "scale": 1,
+      "color": "gold",
+      "text": "FLOOR\n10",
+      "parts": []
+    },
+    {
+      "id": "slot",
+      "kind": "hatch",
+      "place": "hall",
+      "at": [2.83, 0.38, 0],
+      "scale": 1,
+      "color": "teal",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "fare",
+      "kind": "trophy",
+      "place": "hall",
+      "at": [2.83, 0.38, 0.95],
+      "scale": 1.1,
+      "color": "gold",
+      "text": "-2",
+      "parts": []
+    },
+    {
+      "id": "bill",
+      "kind": "board",
+      "place": "hall",
+      "at": [-0.66, 0.2, 0.01],
+      "scale": 1.04,
+      "color": "rust",
+      "text": "SOLO\nNOON",
+      "parts": []
+    },
+    {
+      "id": "harp",
+      "kind": "desk_harp",
+      "place": "hall",
+      "at": [-2.78, 1.46, 0.61],
+      "scale": 1.39,
+      "color": "gold",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "harpstool",
+      "kind": "bench",
+      "place": "hall",
+      "at": [-2.78, 1.46, 0],
+      "scale": 1.03,
+      "color": "gold",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "perc",
+      "kind": "tuning_fork",
+      "place": "hall",
+      "at": [3.39, 1.31, 0.9],
+      "scale": 1.17,
+      "color": "gold",
+      "text": "",
+      "parts": []
+    },
+    {
+      "id": "percstand",
+      "kind": "stand",
+      "place": "hall",
+      "at": [3.39, 1.31, 0],
+      "scale": 1.0,
+      "color": "gold",
+      "text": "",
+      "parts": []
+    }
+  ],
+  "shots": [
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "vale",
+          "at": [2.15, 0.8],
+          "to": [2.15, 0.8],
+          "facing": -18,
+          "end_facing": -18,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "present_both_sides", "start": 0.12, "end": 0.76}],
+          "look_at": "mum"
+        },
+        {
+          "id": "dad",
+          "at": [-0.88, 1.52],
+          "to": [-0.88, 1.52],
+          "facing": 16,
+          "end_facing": 16,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "dust_off_the_lapel", "start": 0.12, "end": 0.76}],
+          "look_at": ""
+        },
+        {
+          "id": "mum",
+          "at": [0.64, 1.58],
+          "to": [0.64, 1.58],
+          "facing": -13,
+          "end_facing": -13,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "wave", "start": 0.12, "end": 0.76}],
+          "look_at": ""
+        },
+        {
+          "id": "kit",
+          "at": [-2.2, -0.38],
+          "to": [-2.2, -0.38],
+          "facing": 26,
+          "end_facing": 26,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "scan_the_horizon", "start": 0.12, "end": 0.76}],
+          "look_at": "dad"
+        },
+        {
+          "id": "nia",
+          "at": [-3.35, 0.2],
+          "to": [-3.35, 0.2],
+          "facing": 27,
+          "end_facing": 27,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "toe_tap_pattern", "start": 0.12, "end": 0.76}],
+          "look_at": "kit"
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": ["kit", "nia", "mum", "dad", "vale"],
+          "size": 7.1,
+          "angle": -6,
+          "elevation": 13,
+          "drift": 5
+        },
+        {"start": 0.35, "focus": ["dad", "mum"], "size": 3.12, "angle": 8, "elevation": 4, "drift": 5},
+        {"start": 0.73, "focus": ["dial"], "size": 2.8, "angle": 0, "elevation": 1, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "dial",
+          "to": [0, 1.15, 2.77],
+          "text": "7 + 3\nFLOOR 10",
+          "start": 0.41,
+          "end": 0.51,
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "sounds": [{"kind": "bell", "at": 0.55}],
+      "transition": "cutaway",
+      "sync": [{"at": 0.51, "words": "That is your floor"}]
+    },
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "mum",
+          "at": [0.64, 1.58],
+          "to": [0.64, 1.58],
+          "facing": -24,
+          "end_facing": -24,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "proud",
+          "cues": [{"action": "blow_a_kiss", "start": 0.12, "end": 0.76}],
+          "look_at": "dad"
+        },
+        {
+          "id": "dad",
+          "at": [-0.88, 1.52],
+          "to": [-0.88, 1.52],
+          "facing": 25,
+          "end_facing": 25,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "proud",
+          "cues": [{"action": "palms_together_thanks", "start": 0.34, "end": 0.94}],
+          "look_at": "mum"
+        },
+        {
+          "id": "vale",
+          "at": [2.15, 0.8],
+          "to": [2.15, 0.8],
+          "facing": -13,
+          "end_facing": -13,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "stifle_a_yawn", "start": 0.12, "end": 0.76}],
+          "look_at": "dad"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["mum"], "size": 1.85, "angle": 2, "elevation": 4, "drift": 5},
+        {"start": 0.37, "focus": ["mum", "dad"], "size": 3, "angle": 2, "elevation": 4, "drift": 5},
+        {"start": 0.74, "focus": ["dad"], "size": 1.63, "angle": 7, "elevation": 4, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "left",
+          "to": [-0.78, 1.0, 0],
+          "text": "",
+          "start": 0.86,
+          "end": 0.995,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "right",
+          "to": [0.78, 1.0, 0],
+          "text": "",
+          "start": 0.86,
+          "end": 0.995,
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "sounds": [],
+      "transition": "continuous",
+      "sync": []
+    },
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "vale",
+          "at": [1.27, 0.1],
+          "to": [1.27, 0.1],
+          "facing": 30,
+          "end_facing": 30,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "formal_bow", "start": 0.45, "end": 0.91}],
+          "look_at": "honks"
+        },
+        {
+          "id": "kit",
+          "at": [-1.5, -0.22],
+          "to": [-1.5, -0.22],
+          "facing": 29,
+          "end_facing": 29,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "double_take", "start": 0.12, "end": 0.76}],
+          "look_at": "vale"
+        },
+        {
+          "id": "nia",
+          "at": [-0.32, 0.12],
+          "to": [-0.32, 0.12],
+          "facing": 22,
+          "end_facing": 22,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "cover_ears", "start": 0.55, "end": 0.92}],
+          "look_at": "honks"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["vale"], "size": 2.0, "angle": 8, "elevation": 5, "drift": 5},
+        {"start": 0.47, "focus": ["honks"], "size": 1.49, "angle": -11, "elevation": 8, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "honks",
+          "to": [1.99, -0.25, 0],
+          "text": "",
+          "start": 0.08,
+          "end": 0.73,
+          "anchor": "",
+          "spin": -14
+        },
+        {
+          "id": "left",
+          "to": [-1.88, 1.0, 0],
+          "text": "",
+          "start": 0.01,
+          "end": 0.28,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "right",
+          "to": [1.88, 1.0, 0],
+          "text": "",
+          "start": 0.01,
+          "end": 0.28,
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "sounds": [{"kind": "honk", "at": 0.7}],
+      "transition": "ellipsis",
+      "sync": []
+    },
+    {
+      "place": "hall",
+      "actors": [
+        {
+          "id": "mae",
+          "at": [1.61, 0.61],
+          "to": [1.61, 0.61],
+          "facing": -24,
+          "end_facing": -24,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "conduct_downbeat", "start": 0.12, "end": 0.76}],
+          "look_at": "bill"
+        },
+        {
+          "id": "ada",
+          "look_at": "mae",
+          "at": [3.43, 2.03],
+          "to": [3.43, 2.03],
+          "facing": -23,
+          "end_facing": -23,
+          "start": 0.01,
+          "end": 0.98,
+          "mood": "proud",
+          "cues": [{"action": "toe_tap_pattern", "start": 0.19, "end": 0.91}]
+        },
+        {
+          "id": "sol",
+          "look_at": "mae",
+          "at": [-2.76, 2.03],
+          "to": [-2.76, 2.03],
+          "facing": 22,
+          "end_facing": 22,
+          "start": 0.01,
+          "end": 0.98,
+          "mood": "proud",
+          "cues": [{"action": "look", "start": 0.35, "end": 0.99}]
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": ["sol", "mae", "ada", "bill"],
+          "size": 8.6,
+          "angle": -4,
+          "elevation": 9,
+          "drift": 5
+        },
+        {"start": 0.54, "focus": ["bill"], "size": 2.74, "angle": 3, "elevation": 4, "drift": 3}
+      ],
+      "events": [],
+      "sounds": [],
+      "transition": "cutaway",
+      "sync": []
+    },
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "kit",
+          "at": [-0.74, 0.22],
+          "to": [-0.74, 0.22],
+          "facing": 15,
+          "end_facing": 15,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "worried",
+          "cues": [{"action": "me_then_you", "start": 0.12, "end": 0.76}],
+          "look_at": "nia"
+        },
+        {
+          "id": "nia",
+          "at": [0.68, 0.25],
+          "to": [0.68, 0.25],
+          "facing": -17,
+          "end_facing": -17,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "worried",
+          "cues": [{"action": "inspect_sleeve", "start": 0.36, "end": 0.87}],
+          "look_at": "kit"
+        },
+        {
+          "id": "vale",
+          "at": [2.38, 0.95],
+          "to": [2.38, 0.95],
+          "facing": -20,
+          "end_facing": -20,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "check_a_wristwatch", "start": 0.12, "end": 0.76}],
+          "look_at": "dial"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["kit", "nia"], "size": 3.35, "angle": -4, "elevation": 5, "drift": 5},
+        {"start": 0.49, "focus": ["kit"], "size": 1.82, "angle": 3, "elevation": 3, "drift": 5},
+        {"start": 0.73, "focus": ["nia"], "size": 1.69, "angle": -3, "elevation": 4, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "horn",
+          "to": [0.02, -0.16, -0.11],
+          "text": "",
+          "start": 0.02,
+          "end": 0.06,
+          "anchor": "nia@wrist1",
+          "spin": 0
+        },
+        {
+          "id": "dial",
+          "to": [0, 1.15, 2.77],
+          "text": "READY\n0",
+          "start": 0.01,
+          "end": 0.08,
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "sounds": [],
+      "transition": "cutaway",
+      "sync": []
+    },
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "kit",
+          "at": [-0.74, 0.22],
+          "to": [-0.74, 1.32],
+          "facing": 13,
+          "end_facing": 13,
+          "start": 0.02,
+          "end": 0.53,
+          "mood": "calm",
+          "cues": [{"action": "press_elevator_buttons", "start": 0.61, "end": 0.96}],
+          "look_at": "dial"
+        },
+        {
+          "id": "nia",
+          "at": [0.68, 0.25],
+          "to": [0.68, 1.38],
+          "facing": -15,
+          "end_facing": -15,
+          "start": 0.07,
+          "end": 0.58,
+          "mood": "surprised",
+          "cues": [{"action": "double_take", "start": 0.55, "end": 0.98}],
+          "look_at": "dial"
+        },
+        {
+          "id": "vale",
+          "at": [2.38, 0.95],
+          "to": [2.38, 0.95],
+          "facing": -28,
+          "end_facing": -28,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "nod", "start": 0.12, "end": 0.76}],
+          "look_at": "kit"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["kit", "nia"], "size": 3.9, "angle": -21, "elevation": 12, "drift": 5},
+        {"start": 0.49, "focus": ["dial"], "size": 2.67, "angle": 2, "elevation": 2, "drift": 5},
+        {"start": 0.74, "focus": ["nia"], "size": 1.65, "angle": -8, "elevation": 3, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "dial",
+          "to": [0, 1.15, 2.77],
+          "text": "6 + 6\nFLOOR 12",
+          "start": 0.39,
+          "end": 0.48,
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "sounds": [{"kind": "bell", "at": 0.49}],
+      "transition": "continuous",
+      "sync": [{"at": 0.48, "words": "Twelve"}]
+    },
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "kit",
+          "at": [-0.74, 1.32],
+          "to": [-0.74, 1.32],
+          "facing": 13,
+          "end_facing": 13,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "worried",
+          "cues": [{"action": "hands_on_hips", "start": 0.12, "end": 0.76}],
+          "look_at": "nia"
+        },
+        {
+          "id": "nia",
+          "at": [0.68, 1.38],
+          "to": [-0.11, 1.66],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.04,
+          "end": 0.42,
+          "mood": "worried",
+          "cues": [{"action": "duck_under_bar", "start": 0.17, "end": 0.82}],
+          "look_at": "kit"
+        },
+        {
+          "id": "vale",
+          "at": [2.38, 0.95],
+          "to": [2.38, 0.95],
+          "facing": -24,
+          "end_facing": -24,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "signal_timeout", "start": 0.12, "end": 0.76}],
+          "look_at": "nia"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["kit", "nia"], "size": 3.46, "angle": 5, "elevation": 6, "drift": 5},
+        {"start": 0.48, "focus": ["dial"], "size": 2.68, "angle": 0, "elevation": 1, "drift": 5},
+        {"start": 0.69, "focus": ["vale"], "size": 1.78, "angle": -5, "elevation": 3, "drift": 5}
+      ],
+      "events": [],
+      "sounds": [],
+      "transition": "continuous",
+      "sync": []
+    },
+    {
+      "place": "depot",
+      "actors": [
+        {
+          "id": "dot",
+          "at": [-0.52, 0.04],
+          "to": [-0.52, 0.04],
+          "facing": 19,
+          "end_facing": 19,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "count_and_confirm", "start": 0.12, "end": 0.76}],
+          "look_at": "box"
+        },
+        {
+          "id": "kit",
+          "at": [-2.05, -0.12],
+          "to": [-2.05, -0.12],
+          "facing": 31,
+          "end_facing": 31,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "scan_the_horizon", "start": 0.12, "end": 0.76}],
+          "look_at": "dot"
+        },
+        {
+          "id": "vale",
+          "at": [2.18, 0.24],
+          "to": [2.18, 0.24],
+          "facing": -26,
+          "end_facing": -26,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "flip_a_page", "start": 0.12, "end": 0.76}],
+          "look_at": "box"
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": ["kit", "dot", "box", "dispatch"],
+          "size": 5.45,
+          "angle": -8,
+          "elevation": 11,
+          "drift": 5
+        },
+        {"start": 0.44, "focus": ["dot", "box"], "size": 2.54, "angle": 8, "elevation": 8, "drift": 5},
+        {"start": 0.78, "focus": ["box"], "size": 1.4, "angle": 5, "elevation": 9, "drift": 5}
+      ],
+      "events": [],
+      "sounds": [],
+      "transition": "cutaway",
+      "sync": []
+    },
+    {
+      "place": "depot",
+      "actors": [
+        {
+          "id": "dot",
+          "at": [-0.52, 0.04],
+          "to": [-0.52, 0.04],
+          "facing": 19,
+          "end_facing": 19,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "pass_a_parcel", "start": 0.06, "end": 0.66}],
+          "look_at": "box"
+        },
+        {
+          "id": "kit",
+          "at": [-2.05, -0.12],
+          "to": [-2.05, -0.12],
+          "facing": 29,
+          "end_facing": 29,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "double_take", "start": 0.38, "end": 0.89}],
+          "look_at": "dispatch"
+        },
+        {
+          "id": "vale",
+          "at": [2.18, 0.24],
+          "to": [2.18, 0.24],
+          "facing": -24,
+          "end_facing": -24,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "count_and_confirm", "start": 0.51, "end": 0.95}],
+          "look_at": "box"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["box"], "size": 1.42, "angle": 1, "elevation": 4, "drift": 5},
+        {"start": 0.46, "focus": ["dispatch"], "size": 2.77, "angle": -2, "elevation": 2, "drift": 5},
+        {"start": 0.76, "focus": ["kit"], "size": 1.62, "angle": 9, "elevation": 2, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "box",
+          "to": [0.65, 0.3, 1.09],
+          "text": "-3",
+          "start": 0.09,
+          "end": 0.33,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "dispatch",
+          "to": [0.76, 1.7, 1.58],
+          "text": "8 - 3\nFLOOR 5",
+          "start": 0.38,
+          "end": 0.46,
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "sounds": [{"kind": "click", "at": 0.32}],
+      "transition": "continuous",
+      "sync": [{"at": 0.36, "words": "The plus"}, {"at": 0.46, "words": "Eight minus three"}]
+    },
+    {
+      "place": "depot",
+      "actors": [
+        {
+          "id": "dot",
+          "at": [-0.52, 0.04],
+          "to": [-0.52, 0.04],
+          "facing": 16,
+          "end_facing": 16,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "wave", "start": 0.43, "end": 0.96}],
+          "look_at": "box"
+        },
+        {
+          "id": "kit",
+          "at": [-2.05, -0.12],
+          "to": [-2.05, -0.12],
+          "facing": 29,
+          "end_facing": 29,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.76}],
+          "look_at": "box"
+        },
+        {
+          "id": "vale",
+          "at": [2.18, 0.24],
+          "to": [2.18, 0.24],
+          "facing": -27,
+          "end_facing": -27,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "zip_the_lips", "start": 0.12, "end": 0.76}],
+          "look_at": "box"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["dot", "box"], "size": 2.82, "angle": 8, "elevation": 7, "drift": 5},
+        {"start": 0.44, "focus": ["box", "counter"], "size": 2.28, "angle": 1, "elevation": 13, "drift": 5},
+        {"start": 0.76, "focus": ["dot"], "size": 1.9, "angle": 8, "elevation": 3, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "box",
+          "to": [0.65, 0.3, -0.8],
+          "text": "-3",
+          "start": 0.4,
+          "end": 0.7,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "counter",
+          "to": [0.65, 0.3, 0],
+          "text": "OPEN",
+          "start": 0.28,
+          "end": 0.39,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "counter",
+          "to": [0.65, 0.3, 0],
+          "text": "CLOSED",
+          "start": 0.74,
+          "end": 0.88,
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "sounds": [{"kind": "clatter", "at": 0.67}],
+      "transition": "continuous",
+      "sync": [{"at": 0.63, "words": "down the chute"}]
+    },
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "kit",
+          "at": [-0.9, 0.55],
+          "to": [2.62, 0.66],
+          "facing": 25,
+          "end_facing": 16,
+          "start": 0.02,
+          "end": 0.82,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.76}],
+          "look_at": "paid"
+        },
+        {
+          "id": "nia",
+          "at": [-0.05, 1.32],
+          "to": [-0.05, 1.32],
+          "facing": 25,
+          "end_facing": 25,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "beckon_twice", "start": 0.12, "end": 0.76}],
+          "look_at": "kit"
+        },
+        {
+          "id": "vale",
+          "at": [-2.47, 0.19],
+          "to": [-2.47, 0.19],
+          "facing": 10,
+          "end_facing": 10,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "check_a_wristwatch", "start": 0.12, "end": 0.76}],
+          "look_at": "kit"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["kit"], "size": 2.55, "angle": 9, "elevation": 6, "drift": 5},
+        {"start": 0.49, "focus": ["paid"], "size": 1.56, "angle": -3, "elevation": 7, "drift": 5},
+        {"start": 0.72, "focus": ["kit", "paid"], "size": 3.04, "angle": 8, "elevation": 8, "drift": 5}
+      ],
+      "events": [],
+      "sounds": [],
+      "transition": "cutaway",
+      "sync": []
+    },
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "kit",
+          "at": [2.62, 0.66],
+          "to": [2.62, 0.66],
+          "facing": 17,
+          "end_facing": 17,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "worried",
+          "cues": [{"action": "inspect_sleeve", "start": 0.43, "end": 0.93}],
+          "look_at": "paid"
+        },
+        {
+          "id": "nia",
+          "at": [-0.05, 1.32],
+          "to": [1.18, 0.76],
+          "facing": 29,
+          "end_facing": 29,
+          "start": 0.01,
+          "end": 0.4,
+          "mood": "calm",
+          "cues": [{"action": "point", "start": 0.41, "end": 0.91}],
+          "look_at": "paid"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["paid"], "size": 1.42, "angle": 2, "elevation": 7, "drift": 5},
+        {"start": 0.32, "focus": ["nia"], "size": 1.68, "angle": 6, "elevation": 4, "drift": 5},
+        {"start": 0.69, "focus": ["kit"], "size": 1.58, "angle": 12, "elevation": 3, "drift": 5}
+      ],
+      "events": [],
+      "sounds": [],
+      "transition": "continuous",
+      "sync": []
+    },
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "kit",
+          "at": [2.62, 0.66],
+          "to": [2.62, 0.66],
+          "facing": 32,
+          "end_facing": 32,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [
+            {"action": "lift_a_crate", "start": 0.04, "end": 0.51},
+            {"action": "pass_a_parcel", "start": 0.52, "end": 0.97}
+          ],
+          "look_at": "paid"
+        },
+        {
+          "id": "vale",
+          "at": [4.07, 0.97],
+          "to": [4.07, 0.97],
+          "facing": -38,
+          "end_facing": -38,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "shrug_and_offer", "start": 0.48, "end": 0.95}],
+          "look_at": "kit"
+        },
+        {
+          "id": "nia",
+          "at": [1.18, 0.76],
+          "to": [1.18, 0.76],
+          "facing": 22,
+          "end_facing": 22,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "palms_together_thanks", "start": 0.47, "end": 0.92}],
+          "look_at": "kit"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["kit", "paid"], "size": 2.76, "angle": -16, "elevation": 10, "drift": 5},
+        {"start": 0.53, "focus": ["kit", "vale"], "size": 2.85, "angle": -8, "elevation": 4, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "paid",
+          "to": [0.02, -0.13, -0.08],
+          "text": "2",
+          "start": 0.17,
+          "end": 0.36,
+          "anchor": "kit@wrist1",
+          "spin": 0
+        },
+        {
+          "id": "paid",
+          "to": [0, -0.16, -0.12],
+          "text": "2",
+          "start": 0.64,
+          "end": 0.82,
+          "anchor": "vale@wrist-1",
+          "spin": 0
+        }
+      ],
+      "sounds": [],
+      "transition": "continuous",
+      "sync": []
+    },
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "kit",
+          "at": [2.62, 0.66],
+          "to": [2.62, 0.66],
+          "facing": 21,
+          "end_facing": 21,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "worried",
+          "cues": [{"action": "shrug_and_offer", "start": 0.12, "end": 0.76}],
+          "look_at": "vale"
+        },
+        {
+          "id": "vale",
+          "at": [4.07, 0.97],
+          "to": [4.07, 0.97],
+          "facing": -38,
+          "end_facing": -38,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "press_elevator_buttons", "start": 0.35, "end": 0.78}],
+          "look_at": "paid"
+        },
+        {
+          "id": "nia",
+          "at": [1.18, 0.76],
+          "to": [1.18, 0.76],
+          "facing": 25,
+          "end_facing": 25,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "double_take", "start": 0.55, "end": 0.94}],
+          "look_at": "paid"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["kit"], "size": 1.75, "angle": 5, "elevation": 3, "drift": 5},
+        {"start": 0.38, "focus": ["vale", "paid"], "size": 2.31, "angle": -5, "elevation": 11, "drift": 5},
+        {"start": 0.73, "focus": ["paid"], "size": 1.39, "angle": -1, "elevation": 4, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "paid",
+          "to": [0, -0.16, -0.12],
+          "text": "-2",
+          "start": 0.47,
+          "end": 0.59,
+          "anchor": "vale@wrist-1",
+          "spin": 0
+        }
+      ],
+      "sounds": [{"kind": "click", "at": 0.57}],
+      "transition": "continuous",
+      "sync": [{"at": 0.59, "words": "Minus two"}]
+    },
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "kit",
+          "at": [-0.83, 0.16],
+          "to": [-0.8, 1.47],
+          "facing": 17,
+          "end_facing": 17,
+          "start": 0.03,
+          "end": 0.56,
+          "mood": "calm",
+          "cues": [{"action": "look", "start": 0.12, "end": 0.76}],
+          "look_at": "dial"
+        },
+        {
+          "id": "nia",
+          "at": [0.59, 0.22],
+          "to": [0.59, 1.47],
+          "facing": -10,
+          "end_facing": -10,
+          "start": 0.08,
+          "end": 0.54,
+          "mood": "proud",
+          "cues": [{"action": "victory_double_pump", "start": 0.56, "end": 0.95}],
+          "look_at": "dial"
+        },
+        {
+          "id": "vale",
+          "at": [2.13, 0.31],
+          "to": [2.13, 0.31],
+          "facing": -32,
+          "end_facing": -32,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "pass_a_parcel", "start": 0.14, "end": 0.62}],
+          "look_at": "paid"
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": ["kit", "nia", "vale"],
+          "size": 4.89,
+          "angle": -8,
+          "elevation": 10,
+          "drift": 5
+        },
+        {"start": 0.55, "focus": ["dial"], "size": 2.67, "angle": 0, "elevation": 2, "drift": 5},
+        {"start": 0.79, "focus": ["nia", "kit"], "size": 2.94, "angle": 5, "elevation": 5, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "paid",
+          "to": [1.49, 1.5, 0.14],
+          "text": "-2",
+          "start": 0.2,
+          "end": 0.51,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "dial",
+          "to": [0, 1.15, 2.77],
+          "text": "12 - 2\nFLOOR 10",
+          "start": 0.48,
+          "end": 0.55,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "left",
+          "to": [-0.78, 1.0, 0],
+          "text": "",
+          "start": 0.86,
+          "end": 0.995,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "right",
+          "to": [0.78, 1.0, 0],
+          "text": "",
+          "start": 0.86,
+          "end": 0.995,
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "sounds": [{"kind": "bell", "at": 0.56}],
+      "transition": "ellipsis",
+      "sync": [{"at": 0.55, "words": "Twelve minus two"}]
+    },
+    {
+      "place": "hall",
+      "actors": [
+        {
+          "id": "kit",
+          "at": [1.92, 0.05],
+          "to": [1.92, 0.05],
+          "facing": 25,
+          "end_facing": 25,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "worried",
+          "cues": [{"action": "wave", "start": 0.22, "end": 0.8}],
+          "look_at": "fare"
+        },
+        {
+          "id": "nia",
+          "at": [-0.64, -0.12],
+          "to": [-0.64, -0.12],
+          "facing": 25,
+          "end_facing": 25,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "listen_then_signal", "start": 0.12, "end": 0.76}],
+          "look_at": "kit"
+        },
+        {
+          "id": "mae",
+          "at": [1.6, 1.42],
+          "to": [1.6, 1.42],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "check_a_wristwatch", "start": 0.12, "end": 0.76}],
+          "look_at": "nia"
+        },
+        {
+          "id": "ada",
+          "look_at": "mae",
+          "at": [3.43, 2.03],
+          "to": [3.43, 2.03],
+          "facing": -23,
+          "end_facing": -23,
+          "start": 0.01,
+          "end": 0.98,
+          "mood": "proud",
+          "cues": [{"action": "toe_tap_pattern", "start": 0.19, "end": 0.91}]
+        },
+        {
+          "id": "sol",
+          "look_at": "mae",
+          "at": [-2.76, 2.03],
+          "to": [-2.76, 2.03],
+          "facing": 22,
+          "end_facing": 22,
+          "start": 0.01,
+          "end": 0.98,
+          "mood": "proud",
+          "cues": [{"action": "look", "start": 0.35, "end": 0.99}]
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["fare", "kit"], "size": 2.67, "angle": 9, "elevation": 11, "drift": 5},
+        {"start": 0.37, "focus": ["fare", "slot"], "size": 1.94, "angle": 6, "elevation": 15, "drift": 5},
+        {"start": 0.74, "focus": ["kit"], "size": 1.61, "angle": 7, "elevation": 3, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "fare",
+          "to": [2.83, 0.38, -0.85],
+          "text": "-2",
+          "start": 0.45,
+          "end": 0.63,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "bill",
+          "to": [-3.19, 2.31, 0],
+          "text": "SOLO\nNOON",
+          "start": 0.02,
+          "end": 0.1,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "solo",
+          "to": [0.02, -0.14, -0.07],
+          "text": "",
+          "start": 0.01,
+          "end": 0.04,
+          "anchor": "nia@wrist1",
+          "spin": 0
+        },
+        {
+          "id": "slot",
+          "to": [2.83, 0.38, 0],
+          "text": "OPEN",
+          "start": 0.33,
+          "end": 0.45,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "slot",
+          "to": [2.83, 0.38, 0],
+          "text": "CLOSED",
+          "start": 0.74,
+          "end": 0.88,
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "sounds": [{"kind": "clatter", "at": 0.6}],
+      "transition": "cutaway",
+      "sync": []
+    },
+    {
+      "place": "hall",
+      "actors": [
+        {
+          "id": "nia",
+          "at": [-0.64, -0.12],
+          "to": [-0.64, -0.12],
+          "facing": 0,
+          "end_facing": 0,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "proud",
+          "cues": [{"action": "play_a_trumpet", "start": 0.02, "end": 0.96}],
+          "look_at": ""
+        },
+        {
+          "id": "mae",
+          "at": [1.6, 1.42],
+          "to": [1.6, 1.42],
+          "facing": -22,
+          "end_facing": -22,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "conduct_downbeat", "start": 0.04, "end": 0.76}],
+          "look_at": "nia"
+        },
+        {
+          "id": "kit",
+          "at": [-2.11, 0.63],
+          "to": [-2.11, 0.63],
+          "facing": 25,
+          "end_facing": 25,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "proud",
+          "cues": [{"action": "clap_three_times", "start": 0.55, "end": 0.99}],
+          "look_at": "nia"
+        },
+        {
+          "id": "ada",
+          "look_at": "mae",
+          "at": [3.43, 2.03],
+          "to": [3.43, 2.03],
+          "facing": -23,
+          "end_facing": -23,
+          "start": 0.01,
+          "end": 0.98,
+          "mood": "proud",
+          "cues": [{"action": "conduct_downbeat", "start": 0.19, "end": 0.91}]
+        },
+        {
+          "id": "sol",
+          "look_at": "mae",
+          "at": [-2.76, 2.03],
+          "to": [-2.76, 2.03],
+          "facing": 22,
+          "end_facing": 22,
+          "start": 0.01,
+          "end": 0.98,
+          "mood": "proud",
+          "cues": [{"action": "strum_air_guitar", "start": 0.35, "end": 0.99}]
+        }
+      ],
+      "cameras": [
+        {
+          "start": 0,
+          "focus": ["sol", "kit", "nia", "ada", "mae"],
+          "size": 8.3,
+          "angle": -9,
+          "elevation": 9,
+          "drift": 5
+        },
+        {"start": 0.32, "focus": ["nia", "solo"], "size": 1.82, "angle": 6, "elevation": 3, "drift": 5},
+        {"start": 0.76, "focus": ["kit"], "size": 1.7, "angle": 11, "elevation": 3, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "solo",
+          "to": [0.27, -0.67, -0.17],
+          "text": "",
+          "start": 0.12,
+          "end": 0.29,
+          "anchor": "nia@head",
+          "spin": -44
+        },
+        {
+          "id": "solo",
+          "to": [0.02, -0.14, -0.07],
+          "text": "",
+          "start": 0.72,
+          "end": 0.91,
+          "anchor": "nia@wrist1",
+          "spin": 0
+        }
+      ],
+      "sounds": [{"kind": "brass", "at": 0.34}],
+      "transition": "ellipsis",
+      "sync": [{"at": 0.72, "words": "other half"}]
+    },
+    {
+      "place": "lift",
+      "actors": [
+        {
+          "id": "mum",
+          "at": [-0.85, 0.6],
+          "to": [-1.92, 0.45],
+          "facing": -23,
+          "end_facing": -31,
+          "start": 0.07,
+          "end": 0.48,
+          "mood": "worried",
+          "cues": [{"action": "cross_then_uncross", "start": 0.54, "end": 0.94}],
+          "look_at": "dad"
+        },
+        {
+          "id": "dad",
+          "at": [0.85, 0.66],
+          "to": [2.12, 0.44],
+          "facing": 24,
+          "end_facing": 34,
+          "start": 0.11,
+          "end": 0.49,
+          "mood": "worried",
+          "cues": [{"action": "hands_on_hips", "start": 0.5, "end": 0.98}],
+          "look_at": "mum"
+        },
+        {
+          "id": "vale",
+          "at": [0.2, 1.64],
+          "to": [0.2, 1.64],
+          "facing": 0,
+          "end_facing": 0,
+          "start": 0.08,
+          "end": 0.77,
+          "mood": "calm",
+          "cues": [{"action": "wipe_brow", "start": 0.5, "end": 0.96}],
+          "look_at": "mum"
+        }
+      ],
+      "cameras": [
+        {"start": 0, "focus": ["mum", "dad", "vale"], "size": 4.58, "angle": 0, "elevation": 9, "drift": 5},
+        {"start": 0.43, "focus": ["mum"], "size": 1.7, "angle": -7, "elevation": 3, "drift": 5},
+        {"start": 0.69, "focus": ["mum", "dad"], "size": 5.25, "angle": 0, "elevation": 9, "drift": 5}
+      ],
+      "events": [
+        {
+          "id": "paid",
+          "to": [1.5, 1.55, -2],
+          "text": "-2",
+          "start": 0.01,
+          "end": 0.02,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "dial",
+          "to": [0, 1.15, 2.77],
+          "text": "3 OR 7\nNO TEN",
+          "start": 0.41,
+          "end": 0.57,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "left",
+          "to": [-1.88, 1.0, 0],
+          "text": "",
+          "start": 0.02,
+          "end": 0.22,
+          "anchor": "",
+          "spin": 0
+        },
+        {
+          "id": "right",
+          "to": [1.88, 1.0, 0],
+          "text": "",
+          "start": 0.02,
+          "end": 0.22,
+          "anchor": "",
+          "spin": 0
+        }
+      ],
+      "sounds": [],
+      "transition": "cutaway",
+      "sync": [{"at": 0.69, "words": "they were taking"}]
+    }
+  ]
+}
