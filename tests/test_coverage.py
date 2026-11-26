@@ -85,14 +85,33 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual(res["actors"][0]["gaze"][0]["at"], 0.25)
         self.assertEqual(res["atmosphere"]["start"], 0.25)
 
+    def test_pickup_uses_silence_and_fits_a_different_voice(self):
+        speed, start = ensemble_movie.narration_budget(15, 7, 3)
+        self.assertEqual(speed, 1)
+        self.assertGreater(start, 7.5)
+        self.assertLess(start + 3, 14.8)
+        fast, later = ensemble_movie.narration_budget(5, 6, 2)
+        self.assertGreater(fast, 1)
+        self.assertGreater(later, 6 / fast)
+        self.assertLessEqual(later + 2 / fast, 4.69)
+        self.assertNotIn(
+            "pickup", planning.provider_schema(ensemble.STORY)["properties"]["beats"]["items"]["properties"]
+        )
+
     def test_grade_spans_preserve_special_color_and_legacy_scenes(self):
         places = {
             "porch": {"finish": "textured", "light": "night", "grade": "lamplight"},
             "old": {"light": "night"},
             "court": {"finish": "textured", "light": "night"},
         }
-        pieces = [("porch", []), ("porch", []), ("porch", ["redline"]), ("porch", []),
-                  ("old", []), ("court", [])]
+        pieces = [
+            ("porch", []),
+            ("porch", []),
+            ("porch", ["redline"]),
+            ("porch", []),
+            ("old", []),
+            ("court", []),
+        ]
         shots = [
             {"clock": i / 2, "frames": 15, "shot": {"place": place, "selective_color": colors}}
             for i, (place, colors) in enumerate(pieces)

@@ -7,7 +7,7 @@ import json
 import subprocess
 import time
 from pathlib import Path
-from . import assets, audio, planning, storage, ensemble_review, ensemble, grading
+from . import assets, audio, planning, storage, ensemble_review, ensemble, grading, vistas
 
 HERE = Path(__file__).resolve().parent
 
@@ -95,6 +95,35 @@ def captions_for_line(out, marks, offset, length, speed):
         out.append((offset + t / speed, offset + end, phrase, False))
 
 
+def narration_budget(seconds, main, pickup=0):
+    available = max(0.08, seconds - min(0.32, seconds * 0.12))
+    breath = min(0.45, available * 0.08) if pickup else 0
+    speed = max(1, (main + pickup) / (available - breath))
+    # Center a short reply in the available silence. A deliberate reaction can still breathe.
+    pickup_start = main / speed + max(breath, (available - (main + pickup) / speed) / 2)
+    return speed, pickup_start
+
+
+def pace_voice(raw, speed, folder, ffmpeg):
+    if speed <= 1.005:
+        return raw
+    audio.write_wave(folder / "line.wav", raw)
+    audio.run(
+        [
+            ffmpeg,
+            "-loglevel",
+            "error",
+            "-y",
+            "-i",
+            str(folder / "line.wav"),
+            "-af",
+            f"atempo={speed:.8f}",
+            str(folder / "paced.wav"),
+        ]
+    )
+    return audio.read_wave(folder / "paced.wav")
+
+
 def synchronized(shot, line, marks, speed, length):
     if not shot.get("sync"):
         return shot
@@ -103,10 +132,7 @@ def synchronized(shot, line, marks, speed, length):
     where = ensemble.phrase_starts(line, shot["sync"])
     knots = [
         (0, 0),
-        *[
-            (m["at"], max(0.001, min(0.999, times[i] / speed / length)))
-            for m, i in zip(shot["sync"], where)
-        ],
+        *[(m["at"], max(0.001, min(0.999, times[i] / speed / length))) for m, i in zip(shot["sync"], where)],
         (1, 1),
     ]
     if any(b[1] <= a[1] for a, b in zip(knots, knots[1:])):
@@ -158,15 +184,18 @@ def render_storyboard(dst, plan, command, ffmpeg):
     for index, s in enumerate(data["shots"], 1):
         s["clip"] = str(out / f"setup-{index:03d}.mp4")
         starts = [c["start"] for c in s["shot"]["cameras"]] + [1]
-        s["sample_frames"] = [
-            1 + round((a + b) / 2 * (s["frames"] - 1)) for a, b in zip(starts, starts[1:])
-        ]
+        s["sample_frames"] = [1 + round((a + b) / 2 * (s["frames"] - 1)) for a, b in zip(starts, starts[1:])]
+        for v in data.get("vistas", []):
+            if v["beat"] == index and v["kind"] == "reaction":
+                j = v["camera"] - 1
+                lo = round(starts[j] * (s["frames"] - 1))
+                s["sample_frames"][j] = 1 + (lo + v["start"] - 1) // 2
         paths.extend((index, f) for f in s["sample_frames"])
     planning.save(out / "plates.json", data)
     with (out / "blender.log").open("w") as log:
-        subprocess.run(
-            [*command, str(out / "plates.json")], stdout=log, stderr=subprocess.STDOUT, check=True
-        )
+        subprocess.run([*command, str(out / "plates.json")], stdout=log, stderr=subprocess.STDOUT, check=True)
+    paths.extend(vistas.boards(data, out, command[0]))
+    paths.sort()
     for page, start in enumerate(range(0, len(paths), 12), 1):
         take = paths[start : start + 12]
         (out / "stills.txt").write_text("".join(f"file setup-{n:03d}-{f}.png\n" for n, f in take))
@@ -194,7 +223,9 @@ def render_storyboard(dst, plan, command, ffmpeg):
     return out
 
 
-def render(job, story, d, quality, blender, ffmpeg, root, directory, names, storyboard=False, prepare_only=False):
+def render(
+    job, story, d, quality, blender, ffmpeg, root, directory, names, storyboard=False, prepare_only=False
+):
     fps = 30
     ffprobe = str(Path(ffmpeg).with_name("ffprobe" + Path(ffmpeg).suffix))
     w, h = {"preview": (432, 768), "review": (720, 1280), "final": (1080, 1920)}[quality]
@@ -249,6 +280,7 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
         versions.update(path.read_bytes())
     engine = subprocess.check_output([blender, "--version"], text=True).splitlines()[0]
     shots = []
+    location_views = []
     speech = array("h")
     captions = []
     effects = []
@@ -258,41 +290,39 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
         shot = dict(shot)
         stage_clock = shot.pop("stage_clock", offset / fps)
         length = count / fps
-        available = max(0.08, length - min(0.32, length * 0.12))
-        speed = max(1, (len(raw) / audio.RATE) / available)
-        if speed > 1.005:
-            audio.write_wave(dst / "line.wav", raw)
-            audio.run(
-                [
-                    ffmpeg,
-                    "-loglevel",
-                    "error",
-                    "-y",
-                    "-i",
-                    str(dst / "line.wav"),
-                    "-af",
-                    f"atempo={speed:.8f}",
-                    str(dst / "paced.wav"),
-                ]
-            )
-            raw = audio.read_wave(dst / "paced.wav")
+        beat = story["beats"][n - 1]
+        pickup = audio.narration(beat["pickup"], job, ffmpeg, root) if beat.get("pickup") else None
+        extra = len(pickup[0]) / audio.RATE if pickup else 0
+        speed, pickup_start = narration_budget(length, len(raw) / audio.RATE, extra)
+        raw = pace_voice(raw, speed, dst, ffmpeg)
         shot = synchronized(shot, story["beats"][n - 1]["line"], marks, speed, length)
         shot = sync_dialogue(shot, story["beats"][n - 1]["line"], marks, speed, length)
+        shot, inserts = vistas.extract(shot, n, count)
+        location_views.extend(inserts)
         begin = offset / fps
         for card in story.get("introductions", []):
             if card["beat"] != n:
                 continue
-            at = ensemble.phrase_starts(story["beats"][n - 1]["line"], [dict(at=0.5, words=card["words"])])[
-                0
-            ]
+            at = ensemble.phrase_starts(story["beats"][n - 1]["line"], [dict(at=0.5, words=card["words"])])[0]
             token_times = [t / speed for word, t in marks for _ in ensemble.tokens(word)]
             start = begin + token_times[at]
             introductions.append((start, min(begin + length, start + 1.75), card["label"]))
         effects.extend((begin + length * fx["at"], fx["kind"]) for fx in shot["sounds"])
         captions_for_line(captions, marks, begin, len(raw) / audio.RATE, speed)
-        speech.extend(raw[: count * (audio.RATE // fps)])
+        capacity = round((offset + count) * audio.RATE / fps) - len(speech)
+        clip = raw[:capacity]
+        if pickup:
+            take = pace_voice(pickup[0], speed, dst, ffmpeg)
+            start_sample = min(capacity, max(len(clip), round(pickup_start * audio.RATE)))
+            take = take[: capacity - start_sample]
+            clip.extend(array("h", [0]) * (start_sample - len(clip)))
+            clip.extend(take)
+            captions_for_line(
+                captions, pickup[1], begin + start_sample / audio.RATE, len(take) / audio.RATE, speed
+            )
+        speech.extend(clip)
         offset += count
-        speech.extend(array("h", [0]) * (round(offset * audio.RATE / fps) - len(speech)))
+        speech.extend(array("h", [0]) * (capacity - len(clip)))
         local = [p for p in d["props"] if p["place"] == shot["place"]]
         before = {p["id"]: states[p["id"]] for p in local}
         for e in shot["events"]:
@@ -341,6 +371,8 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
         looks=looks,
         places=places,
         props=d["props"],
+        vistas=location_views,
+        pickup_count=sum(bool(b.get("pickup")) for b in story["beats"]),
         motions=planning.MOTIONS,
         shots=shots,
     )
@@ -377,8 +409,9 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
                 raise
             if proc.returncode:
                 raise RuntimeError(f"Blender stopped. See {dst / 'blender.log'}.")
+    edit = vistas.apply(plan, dst, root, blender, ffmpeg, ffprobe)
     (dst / "clips.txt").write_text(
-        "\n".join("file " + Path(s["clip"]).relative_to(dst).as_posix() for s in shots) + "\n"
+        "\n".join("file " + Path(s["clip"]).relative_to(dst).as_posix() for s in edit["shots"]) + "\n"
     )
     # Matroska/MP4 fragment time bases can round each cut by a fraction of a frame. Re-clock exact frame order.
     audio.run(
@@ -419,7 +452,11 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
         ],
         cwd=dst,
     )
-    proof = ensemble_review.audit(plan, dst / "movie.partial.mp4", ffmpeg, ffprobe)
+    proof = ensemble_review.audit(edit, dst / "movie.partial.mp4", ffmpeg, ffprobe)
+    if location_views:
+        planning.save(dst / "picture-edit.json", edit)
+    else:
+        (dst / "picture-edit.json").unlink(missing_ok=True)
     planning.save(dst / "render-review.json", proof)
     (dst / "movie.partial.mp4").replace(dst / "movie.mp4")
     print(f"Finished: {dst / 'movie.mp4'} ({offset / fps:.2f}s)", flush=True)

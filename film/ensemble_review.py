@@ -159,6 +159,9 @@ def audit(timeline, movie, ffmpeg="ffmpeg", ffprobe="ffprobe"):
     )
     return dict(
         direction=directing_stats(timeline),
+        location_views=sum(v["kind"] != "reaction" for v in timeline.get("vistas", [])),
+        reaction_angles=sum(v["kind"] == "reaction" for v in timeline.get("vistas", [])),
+        spoken_pickups=timeline.get("pickup_count", 0),
         frames=total,
         fps=timeline["fps"],
         width=stream["width"],
@@ -180,6 +183,9 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("quality_folder", type=Path)
     out = ap.parse_args().quality_folder
-    result = audit(json.loads((out / "timeline.json").read_text(encoding="utf8")), out / "movie.mp4")
+    edit = out / "picture-edit.json"
+    if not edit.exists():
+        edit = out / "timeline.json"
+    result = audit(json.loads(edit.read_text(encoding="utf8")), out / "movie.mp4")
     planning.save(out / "render-review.json", result)
     print(json.dumps({k: v for k, v in result.items() if k != "setups"}, indent=2))

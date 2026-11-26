@@ -4,7 +4,7 @@ import json
 import math
 import re
 from . import planning as p
-from . import assets
+from . import assets, vistas
 from .props import CATALOG
 from .story_objects import KINDS as STORY_PROPS
 
@@ -23,6 +23,7 @@ STORY = obj(
 STORY["properties"]["introductions"] = arr(obj(beat=I, actor=S, words=S, label=S))
 STORY["properties"]["beats"]["items"]["properties"]["also_because"] = arr(I)
 STORY["properties"]["beats"]["items"]["properties"]["edit_frames"] = dict(I, readOnly=True)
+STORY["properties"]["beats"]["items"]["properties"]["pickup"] = dict(S, readOnly=True)
 V = arr(N)
 LOOK = obj(
     id=S,
@@ -75,6 +76,9 @@ PLACE["properties"]["grade"] = enum("natural moonlight lamplight sunset neon dre
 PLACE["properties"]["light"] = enum("daylight late_sun night")
 PLACE["properties"]["life"] = enum("quiet shoppers workers audience")
 CAM["properties"]["move"] = enum("hold follow arc punch reveal")
+CAM["properties"]["vista"] = enum("stage " + " ".join(vistas.KINDS))
+CAM["properties"]["vista_text"] = S
+CAM["properties"]["reactions"] = arr(obj(actor=S, action=p.PERFORMANCE))
 CUE["properties"]["play"] = enum("accent sustain cycle")
 SOUND = obj(kind=enum("bell knock click rumble honk brass clatter"), at=N)
 SYNC = obj(at=N, words=S)
@@ -113,6 +117,8 @@ def check_story(story):
     if not minimum_cast <= len(cast) <= 10 or story["lead"] not in cast:
         raise ValueError(f"Give {minimum_cast}–10 people distinct jobs and wants and identify the lead.")
     locked = [b["edit_frames"] for b in beats if "edit_frames" in b]
+    if any("pickup" in b and (not isinstance(b["pickup"], str) or not b["pickup"].strip()) for b in beats):
+        raise ValueError("A dialogue pickup needs a spoken line.")
     budget = story["seconds"] * 30
     if (
         any(type(v) is not int or v < 3 for v in locked)
@@ -346,6 +352,20 @@ def check_direction(d, story, partial=False):
         if not cams or cams[0]["start"] != 0:
             raise ValueError(f"Beat {n} needs a camera from its first frame.")
         for i, c in enumerate(cams):
+            replies = c.get("reactions", [])
+            if len(replies) > 1 or (
+                replies
+                and (
+                    c.get("vista", "stage") != "stage"
+                    or not any(
+                        a["id"] == replies[0]["actor"] and a.get("pose") != "frozen" for a in s["actors"]
+                    )
+                    or replies[0]["action"] not in p.MOTIONS
+                )
+            ):
+                raise ValueError(f"Camera in beat {n} needs a single onstage reaction and a known action.")
+            if c.get("vista", "stage") not in ["stage", *vistas.KINDS]:
+                raise ValueError(f"Unknown location view in beat {n}.")
             if not c["focus"] or not set(c["focus"]) <= actors | local or not 1.1 <= c["size"] <= 14:
                 raise ValueError(f"Camera {n} needs onstage targets and a 1.1–14 unit horizontal field.")
             if not 0 <= c["start"] < 1 or (i and c["start"] <= cams[i - 1]["start"]):
@@ -465,6 +485,7 @@ e.g. wide proof, insert, delayed reaction. A supporting actor should continue a 
 Use the same coordinates across cuts in one place. Set look_at to a visible actor or prop ID, or empty for a neutral gaze. Actors face -Y at 0 degrees. X is screen right. Floor Z=0.
 Use finish textured for patterned street surfaces and architecture. Choose grade natural, moonlight, lamplight, sunset, neon or dream to suit the light source. Choose a specific kit such as market, bedroom, lockup, grove, belfry, skyport or canyon. Stage handheld items at the wrist. Give creatures and large machinery their own low or profile view. An actor can change gaze during the shot with gaze entries (at, focus), rise/fall with lift [startZ,endZ], or lean with pitch [startDegrees,endDegrees]. For a limited-color world, selective_color lists the IDs that retain color. Use an empty list for natural full color, normal human form and live pose for ordinary people, [0,0] for unused lift and pitch, and atmosphere kind none in clear scenes. Choose scoreboard for a ranked list and skytype for floating command text. Atmosphere supports fog, sunpatch, eclipse, flicker, blackout and dawn across start/end fractions.
 Actors are 2.5 units tall. Typical X range -3 to 3, Y range -1 to 3. Actor at/to are [x,y].
+Normally use vista stage, empty vista_text and empty reactions. When a longer camera shows a cause, its reactions array may name one onstage actor and a matching performance action for a separately filmed reverse angle near its end. Preserve silence or intentional stillness when the rule needs it. For paper_detail or phone_detail, supply the clue in vista_text, up to 72 characters. A dedicated location view can replace a camera when geography itself is evidence. Use desert_queue for a queue that crosses the landscape, balloon_fleet for homes above the clouds, cell_tower for stacked prison tiers, or flooded_gym for a submerged basketball court. Only choose a view when its subject appears in the story. It replaces everything seen from that camera, so use stage for performances and clues carried by a person.
 Keep coupled objects near the hands; animate handoffs and place evidence in camera focus. A prop at/to is [x,y,z],
 its base. Event anchor is empty for world space or actor@wrist1 / actor@wrist-1 / actor@spine / actor@head; to becomes a local offset. Prop positions, yaw and display text persist between visits; events assign absolute position and yaw.
 A hatch opens with event text OPEN and closes with CLOSED. Use a mark prop as an invisible, fixed camera target at its exact coordinates. The board has at most two centered lines, separated by a newline; use terse, large labels. Kit adds architecture. Invent landmarks or physical mechanisms with custom props (parts use local at, size, rotation in degrees, color). Use empty parts for stock props. Do not force a city elevator story onto another premise. The kit adds scenery,
@@ -502,8 +523,7 @@ Story: {json.dumps(story, ensure_ascii=False)}"""
     for first in range(0, len(story["beats"]), 3):
         stop = min(first + 3, len(story["beats"]))
         before = {
-            item["id"]: dict(to=item["at"], text=item["text"], anchor="", spin=0)
-            for item in catalog["props"]
+            item["id"]: dict(to=item["at"], text=item["text"], anchor="", spin=0) for item in catalog["props"]
         }
         for shot in design["shots"]:
             for event in shot["events"]:

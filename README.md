@@ -99,6 +99,12 @@ The `anchors` object maps a one-based beat number to entries with `at` and `word
 
 Use `--prepare-only` with an ensemble plan to write narration, captions, the sound mix and the timed shot list without starting a picture render. Use the same job folder and quality when resuming. A location can specify `grade` as `natural`, `lamplight`, `moonlight`, `sunset`, `neon` or `dream`. Grading runs before captions. It reuses captured shots, and skips scenes that reserve color for named clues.
 
+An editor can add a short spoken `pickup` to a beat after reviewing its timing. The mixer places it in the gap after the main line and captions it. If the configured voice reads more slowly, both lines fit inside the approved take.
+
+A camera usually films the people and props already on stage. Set its `vista` to a named location view when the geography itself explains the rule. For example, `desert_queue` follows a line over dunes and `cell_tower` looks up through stacked prison tiers. A `paper_detail` or `phone_detail` camera can display a short `vista_text` inscription. Separate lines on a paper tag with a vertical bar. These native Blender shots replace the exact frames for the selected camera.
+
+To cut from a cause to the witness who experiences it, give a stage camera one entry such as `"reactions": [{"actor": "conductor", "action": "double_take"}]`. The director films a brief reverse angle with the same actor, set, props and animation clock. Its additional cut and the main footage both appear in the frame audit. Cameras shorter than 1.3 seconds retain the original view. Storyboards include the additional composition. Previously captured performance footage and location inserts can each be reused across edits.
+
 The comparison command decodes both local movies, samples their upper-center images eight times per second and reports large visual changes per minute. This measure responds to large in-shot movement as well as cuts. For an excerpt in a longer video, provide `--source-offset` in media seconds, `--source-seconds` in original seconds and `--source-rate` in media seconds per original second. Inspect faces, prop contacts, scale and the order of clues alongside the measurement.
 
 ### Reuse and review a prop
