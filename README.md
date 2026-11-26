@@ -184,3 +184,5 @@ The renderer schedules the story's chosen duration, paces each line to fit, and 
 Implement the same `generate(prompt, schema, job) -> dict` interface in `film/planning.py` against your local model. The story and direction schemas, semantic validation, speech, animation, and export remain reusable. No local model server is used by the included version.
 
 Official CLI references: [non-interactive mode](https://developers.openai.com/codex/noninteractive/) and [ChatGPT sign-in](https://developers.openai.com/codex/auth/).
+
+Ensemble films caption the voice one or two words at a time. Very fast words share a cue. In a saved story, set `"caption_style": "phrases"` for the longer subtitle treatment. Both styles use the recorded word timings and leave pauses clear.

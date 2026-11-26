@@ -79,7 +79,20 @@ def timings(lines, seconds, fps, locks=None):
     return result
 
 
-def captions_for_line(out, marks, offset, length, speed):
+def captions_for_line(out, marks, offset, length, speed, style="phrases"):
+    if style == "spoken":
+        # Give very fast words a readable shared cue. End the group on punctuation or a long word.
+        words = []
+        start = 0.0
+        for i, (word, raw_start) in enumerate(marks):
+            if not words:
+                start = raw_start / speed
+            words.append(word)
+            end = min(length, marks[i + 1][1] / speed) if i + 1 < len(marks) else length
+            if end - start >= 0.28 or len(words) == 3 or word[-1] in ".,!?" or i + 1 == len(marks):
+                out.append((offset + start, offset + end, " ".join(words), False))
+                words = []
+        return
     chunks = []
     words = []
     begin = 0
@@ -285,6 +298,7 @@ def render(
     speech = array("h")
     captions = []
     effects = []
+    caption_style = story.get("caption_style", "spoken")
     introductions = []
     offset = 0
     for n, (shot, count, (raw, marks)) in enumerate(zip(d["shots"], counts, utterances), 1):
@@ -309,7 +323,7 @@ def render(
             start = begin + token_times[at]
             introductions.append((start, min(begin + length, start + 1.75), card["label"]))
         effects.extend((begin + length * fx["at"], fx["kind"]) for fx in shot["sounds"])
-        captions_for_line(captions, marks, begin, len(raw) / audio.RATE, speed)
+        captions_for_line(captions, marks, begin, len(raw) / audio.RATE, speed, caption_style)
         capacity = round((offset + count) * audio.RATE / fps) - len(speech)
         clip = raw[:capacity]
         if pickup:
@@ -319,7 +333,7 @@ def render(
             clip.extend(array("h", [0]) * (start_sample - len(clip)))
             clip.extend(take)
             captions_for_line(
-                captions, pickup[1], begin + start_sample / audio.RATE, len(take) / audio.RATE, speed
+                captions, pickup[1], begin + start_sample / audio.RATE, len(take) / audio.RATE, speed, caption_style
             )
         speech.extend(clip)
         offset += count
@@ -382,7 +396,7 @@ def render(
     if storyboard:
         planning.save(dst / "blocking-review.json", ensemble_review.directing_stats(plan))
         return render_storyboard(dst, plan, command, ffmpeg)
-    audio.make_captions(dst / "lines.ass", captions, introductions)
+    audio.make_captions(dst / "lines.ass", captions, introductions, caption_style)
     audio.soundtrack(dst / "mix.wav", speech, effects, "wonder", root)
     if prepare_only:
         return dst / "timeline.json"

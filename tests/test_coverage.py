@@ -98,6 +98,12 @@ class CoverageTests(unittest.TestCase):
             "pickup", planning.provider_schema(ensemble.STORY)["properties"]["beats"]["items"]["properties"]
         )
 
+    def test_spoken_captions_keep_fast_words_and_end_with_the_audio(self):
+        cues = []
+        marks = [("I", 0), ("saw", 0.07), ("it.", 0.20), ("Run!", 0.62)]
+        ensemble_movie.captions_for_line(cues, marks, 4, 0.8, 1, "spoken")
+        self.assertEqual(cues, [(4, 4.62, "I saw it.", False), (4.62, 4.8, "Run!", False)])
+
     def test_grade_spans_preserve_special_color_and_legacy_scenes(self):
         places = {
             "porch": {"finish": "textured", "light": "night", "grade": "lamplight"},

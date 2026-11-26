@@ -20,6 +20,7 @@ STORY = obj(
     cast=arr(obj(id=S, job=S, want=S)),
     beats=arr(obj(role=enum(ROLES), because=I, witness=S, visible=S, line=S)),
 )
+STORY["properties"]["caption_style"] = dict(enum("spoken phrases"), readOnly=True)
 STORY["properties"]["introductions"] = arr(obj(beat=I, actor=S, words=S, label=S))
 STORY["properties"]["beats"]["items"]["properties"]["also_because"] = arr(I)
 STORY["properties"]["beats"]["items"]["properties"]["edit_frames"] = dict(I, readOnly=True)

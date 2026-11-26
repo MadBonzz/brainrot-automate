@@ -142,7 +142,7 @@ def stamp(s):
     cs = max(0, round(s*100))
     return f'{cs//360000}:{(cs//6000)%60:02}:{(cs//100)%60:02}.{cs%100:02}'
 
-def make_captions(path, captions, introductions=()):
+def make_captions(path, captions, introductions=(), style="phrases"):
     header = """[Script Info]
 ScriptType: v4.00+
 PlayResX: 1080
@@ -151,6 +151,7 @@ WrapStyle: 2
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Narration,Arial,69,&H00FFFFFF,&H000000FF,&H00171B22,&H80000000,-1,0,0,0,100,100,0,0,1,5,2,2,95,95,300,1
+Style: Spoken,Arial,94,&H00FFFFFF,&H000000FF,&H00131A22,&H80000000,-1,0,0,0,100,100,0,0,1,7,2,2,70,70,440,1
 Style: Identity,Arial,46,&H0000E9FF,&H000000FF,&H00252226,&H80000000,-1,0,0,0,100,100,0,0,1,4,1,7,75,75,205,1
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -165,7 +166,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             if top:
                 t = r'{\an8\pos(540,190)}'+t
             if t and b-a>.025:
-                f.write(f'Dialogue: 0,{stamp(a)},{stamp(b)},Narration,,0,0,0,,{t}\n')
+                label = 'Spoken' if style == 'spoken' else 'Narration'
+                f.write(f'Dialogue: 0,{stamp(a)},{stamp(b)},{label},,0,0,0,,{t}\n')
 
 def effect(name):
     if name in ('brass','honk','clatter'):
