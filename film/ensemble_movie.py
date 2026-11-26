@@ -7,7 +7,7 @@ import json
 import subprocess
 import time
 from pathlib import Path
-from . import assets, audio, planning, storage, ensemble_review, ensemble, grading, vistas, character_props
+from . import assets, audio, planning, storage, ensemble_review, ensemble, grading, vistas, character_props, blocking
 
 HERE = Path(__file__).resolve().parent
 
@@ -239,7 +239,7 @@ def render_storyboard(dst, plan, command, ffmpeg):
 def render(
     job, story, d, quality, blender, ffmpeg, root, directory, names, storyboard=False, prepare_only=False
 ):
-    d = character_props.expand(d)
+    d = blocking.expand(character_props.expand(d))
     fps = 30
     ffprobe = str(Path(ffmpeg).with_name("ffprobe" + Path(ffmpeg).suffix))
     w, h = {"preview": (432, 768), "review": (720, 1280), "final": (1080, 1920)}[quality]

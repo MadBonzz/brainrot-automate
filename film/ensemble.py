@@ -4,7 +4,7 @@ import json
 import math
 import re
 from . import planning as p
-from . import assets, vistas
+from . import assets, blocking, vistas
 from .props import CATALOG
 from .story_objects import KINDS as STORY_PROPS
 
@@ -66,6 +66,8 @@ ACTOR = obj(
     mood=enum("calm worried proud surprised"),
     cues=arr(CUE),
 )
+ACTOR["properties"]["travel"] = obj(kind=enum("as_blocked enter exit"), side=enum("left right front back"), distance=N)
+ACTOR["properties"]["travel"]["properties"]["coverage"] = enum("authored follow")
 ACTOR["properties"]["gaze"] = arr(obj(at=N, focus=S))
 ACTOR["properties"]["lift"] = V
 ACTOR["properties"]["pitch"] = V
@@ -252,6 +254,7 @@ def vector(v, n):
 
 
 def check_direction(d, story, partial=False):
+    d = blocking.expand(d)
     cast = unique(d["looks"], "looks")
     places = unique(d["places"], "places")
     props = unique(d["props"], "props")
@@ -488,6 +491,7 @@ follow tracks the target, arc orbits, punch closes in quickly and reveal opens o
 e.g. wide proof, insert, delayed reaction. A supporting actor should continue a different task while someone speaks.
 Use the same coordinates across cuts in one place. Set look_at to a visible actor or prop ID, or empty for a neutral gaze. Actors face -Y at 0 degrees. X is screen right. Floor Z=0.
 Use finish textured for patterned street surfaces and architecture. Choose grade natural, moonlight, lamplight, sunset, neon or dream to suit the light source. Choose a specific kit such as market, bedroom, lockup, grove, belfry, skyport or canyon. Stage handheld items at the wrist. Give creatures and large machinery their own low or profile view. An actor can change gaze during the shot with gaze entries (at, focus), rise/fall with lift [startZ,endZ], or lean with pitch [startDegrees,endDegrees]. For a limited-color world, selective_color lists the IDs that retain color. Use an empty list for natural full color, normal human form and live pose for ordinary people, [0,0] for unused lift and pitch, and atmosphere kind none in clear scenes. Choose scoreboard for a ranked list and skytype for floating command text. Atmosphere supports fog, sunpatch, eclipse, flicker, blackout and dawn across start/end fractions.
+When people run, cross a threshold, queue for a turn, rush to help, or back out of danger, show the distance they cover. Give them different departure times. A hand gesture alone cannot get someone to a door. For a staged entrance or exit, set at and to to the same contact mark and specify travel.kind enter or exit, its side and distance. The director keeps the arrival point and finds a lane past the cast. Use as_blocked when the actor is still or has explicit at/to. Use travel.coverage follow when the crossing is the new information. Use authored when another visible clue takes precedence. Time travel in seconds worth of the beat, before a handoff or after the decision. Hold still on purpose when silence or immobility is the rule.
 Actors are 2.5 units tall. Typical X range -3 to 3, Y range -1 to 3. Actor at/to are [x,y].
 A stalker practical can have face_model creased or fixed_grin when its expression is evidence. Use plain for other props. Normally use vista stage, empty vista_text and empty reactions. When a longer camera shows a cause, its reactions array may name one onstage actor and a matching performance action for a separately filmed reverse angle near its end. Preserve silence or intentional stillness when the rule needs it. For paper_detail or phone_detail, supply the clue in vista_text, up to 72 characters. A dedicated location view can replace a camera when geography itself is evidence. Use desert_queue for a queue that crosses the landscape, balloon_fleet for homes above the clouds, cell_tower for stacked prison tiers, or flooded_gym for a submerged basketball court. Only choose a view when its subject appears in the story. It replaces everything seen from that camera, so use stage for performances and clues carried by a person.
 Keep coupled objects near the hands; animate handoffs and place evidence in camera focus. A prop at/to is [x,y,z],

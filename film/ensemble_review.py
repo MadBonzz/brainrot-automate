@@ -53,6 +53,8 @@ def directing_stats(timeline):
     overlaps = []
     modes = set()
     busiest = 0
+    moving = []
+    untracked = []
     for i, s in enumerate(timeline["shots"], 1):
         shot = s["shot"]
         starts = [round(c["start"] * (s["frames"] - 1)) for c in shot["cameras"]]
@@ -62,6 +64,20 @@ def directing_stats(timeline):
                 opening.append(round(s["clock"] + f / fps, 2))
             modes.add(c.get("move", "arc" if c["drift"] else "follow"))
         busiest = max(busiest, len(shot["actors"]))
+        travel = []
+        for actor in shot["actors"]:
+            lower, upper = actor.get("lift", (0, 0))
+            if dist(actor["at"], actor["to"]) >= 0.35 or abs(upper - lower) >= 0.35:
+                travel.append(actor["id"])
+                framed = any(
+                    actor["id"] in camera["focus"]
+                    and min(actor["end"], end / s["frames"]) > max(actor["start"], start / s["frames"])
+                    for camera, start, end in zip(shot["cameras"], starts, starts[1:] + [s["frames"]])
+                )
+                if not framed:
+                    untracked.append(dict(setup=i, actor=actor["id"]))
+        if travel:
+            moving.append(dict(setup=i, actors=travel))
 
         def position(actor, t):
             u = max(0, min(1, (t - actor["start"]) / (actor["end"] - actor["start"])))
@@ -85,6 +101,8 @@ def directing_stats(timeline):
         camera_moves=sorted(modes),
         peak_named_actors=busiest,
         sustained_actor_overlaps=overlaps,
+        setups_with_actor_travel=moving,
+        travel_without_named_camera_target=untracked,
     )
 
 

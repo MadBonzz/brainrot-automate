@@ -186,3 +186,5 @@ Implement the same `generate(prompt, schema, job) -> dict` interface in `film/pl
 Official CLI references: [non-interactive mode](https://developers.openai.com/codex/noninteractive/) and [ChatGPT sign-in](https://developers.openai.com/codex/auth/).
 
 Ensemble films caption the voice one or two words at a time. Very fast words share a cue. In a saved story, set `"caption_style": "phrases"` for the longer subtitle treatment. Both styles use the recorded word timings and leave pauses clear.
+
+For a walk-in or an exit, actors can specify `travel` with `kind` (`enter` or `exit`), `side` (`left`, `right`, `front` or `back`) and `distance` in stage units. Put the contact mark in both `at` and `to`. The shot keeps that mark and finds a clear approach past the other cast members. Use `coverage: follow` in the travel cue to track the crossing with a medium shot. The render report lists the setups in which performers cross the stage or change height and marks any moving performer that the camera never targeted during the move.
