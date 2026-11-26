@@ -7,7 +7,7 @@ import json
 import subprocess
 import time
 from pathlib import Path
-from . import assets, audio, planning, storage, ensemble_review, ensemble
+from . import assets, audio, planning, storage, ensemble_review, ensemble, grading
 
 HERE = Path(__file__).resolve().parent
 
@@ -194,7 +194,7 @@ def render_storyboard(dst, plan, command, ffmpeg):
     return out
 
 
-def render(job, story, d, quality, blender, ffmpeg, root, directory, names, storyboard=False):
+def render(job, story, d, quality, blender, ffmpeg, root, directory, names, storyboard=False, prepare_only=False):
     fps = 30
     ffprobe = str(Path(ffmpeg).with_name("ffprobe" + Path(ffmpeg).suffix))
     w, h = {"preview": (432, 768), "review": (720, 1280), "final": (1080, 1920)}[quality]
@@ -310,7 +310,7 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
                 stage_clock,
                 shot,
                 before,
-                places[shot["place"]],
+                {k: v for k, v in places[shot["place"]].items() if k != "grade"},
                 local,
                 [[looks[i], files[i]["sha256"]] for i in ids],
                 recipes,
@@ -351,6 +351,8 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
         return render_storyboard(dst, plan, command, ffmpeg)
     audio.make_captions(dst / "lines.ass", captions, introductions)
     audio.soundtrack(dst / "mix.wav", speech, effects, "wonder", root)
+    if prepare_only:
+        return dst / "timeline.json"
     cached = sum(Path(s["clip"]).is_file() for s in shots)
     print(
         f"{len(shots)} setups, {sum(len(s['shot']['cameras']) for s in shots)} camera shots, {offset} frames. {cached} setups cached.",
@@ -394,7 +396,7 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
             "-i",
             "mix.wav",
             "-vf",
-            f"setpts=N/({fps}*TB),ass=lines.ass",
+            ",".join([f"setpts=N/({fps}*TB)", *grading.filters(plan), "ass=lines.ass"]),
             "-r",
             str(fps),
             "-c:v",

@@ -38,7 +38,7 @@ LOOK["properties"]["form"] = enum("human paper rock scissors")
 PLACE = obj(
     id=S,
     kit=enum(
-        "arcade depot theater garden harbor boathouse fairground glasshouse bedroom vault classroom market aisle lockup belfry canyon grove dreamcourt rooftops corridor skyport"
+        "arcade depot theater garden harbor boathouse fairground glasshouse bedroom vault classroom market aisle lockup belfry canyon grove dreamcourt rooftops corridor skyport undercity meadow duskfield"
     ),
     sign=S,
     trim=p.COLOR,
@@ -71,6 +71,7 @@ EVENT = obj(id=S, anchor=S, to=V, text=S, spin=N, start=N, end=N)
 CAM = obj(start=N, focus=arr(S), size=N, angle=N, elevation=N, drift=N)
 # These keys may be absent in saved plans. Fresh model output supplies them explicitly.
 PLACE["properties"]["finish"] = enum("flat textured")
+PLACE["properties"]["grade"] = enum("natural moonlight lamplight sunset neon dream")
 PLACE["properties"]["light"] = enum("daylight late_sun night")
 PLACE["properties"]["life"] = enum("quiet shoppers workers audience")
 CAM["properties"]["move"] = enum("hold follow arc punch reveal")
@@ -462,7 +463,7 @@ native-speed action, cycle for repeating work, sustain to hold a pose. Camera mo
 follow tracks the target, arc orbits, punch closes in quickly and reveal opens out. Use brief splash, dust, petals or glint accents at physical contacts and discoveries. Attach each to an onstage focus ID. Reserve them for events a viewer should notice. All timings follow anchors. Use multiple cuts during long beats,
 e.g. wide proof, insert, delayed reaction. A supporting actor should continue a different task while someone speaks.
 Use the same coordinates across cuts in one place. Set look_at to a visible actor or prop ID, or empty for a neutral gaze. Actors face -Y at 0 degrees. X is screen right. Floor Z=0.
-Use finish textured for patterned street surfaces and architecture. Choose a specific kit such as market, bedroom, lockup, grove, belfry, skyport or canyon. Stage handheld items at the wrist. Give creatures and large machinery their own low or profile view. An actor can change gaze during the shot with gaze entries (at, focus), rise/fall with lift [startZ,endZ], or lean with pitch [startDegrees,endDegrees]. For a limited-color world, selective_color lists the IDs that retain color. Use an empty list for natural full color, normal human form and live pose for ordinary people, [0,0] for unused lift and pitch, and atmosphere kind none in clear scenes. Choose scoreboard for a ranked list and skytype for floating command text. Atmosphere supports fog, sunpatch, eclipse, flicker, blackout and dawn across start/end fractions.
+Use finish textured for patterned street surfaces and architecture. Choose grade natural, moonlight, lamplight, sunset, neon or dream to suit the light source. Choose a specific kit such as market, bedroom, lockup, grove, belfry, skyport or canyon. Stage handheld items at the wrist. Give creatures and large machinery their own low or profile view. An actor can change gaze during the shot with gaze entries (at, focus), rise/fall with lift [startZ,endZ], or lean with pitch [startDegrees,endDegrees]. For a limited-color world, selective_color lists the IDs that retain color. Use an empty list for natural full color, normal human form and live pose for ordinary people, [0,0] for unused lift and pitch, and atmosphere kind none in clear scenes. Choose scoreboard for a ranked list and skytype for floating command text. Atmosphere supports fog, sunpatch, eclipse, flicker, blackout and dawn across start/end fractions.
 Actors are 2.5 units tall. Typical X range -3 to 3, Y range -1 to 3. Actor at/to are [x,y].
 Keep coupled objects near the hands; animate handoffs and place evidence in camera focus. A prop at/to is [x,y,z],
 its base. Event anchor is empty for world space or actor@wrist1 / actor@wrist-1 / actor@spine / actor@head; to becomes a local offset. Prop positions, yaw and display text persist between visits; events assign absolute position and yaw.

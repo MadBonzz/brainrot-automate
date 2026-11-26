@@ -97,6 +97,8 @@ A coverage row has five strings in order. They specify the set, blocking, props,
 
 The `anchors` object maps a one-based beat number to entries with `at` and `words`. At render time the narrator's timing moves camera cuts, gestures, gaze changes and effects together. For an edit that preserves an approved take, copy its frame count into the beat's `edit_frames` and its original animation clock (seconds) into the shot's `stage_clock`. The remaining setups share the remaining running time. The shot cache still checks the cast, set, props, staging, motion and renderer version.
 
+Use `--prepare-only` with an ensemble plan to write narration, captions, the sound mix and the timed shot list without starting a picture render. Use the same job folder and quality when resuming. A location can specify `grade` as `natural`, `lamplight`, `moonlight`, `sunset`, `neon` or `dream`. Grading runs before captions. It reuses captured shots, and skips scenes that reserve color for named clues.
+
 The comparison command decodes both local movies, samples their upper-center images eight times per second and reports large visual changes per minute. This measure responds to large in-shot movement as well as cuts. For an excerpt in a longer video, provide `--source-offset` in media seconds, `--source-seconds` in original seconds and `--source-rate` in media seconds per original second. Inspect faces, prop contacts, scale and the order of clues alongside the measurement.
 
 ### Reuse and review a prop

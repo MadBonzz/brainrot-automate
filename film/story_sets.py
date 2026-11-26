@@ -3,7 +3,7 @@
 from math import pi
 from animate import part, label
 
-KITS = "bedroom vault classroom market aisle lockup belfry canyon grove dreamcourt rooftops corridor skyport".split()
+KITS = "bedroom vault classroom market aisle lockup belfry canyon grove dreamcourt rooftops corridor skyport undercity meadow duskfield".split()
 
 
 def build(place):
@@ -25,6 +25,12 @@ def build(place):
             )
         return o
 
+    if kind == "undercity":
+        undercity(block)
+        return
+    if kind in ("meadow", "duskfield"):
+        meadow(block, place, kind == "duskfield")
+        return
     night = place.get("light") == "night"
     sky = "313B66" if night else "62CDEE"
     if kind == "skyport":
@@ -217,3 +223,96 @@ def skyport(block, sky, trim):
         block(x, y, z - 2.35, 0.99, 0.97, 0.71, "A27B56")
         for side in (-1, 1):
             block(x + side * 0.43, y, z - 1.66, 0.043, 0.045, 1.14, "5C565C")
+
+
+def undercity(block):
+    # A deep, occluded street makes the cable legible between three architecture layers.
+    slab = block(0, 2, -0.18, 48, 55, 0.36, "3F485E")
+    slab["surface_finish"] = "stone"
+    block(0, 20, 5, 130, 0.70, 43, "24223E")
+    for side in (-1, 1):
+        for row in range(5):
+            x = side * (5.5 + (row % 2) * 1.1)
+            y = -1 + row * 3.8
+            high = 6.2 + (row * 7 % 5)
+            block(x, y, high / 2, 2.6, 3.25, high, ("51435C", "415369", "584956")[row % 3])
+            for level in range(3):
+                for j in range(3):
+                    color = ("B88EAE", "75C7CF", "DAAB63")[(j + level + row) % 3]
+                    block(x - side * 1.34, y + (j - 1) * 0.78, 2.6 + level * 1.4, 0.10, 0.45, 0.59, color)
+            c = ("F77EA6", "78D9E3", "F3BD64")[row % 3]
+            block(x - side * 1.65, y - 0.65, 2.6, 0.74, 0.22, 1.7, "273647")
+            for k in range(5):
+                block(x - side * 1.65, y - 0.79, 2.09 + k * 0.23, 0.49 if k % 2 else 0.35, 0.026, 0.076, c)
+    for i in range(5):
+        x = (i - 2) * 4
+        block(x, 12, 3.1 + (i % 2), 3.8, 2.3, 6.2 + (i % 2) * 2, "30374A")
+        for j in range(4):
+            block(x, 10.81, 2.11 + j * 1.0, 2.0, 0.06, 0.12, ("6EAABB", "B97DA0")[i % 2])
+    block(2.4, 6.2, 8.3, 0.11, 0.11, 16.7, "C8EEF8")
+    block(0, 9, 12.8, 30, 18, 1.14, "262941")
+    for x in (-9, -4, 1, 6, 11):
+        block(x, 5, 12.18, 2.2, 0.72, 0.10, "E8A56B")
+    for x in (-3.45, 3.5):
+        block(x, 1.6, 0.019, 0.075, 11, 0.023, "A87286")
+
+
+def meadow(block, place, twilight):
+    ground = block(0, 2, -0.20, 100, 100, 0.40, "6F8666" if twilight else "66935C")
+    ground["surface_finish"] = "grass"
+    if twilight:
+        # Draw every horizon in world space so oblique coverage sees the same dusk.
+        for i in range(12):
+            z = -0.6 + i * 1.55
+            palette = (
+                "DB9379",
+                "D79381",
+                "CE8C8B",
+                "BC8193",
+                "A7779F",
+                "976CA4",
+                "8164A2",
+                "725E9B",
+                "625994",
+                "56548B",
+                "4C4E82",
+                "45487A",
+            )
+            block(0, 22, z, 140, 1, 1.60, palette[i])
+        for j in range(-5, 6):
+            block(j * 5, 14, 0.52, 7.4, 3.2, 2.35 + abs(j) % 3 * 0.49, "6F7384", "sphere")
+    else:
+        sky = block(0, 24, 17, 140, 0.55, 48, "434D69" if place.get("light") == "night" else "93CBD4")
+        sky["surface_finish"] = "sky"
+    for side in (-1, 1):
+        for j in range(7):
+            x = side * (5.2 + (j * 7 % 4))
+            y = -1 + j * 2.55
+            block(x, y, 1.47, 0.45, 0.43, 2.94, "655042")
+            for k in range(3):
+                block(
+                    x + (k - 1) * 0.61,
+                    y,
+                    3.02 + (k % 2) * 0.52,
+                    2.22,
+                    1.83,
+                    2.20,
+                    ("567B62", "6D935F", "4D705E")[k],
+                    "sphere",
+                )
+    for j in range(41):
+        x = (j * 17 % 31 - 15) * 0.61
+        y = (j * 13 % 25 - 7) * 0.54
+        if abs(x) < 2.4 and y < 2:
+            continue
+        for k in range(2):
+            block(
+                x + k * 0.09,
+                y,
+                0.14,
+                0.054,
+                0.045,
+                0.29 + (j % 3) * 0.07,
+                ("9BAA68", "7F955E")[k],
+                angle=(0.06, (-1 if k else 1) * 0.23, 0),
+            )

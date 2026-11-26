@@ -3,7 +3,7 @@
 import copy
 import unittest
 
-from film import ensemble, ensemble_movie, planning
+from film import ensemble, ensemble_movie, grading, planning
 from tools import compare_cuts, coverage_plan
 
 
@@ -84,6 +84,25 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual(res["cameras"][1]["start"], 0.25)
         self.assertEqual(res["actors"][0]["gaze"][0]["at"], 0.25)
         self.assertEqual(res["atmosphere"]["start"], 0.25)
+
+    def test_grade_spans_preserve_special_color_and_legacy_scenes(self):
+        places = {
+            "porch": {"finish": "textured", "light": "night", "grade": "lamplight"},
+            "old": {"light": "night"},
+            "court": {"finish": "textured", "light": "night"},
+        }
+        pieces = [("porch", []), ("porch", []), ("porch", ["redline"]), ("porch", []),
+                  ("old", []), ("court", [])]
+        shots = [
+            {"clock": i / 2, "frames": 15, "shot": {"place": place, "selective_color": colors}}
+            for i, (place, colors) in enumerate(pieces)
+        ]
+        filters = grading.filters({"fps": 30, "places": places, "shots": shots})
+        self.assertEqual(len(filters), 4)
+        self.assertIn("gte(n,0)*lt(n,30)+gte(n,45)*lt(n,60)", filters[0])
+        self.assertIn("gte(n,75)*lt(n,90)", filters[-1])
+        natural = {"fps": 30, "places": places, "shots": [shots[2], shots[4]]}
+        self.assertEqual(grading.filters(natural), [])
 
     def test_rapid_change_measure_ignores_sustained_frames(self):
         changes = [0] * 63

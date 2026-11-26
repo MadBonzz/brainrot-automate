@@ -28,6 +28,11 @@ def texture(name, rgba):
             np.sin((np.floor(x * (3 if name == "stone" else 2) + (row % 2) * 0.5) + row * 9) * 2.3) * 0.10
         )
         value *= np.where(rim < 0.018, 0.41, np.where(rim < 0.047, 0.68, np.where(rim < 0.074, 1.10, 1.0)))
+    elif name == "grass":
+        stems = np.sin((x * 19 + 0.40 * np.sin(y * math.tau * 3)) * math.tau)
+        value += (
+            0.05 * stems + 0.065 * np.cos((x * 7 - y * 11) * math.tau) + 0.045 * np.sin(y * math.tau * 13)
+        )
     elif name == "wood":
         grain = 2 * math.pi * (15 * y + 0.38 * np.sin(x * math.tau) + 0.32 * np.sin((x + y) * math.tau * 2))
         value += 0.07 * np.sin(grain) + 0.06 * np.cos(grain * 3)

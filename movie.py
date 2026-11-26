@@ -179,12 +179,15 @@ def args():
     p.add_argument('--witness', type=assets.character_id, help='Use or create this character when a witness appears.')
     p.add_argument('--asset-dir', type=Path, help='Folder shared by episodes for reusable assets (default: assets in this project).')
     p.add_argument('--cast-dir', type=Path, help='Shared character folder (default: assets/characters in this project).')
+    p.add_argument('--prepare-only',action='store_true',help='Prepare the ensemble timeline, captions and soundtrack for an external Blender render.')
     p.add_argument('--storyboard',action='store_true',help='Render a contact sheet of every ensemble camera setup and stop before full-frame rendering.')
     p.add_argument('--out', type=Path, default=Path('movies'), help='Parent folder for new jobs.')
     return p.parse_args()
 
 def main():
     a = args()
+    if a.prepare_only and a.storyboard:
+        raise ValueError('Choose either a camera storyboard or a prepared render timeline.')
     default_assets = ROOT/'assets'
     if a.list_actions:
         print('\n'.join(sorted(planning.MOTIONS)))
@@ -243,9 +246,9 @@ def main():
                 ensemble.check_direction(design,story)
                 planning.save(job/'direction.json',design)
             print(story['title'],flush=True)
-            ensemble_movie.render(job,story,design,a.quality,blender,ffmpeg,asset_root,directory,names,a.storyboard)
+            ensemble_movie.render(job,story,design,a.quality,blender,ffmpeg,asset_root,directory,names,a.storyboard,a.prepare_only)
             return
-        if a.storyboard:raise ValueError('Storyboard review takes an ensemble plan.')
+        if a.storyboard or a.prepare_only:raise ValueError('Preparing a timeline or storyboard takes an ensemble plan.')
         prop_path = asset_root/'props/named'/(assets.character_id(prop_id)+'.json') if prop_id else None
         saved_prop = json.loads(prop_path.read_text(encoding='utf8')) if prop_path and prop_path.is_file() else None
         story, design=planning.plan(job, request['idea'], request['seconds'], names, prop_id, saved_prop)
