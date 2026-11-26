@@ -7,7 +7,7 @@ import subprocess
 import tempfile
 import unittest
 
-from film import vistas
+from film import character_props, vistas
 
 
 class SecondUnitTests(unittest.TestCase):
@@ -31,6 +31,41 @@ class SecondUnitTests(unittest.TestCase):
             dict(cameras=[dict(start=0, reactions=[dict(actor="kid", action="point")])]), 1, 26
         )
         self.assertEqual(views, [])
+
+    def test_articulated_face_follows_prop_and_keeps_cues_and_selective_color(self):
+        prop = dict(
+            id="stranger",
+            place="door",
+            kind="stalker",
+            face_model="fixed_grin",
+            color="cream",
+            scale=2,
+            at=[1, 2, 0],
+            parts=[],
+            text="",
+        )
+        event = dict(id="stranger", start=0.1, end=0.7, to=[2, 3, 1], spin=35, anchor="", text="")
+        shot = dict(
+            place="door",
+            events=[event],
+            selective_color=["stranger"],
+            cameras=[dict(focus=["stranger"], size=2)],
+        )
+        direction = dict(looks=[], props=[prop], shots=[shot])
+        expanded = character_props.expand(direction)
+        figure, mask = expanded["props"]
+        self.assertEqual(figure["kind"], "stalker")
+        self.assertEqual(mask["at"], [1, 2, 4.94])
+        after = expanded["shots"][0]
+        self.assertEqual(after["events"][-1]["to"], [2, 3, 5.94])
+        self.assertEqual(after["events"][-1]["spin"], 35)
+        self.assertIn(mask["id"], after["selective_color"])
+        self.assertEqual(after["cameras"][0]["focus"], [mask["id"]])
+        self.assertEqual(len(direction["props"]), 1)
+        prop["face_model"] = "plain"
+        clean = character_props.expand(direction)
+        self.assertNotIn("face_model", clean["props"][0])
+        self.assertEqual(clean["shots"], [shot])
 
     @unittest.skipUnless(shutil.which("ffmpeg") and shutil.which("ffprobe"), "FFmpeg needed")
     def test_frame_boundaries_of_adjacent_inserts(self):

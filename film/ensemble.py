@@ -51,6 +51,7 @@ PROP_KINDS = (
     + " ".join([*CATALOG, *STORY_PROPS])
 )
 PROP = obj(id=S, kind=enum(PROP_KINDS), place=S, at=V, scale=N, color=p.COLOR, text=S, parts=arr(PART))
+PROP["properties"]["face_model"] = enum("plain creased fixed_grin")
 CUE = obj(action=enum(" ".join(p.MOTIONS)), start=N, end=N)
 ACTOR = obj(
     id=S,
@@ -268,6 +269,8 @@ def check_direction(d, story, partial=False):
     for x in d["props"]:
         if x["place"] not in places or not 0.05 <= x["scale"] <= 8:
             raise ValueError("Invalid prop location or scale.")
+        if x.get("face_model", "plain") != "plain" and x["kind"] != "stalker":
+            raise ValueError("The creased and fixed-grin faces fit the articulated stalker practical.")
         if x["kind"] == "custom" and not 1 <= len(x["parts"]) <= 40:
             raise ValueError("A new prop or landmark needs 1–40 local primitive parts.")
         if x["kind"] != "custom" and x["parts"]:
@@ -485,7 +488,7 @@ e.g. wide proof, insert, delayed reaction. A supporting actor should continue a 
 Use the same coordinates across cuts in one place. Set look_at to a visible actor or prop ID, or empty for a neutral gaze. Actors face -Y at 0 degrees. X is screen right. Floor Z=0.
 Use finish textured for patterned street surfaces and architecture. Choose grade natural, moonlight, lamplight, sunset, neon or dream to suit the light source. Choose a specific kit such as market, bedroom, lockup, grove, belfry, skyport or canyon. Stage handheld items at the wrist. Give creatures and large machinery their own low or profile view. An actor can change gaze during the shot with gaze entries (at, focus), rise/fall with lift [startZ,endZ], or lean with pitch [startDegrees,endDegrees]. For a limited-color world, selective_color lists the IDs that retain color. Use an empty list for natural full color, normal human form and live pose for ordinary people, [0,0] for unused lift and pitch, and atmosphere kind none in clear scenes. Choose scoreboard for a ranked list and skytype for floating command text. Atmosphere supports fog, sunpatch, eclipse, flicker, blackout and dawn across start/end fractions.
 Actors are 2.5 units tall. Typical X range -3 to 3, Y range -1 to 3. Actor at/to are [x,y].
-Normally use vista stage, empty vista_text and empty reactions. When a longer camera shows a cause, its reactions array may name one onstage actor and a matching performance action for a separately filmed reverse angle near its end. Preserve silence or intentional stillness when the rule needs it. For paper_detail or phone_detail, supply the clue in vista_text, up to 72 characters. A dedicated location view can replace a camera when geography itself is evidence. Use desert_queue for a queue that crosses the landscape, balloon_fleet for homes above the clouds, cell_tower for stacked prison tiers, or flooded_gym for a submerged basketball court. Only choose a view when its subject appears in the story. It replaces everything seen from that camera, so use stage for performances and clues carried by a person.
+A stalker practical can have face_model creased or fixed_grin when its expression is evidence. Use plain for other props. Normally use vista stage, empty vista_text and empty reactions. When a longer camera shows a cause, its reactions array may name one onstage actor and a matching performance action for a separately filmed reverse angle near its end. Preserve silence or intentional stillness when the rule needs it. For paper_detail or phone_detail, supply the clue in vista_text, up to 72 characters. A dedicated location view can replace a camera when geography itself is evidence. Use desert_queue for a queue that crosses the landscape, balloon_fleet for homes above the clouds, cell_tower for stacked prison tiers, or flooded_gym for a submerged basketball court. Only choose a view when its subject appears in the story. It replaces everything seen from that camera, so use stage for performances and clues carried by a person.
 Keep coupled objects near the hands; animate handoffs and place evidence in camera focus. A prop at/to is [x,y,z],
 its base. Event anchor is empty for world space or actor@wrist1 / actor@wrist-1 / actor@spine / actor@head; to becomes a local offset. Prop positions, yaw and display text persist between visits; events assign absolute position and yaw.
 A hatch opens with event text OPEN and closes with CLOSED. Use a mark prop as an invisible, fixed camera target at its exact coordinates. The board has at most two centered lines, separated by a newline; use terse, large labels. Kit adds architecture. Invent landmarks or physical mechanisms with custom props (parts use local at, size, rotation in degrees, color). Use empty parts for stock props. Do not force a city elevator story onto another premise. The kit adds scenery,
