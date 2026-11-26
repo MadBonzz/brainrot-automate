@@ -12,17 +12,20 @@ def features(style, z):
     flesh = "C0BBA9" if paper else "EDE9DA"
     out = [part((0, -0.235, 0), (0.73, 0.40, 0.76), flesh)]
     for side in (-1, 1):
-        out.append(part((side * 0.18, -0.405, 0.10), (0.175, 0.08, 0.105 if paper else 0.15), "514D45"))
-        out.append(part((side * 0.18, -0.451, 0.105), (0.052, 0.026, 0.054), "DDD8BC"))
-        out.append(
-            part(
-                (side * 0.20, -0.420, 0.185),
-                (0.28, 0.058, 0.058),
-                "A29B87" if paper else flesh,
-                "box",
-                (0, side * (13 if paper else -6), 0),
+        socket = (0.175, 0.08, 0.105) if paper else (0.093, 0.06, 0.105)
+        glint = (0.052, 0.026, 0.054) if paper else (0.024, 0.022, 0.024)
+        out.append(part((side * 0.18, -0.405, 0.10), socket, "514D45"))
+        out.append(part((side * 0.18, -0.451, 0.105), glint, "DDD8BC"))
+        if paper:
+            out.append(
+                part(
+                    (side * 0.20, -0.420, 0.185),
+                    (0.28, 0.058, 0.058),
+                    "A29B87",
+                    "box",
+                    (0, side * 13, 0),
+                )
             )
-        )
     if paper:
         out.append(part((0, -0.447, -0.134), (0.36, 0.045, 0.22), "413C37"))
         for j in range(6):
@@ -48,17 +51,18 @@ def features(style, z):
                 )
             )
     else:
-        # A painted crescent keeps the visitors' expression unnaturally fixed as the limbs move.
-        for j in range(-4, 5):
-            x = j * 0.058
+        # One continuous dark mouth and a narrow row of teeth read clearly at window distance.
+        out.append(part((0, -0.447, -0.125), (0.43, 0.045, 0.143), "352D29"))
+        for side in (-1, 1):
             out.append(
-                part(
-                    (x, -0.443, -0.19 + 0.105 * (abs(j) / 4) ** 1.7),
-                    (0.086, 0.047, 0.063),
-                    "413936",
-                    "sphere",
-                    (0, -j * 8, 0),
-                )
+                part((side * 0.205, -0.451, -0.097), (0.096, 0.035, 0.029),
+                     "352D29", "sphere", (0, -side * 26, 0))
+            )
+        for j in range(-3, 4):
+            x = j * 0.049
+            out.append(
+                part((x, -0.474, -0.109 + 0.024 * (j / 3) ** 2),
+                     (0.039, 0.023, 0.045 if abs(j) < 3 else 0.031), "DED8B8", "box")
             )
     return flesh, out
 
