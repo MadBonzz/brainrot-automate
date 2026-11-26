@@ -82,6 +82,23 @@ The job's `cast.json` records the resolved paths and hashes. Use `--cast-dir` to
 | Timing | Map a reveal to an exact spoken phrase. The director's camera, sound, gesture and mechanism cues follow the narration clock. A short cast label can appear on the first spoken mention when the viewer needs a relationship explained. Windows can supply word boundaries. Linux and macOS estimate word onsets within each recorded line. |
 | Reuse | Shared character files, motion recipes, prop designs, voices, scores and rendered clips. The shot cache includes the state carried into the shot and the versions of the Blender code and visible assets. |
 
+### Film a reference with a saved coverage sheet
+
+A coverage sheet ties each spoken line to a location, actors, actions, working props and camera cuts. Compile it into the same plan format used by the ordinary movie command. Its `source` field identifies the original story and preserves its ending. A solo adaptation can keep a solo cast.
+
+```bash
+python tools/coverage_plan.py coverage.json plans/my-cut
+python movie.py --from-plan plans/my-cut --quality review --storyboard
+python movie.py --resume <job-folder> --quality review
+python tools/compare_cuts.py reference.mp4 <job-folder>/review/movie.mp4
+```
+
+A coverage row has five strings in order. They specify the set, blocking, props, cameras and narration. For example, the camera string `0:P0:3:hold:0:8 0.48:A0:2:follow:15:5` opens on the first prop, then cuts to the first cast member. Each camera token gives the beat fraction, targets, horizontal field width, move, yaw and elevation. Use `A0+A1` for a two-shot or `W` for everyone onstage. A typical prop string is `key:gold@0,1,.8>hand0`. A movement such as `0:walk@-2,0>1,0` uses the cached walk and moves the actor through the set. A dash in the action field freezes the character, including the face.
+
+The `anchors` object maps a one-based beat number to entries with `at` and `words`. At render time the narrator's timing moves camera cuts, gestures, gaze changes and effects together. For an edit that preserves an approved take, copy its frame count into the beat's `edit_frames` and its original animation clock (seconds) into the shot's `stage_clock`. The remaining setups share the remaining running time. The shot cache still checks the cast, set, props, staging, motion and renderer version.
+
+The comparison command decodes both local movies, samples their upper-center images eight times per second and reports large visual changes per minute. This measure responds to large in-shot movement as well as cuts. For an excerpt in a longer video, provide `--source-offset` in media seconds, `--source-seconds` in original seconds and `--source-rate` in media seconds per original second. Inspect faces, prop contacts, scale and the order of clues alongside the measurement.
+
 ### Reuse and review a prop
 
 The director can choose 50 tabletop instruments, machines and miniatures alongside the four original props. A saved direction can select the compass with this prop entry.

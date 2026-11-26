@@ -111,7 +111,8 @@ def perform(a, look, asset, recipes, frames, fps, clock, sightline):
     default = {k: tuple(rig[k].scale) for k in ("eye1", "eye-1", "mouth")}
     mood = a["mood"]
     # Curves sample the performed pose in seconds. Blender interpolates between knots at render cadence.
-    for frame in sorted({1, frames, *range(1, frames + 1, 2)}):
+    keys = (1,) if a.get("pose") == "frozen" else sorted({1, frames, *range(1, frames + 1, 2)})
+    for frame in keys:
         t = (frame - 1) / max(frames - 1, 1)
         sec = clock + (frame - 1) / fps
         u = progress(t, start, end)
@@ -127,7 +128,10 @@ def perform(a, look, asset, recipes, frames, fps, clock, sightline):
             moving = progress(t, start - span, start + span) * (1 - progress(t, end - span, end + span))
             angle += phi(atan2(dx, -dy) - angle) * moving
         x, y = position(a, t)
-        root.location = (x, y, 0)
+        root.location = (x, y, blend(*a.get("lift", (0, 0)), u))
+        if "pitch" in a:
+            root.rotation_euler.x = radians(blend(*a["pitch"], u))
+            root.keyframe_insert(data_path="rotation_euler", index=0, frame=frame)
         root.rotation_euler.z = angle
         root.keyframe_insert(data_path="location", frame=frame)
         root.keyframe_insert(data_path="rotation_euler", frame=frame, index=2)
@@ -261,8 +265,18 @@ def place_props(spec, props, rigs, frames):
         name = p["id"]
         old = spec["before"][name]
         root, letters, center = practical(p)
+        for piece in root.children:
+            if "oscillator" in piece and old["text"] != "STILL":
+                axis, amplitude, phase, rate = piece["oscillator"]
+                axis = int(axis)
+                path = "delta_location" if axis < 3 else "delta_rotation_euler"
+                for f in sorted({1, frames, *range(1, frames + 1, 3)}):
+                    getattr(piece, path)[axis % 3] = amplitude * sin(
+                        (spec.get("stage_clock", spec["clock"]) + (f - 1) / art.FPS) * rate + phase
+                    )
+                    piece.keyframe_insert(data_path=path, index=axis % 3, frame=f)
         events = [e for e in spec["shot"]["events"] if e["id"] == name]
-        practical_motion(root, old, events, spec["clock"], frames, art.FPS)
+        practical_motion(root, old, events, spec.get("stage_clock", spec["clock"]), frames, art.FPS)
         scene = bpy.context.scene
         states = [(1, old["text"])]
 
@@ -279,6 +293,9 @@ def place_props(spec, props, rigs, frames):
 
         def leaves(state, frame):
             for o in root.children:
+                if o.get("paint_gap"):
+                    o.delta_location.z = -0.28 if state["text"] == "GAP" else 0
+                    o.keyframe_insert(data_path="delta_location", index=2, frame=frame)
                 if "hatch_leaf" in o:
                     o.delta_location.x = o["hatch_leaf"] * (0.68 if state["text"] == "OPEN" else 0)
                     o.keyframe_insert(data_path="delta_location", index=0, frame=frame)
@@ -348,7 +365,12 @@ def place_props(spec, props, rigs, frames):
                     o.hide_render = hidden or not f <= frame < end
                     o.keyframe_insert(data_path="hide_render", frame=frame)
             bpy.data.objects.remove(letters, do_unlink=True)
-        targets[name] = (root, center)
+        if p["kind"] == "serpent":
+            interest = art.empty("Serpent head", (-0.72, -0.08, 0.83), root)
+            interest["camera_interest"] = True
+            targets[name] = (interest, 0)
+        else:
+            targets[name] = (root, center)
     return targets
 
 
@@ -396,6 +418,8 @@ def camera_clearance(scene, camera, f, end, targets, rigs, looks):
                 # A mark is deliberately invisible. Held props can be occluded by their own actor.
                 # Test above/below center to avoid a single finger or stray petal deciding the shot.
                 root = targets[name][0]
+                if root.get("camera_interest"):
+                    root = root.parent
                 for dz in (-0.09, 0.09):
                     endpoint = dot + Vector((0, 0, dz))
                     ray = endpoint - origin
@@ -465,26 +489,55 @@ def shoot(spec, plan):
         scene.view_settings.exposure = 0.48 if light == "late_sun" else -0.10
         sh.studiolight_rotate_z = 1.5 if light == "late_sun" else -0.85
     city(place)
-    street_life(place, spec["clock"], frames, fps)
+    street_life(place, spec.get("stage_clock", spec["clock"]), frames, fps)
     for poly in art.mesh("sphere").polygons:
         poly.use_smooth = True
     rigs = {}
     targets = {}
     actors = {a["id"]: a for a in shot["actors"]}
 
-    def sightline(actor, t):
-        focus = actor["look_at"]
+    def target_position(focus, t):
         if focus in actors:
-            return position(actors[focus], t)
-        if focus in spec["before"] and not spec["before"][focus]["anchor"]:
-            xyz = spec["before"][focus]["to"]
-            return [xyz[0], xyz[1], xyz[2] + 0.6]
-        return None
+            target = actors[focus]
+            elevation = blend(*target.get("lift", (0, 0)), progress(t, target["start"], target["end"]))
+            return [*position(target, t), elevation + 2 * plan["looks"][focus]["height"]]
+        if focus not in spec["before"]:
+            return None
+
+        def landmark(state):
+            owner = state["anchor"].partition("@")[0]
+            if owner in actors:
+                return [*position(actors[owner], t), 1.5 * plan["looks"][owner]["height"]]
+            return [*state["to"][:2], state["to"][2] + 0.6]
+
+        xyz = landmark(spec["before"][focus])
+        for event in shot["events"]:
+            if event["id"] == focus and event["start"] <= t:
+                u = progress(t, event["start"], event["end"])
+                xyz = [blend(x, y, u) for x, y in zip(xyz, landmark(event))]
+        return xyz
+
+    def sightline(actor, t):
+        target = target_position(actor["look_at"], t)
+        for glance in actor.get("gaze", []):
+            if t < glance["at"]:
+                break
+            next_target = target_position(glance["focus"], t)
+            if next_target is None:
+                continue
+            if target is None:
+                target = next_target
+                continue
+            turn = ease((t - glance["at"]) * (frames - 1) / (fps * 0.24))
+            target = [blend(x, y, turn) for x, y in zip(target, next_target)]
+        return target
 
     for a in shot["actors"]:
         i = a["id"]
         look = plan["looks"][i]
-        noticed = [e["end"] for e in shot["events"] if e["id"] == a["look_at"]]
+        noticed = [e["end"] for e in shot["events"] if e["id"] == a["look_at"]] + [
+            g["at"] for g in a.get("gaze", [])
+        ]
         rigs[i] = perform(
             dict(a, notice=noticed),
             look,
@@ -492,7 +545,7 @@ def shoot(spec, plan):
             plan["motions"],
             frames,
             fps,
-            spec["clock"],
+            spec.get("stage_clock", spec["clock"]),
             lambda t: sightline(a, t),
         )
         targets[i] = (rigs[i]["root"], 1.57 * look["height"])
@@ -524,6 +577,20 @@ def shoot(spec, plan):
         lens.type = "PERSP"
         lens.sensor_fit = "HORIZONTAL"
         lens.lens = 34
+        if (
+            len(c["focus"]) == 1
+            and c["focus"][0] in rigs
+            and c["size"] <= 2.5
+            and place.get("finish") == "textured"
+        ):
+            # Choose the face side once per cut. A follow shot should never orbit mid-line.
+            scene.frame_set((f + end) // 2)
+            rig = rigs[c["focus"][0]]
+            face = rig["head"].evaluated_get(bpy.context.evaluated_depsgraph_get()).matrix_world
+            forward = face.to_quaternion() @ Vector((0, -1, 0))
+            heading = atan2(forward.x, -forward.y)
+            offset = max(-0.68, min(0.68, phi(radians(c["angle"]) - heading)))
+            c = dict(c, angle=math.degrees(heading + offset))
         yaw_offset, pitch_offset = camera_clearance(scene, c, f, end, targets, rigs, plan["looks"])
         move = c.get("move", "arc" if c["drift"] else "follow")
         samples = [f] if move == "hold" else sorted({f, end, *range(f, end + 1, 3)})
@@ -543,6 +610,10 @@ def shoot(spec, plan):
             )
             el = radians(c["elevation"] + pitch_offset)
             width = camera_width(c["size"], v, move)
+            if len(c["focus"]) == 1:
+                subject = targets[c["focus"][0]][0]
+                # Inserts of lettering must retain both edges, even during a punch-in.
+                width = max(width, subject.get("readable_width", 0.0))
             if len(locs) > 1:
                 right = Vector((cos(angle), sin(angle), 0))
                 span = max(abs((loc - aim).dot(right)) for loc in locs) * 2
@@ -552,6 +623,28 @@ def shoot(spec, plan):
             cam.rotation_euler = (aim - cam.location).to_track_quat("-Z", "Y").to_euler()
             cam.keyframe_insert(data_path="location", frame=k)
             cam.keyframe_insert(data_path="rotation_euler", frame=k)
+    if shot.get("selective_color"):
+        keep = set()
+        for name in shot["selective_color"]:
+            root = targets[name][0]
+            if root.get("camera_interest"):
+                root = root.parent
+            keep.update(root.children_recursive)
+            keep.add(root)
+        for obj in scene.objects:
+            if obj.type in ("MESH", "FONT") and obj not in keep:
+                y = sum(a * b for a, b in zip(obj.color, (0.2126, 0.7152, 0.0722)))
+                obj.color = (y, y, y, 1)
+    if place.get("finish") == "textured":
+        from surface_art import finish
+
+        finish(scene)
+        scene.view_settings.exposure -= 0.15
+        sh.shadow_intensity = 0.31
+    if "atmosphere" in shot:
+        from atmosphere import stage
+
+        stage(scene, shot["atmosphere"], frames, fps, spec.get("stage_clock", spec["clock"]))
     scene.frame_set(1)
     return scene
 

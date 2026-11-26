@@ -6,6 +6,7 @@ import re
 from . import planning as p
 from . import assets
 from .props import CATALOG
+from .story_objects import KINDS as STORY_PROPS
 
 S, N, I, obj, arr, enum = p.S, p.N, p.I, p.obj, p.arr, p.choices
 ROLES = "rule custom desire attempt clue choice outcome callback"
@@ -21,6 +22,7 @@ STORY = obj(
 )
 STORY["properties"]["introductions"] = arr(obj(beat=I, actor=S, words=S, label=S))
 STORY["properties"]["beats"]["items"]["properties"]["also_because"] = arr(I)
+STORY["properties"]["beats"]["items"]["properties"]["edit_frames"] = dict(I, readOnly=True)
 V = arr(N)
 LOOK = obj(
     id=S,
@@ -28,21 +30,24 @@ LOOK = obj(
     skin=enum("amber umber rose bronze"),
     hair=p.COLOR,
     hat=enum("none cap beret bun crown visor curls helmet bow veil"),
-    uniform=enum("jacket apron sash satchel tunic bandleader gown"),
+    uniform=enum("jacket apron sash satchel tunic bandleader gown dress"),
     badge=S,
     height=N,
 )
+LOOK["properties"]["form"] = enum("human paper rock scissors")
 PLACE = obj(
     id=S,
-    kit=enum("arcade depot theater garden harbor boathouse fairground glasshouse"),
+    kit=enum(
+        "arcade depot theater garden harbor boathouse fairground glasshouse bedroom vault classroom market aisle lockup belfry canyon grove dreamcourt rooftops corridor skyport"
+    ),
     sign=S,
     trim=p.COLOR,
     wall=p.COLOR,
 )
 PART = obj(shape=enum("box sphere cylinder cone ring sail"), at=V, size=V, rotation=V, color=p.COLOR)
 PROP_KINDS = (
-    "raincloud bouquet cistern cake clock radio lantern signal mark custom lamp drum mirror hatch board door parcel trophy trumpet goose bench stand "
-    + " ".join(CATALOG)
+    "raincloud bouquet cistern cake clock radio lantern signal mark custom lamp drum mirror hatch board scoreboard skytype door parcel trophy trumpet goose bench stand "
+    + " ".join([*CATALOG, *STORY_PROPS])
 )
 PROP = obj(id=S, kind=enum(PROP_KINDS), place=S, at=V, scale=N, color=p.COLOR, text=S, parts=arr(PART))
 CUE = obj(action=enum(" ".join(p.MOTIONS)), start=N, end=N)
@@ -58,9 +63,14 @@ ACTOR = obj(
     mood=enum("calm worried proud surprised"),
     cues=arr(CUE),
 )
+ACTOR["properties"]["gaze"] = arr(obj(at=N, focus=S))
+ACTOR["properties"]["lift"] = V
+ACTOR["properties"]["pitch"] = V
+ACTOR["properties"]["pose"] = enum("live frozen")
 EVENT = obj(id=S, anchor=S, to=V, text=S, spin=N, start=N, end=N)
 CAM = obj(start=N, focus=arr(S), size=N, angle=N, elevation=N, drift=N)
 # These keys may be absent in saved plans. Fresh model output supplies them explicitly.
+PLACE["properties"]["finish"] = enum("flat textured")
 PLACE["properties"]["light"] = enum("daylight late_sun night")
 PLACE["properties"]["life"] = enum("quiet shoppers workers audience")
 CAM["properties"]["move"] = enum("hold follow arc punch reveal")
@@ -76,7 +86,12 @@ SHOT = obj(
     events=arr(EVENT),
     cameras=arr(CAM),
 )
+SHOT["properties"]["stage_clock"] = dict(N, readOnly=True)
 SHOT["properties"]["accents"] = arr(obj(kind=enum("splash petals dust glint"), focus=S, at=N))
+SHOT["properties"]["selective_color"] = arr(S)
+SHOT["properties"]["atmosphere"] = obj(
+    kind=enum("none fog sunpatch eclipse flicker blackout dawn"), start=N, end=N
+)
 SHOT["properties"]["dialogue"] = arr(obj(actor=S, words=S))
 DIRECTION = obj(looks=arr(LOOK), places=arr(PLACE), props=arr(PROP), shots=arr(SHOT))
 
@@ -93,8 +108,18 @@ def check_story(story):
         raise ValueError("Duration must be 12–180 seconds.")
     cast = unique(story["cast"], "cast")
     beats = story["beats"]
-    if not 4 <= len(cast) <= 10 or story["lead"] not in cast:
-        raise ValueError("Give the lead and 3–9 other townspeople distinct jobs and wants.")
+    minimum_cast = 1 if "source_cut" in story else 4
+    if not minimum_cast <= len(cast) <= 10 or story["lead"] not in cast:
+        raise ValueError(f"Give {minimum_cast}–10 people distinct jobs and wants and identify the lead.")
+    locked = [b["edit_frames"] for b in beats if "edit_frames" in b]
+    budget = story["seconds"] * 30
+    if (
+        any(type(v) is not int or v < 3 for v in locked)
+        or sum(locked) + 3 * (len(beats) - len(locked)) > budget
+    ):
+        raise ValueError("Locked takes exceed the edit duration or have fewer than three frames.")
+    if len(locked) == len(beats) and sum(locked) != budget:
+        raise ValueError("Fully locked takes must add up to the edit duration.")
     for card in story.get("introductions", []):
         if (
             card["actor"] not in cast
@@ -103,6 +128,20 @@ def check_story(story):
         ):
             raise ValueError("A cast introduction needs a known actor, beat, and label of 1–28 characters.")
         phrase_starts(beats[card["beat"] - 1]["line"], [dict(at=0.5, words=card["words"])])
+    if "source_cut" in story:
+        # An existing story can end in a trap or a failed choice. Preserve its authored beat order.
+        source = story["source_cut"]
+        if not isinstance(source, str) or not source.strip() or len(beats) < 2:
+            raise ValueError("An adaptation needs a named source and at least two beats.")
+        for n, b in enumerate(beats):
+            if (
+                b["witness"] not in cast
+                or not b["line"].strip()
+                or not b["visible"].strip()
+                or not 0 <= b["because"] <= n
+            ):
+                raise ValueError(f"Invalid adapted beat {n + 1}.")
+        return
     order = [b["role"] for b in beats]
     if not all(r in order for r in ROLES.split()) or order[0] != "rule" or order[-1] != "callback":
         raise ValueError("Open with the rule, include all eight story functions, close on the callback.")
@@ -207,7 +246,11 @@ def check_direction(d, story, partial=False):
     cast = unique(d["looks"], "looks")
     places = unique(d["places"], "places")
     props = unique(d["props"], "props")
-    if cast != {a["id"] for a in story["cast"]} or cast & props or len(places) < 2:
+    if (
+        cast != {a["id"] for a in story["cast"]}
+        or cast & props
+        or len(places) < (1 if "source_cut" in story else 2)
+    ):
         raise ValueError("Match looks to the cast, give props unique IDs and build at least two locations.")
     if len(d["shots"]) != len(story["beats"]):
         raise ValueError("Supply one blocking setup per spoken beat.")
@@ -254,8 +297,20 @@ def check_direction(d, story, partial=False):
             vector(a["at"], 2)
             vector(a["to"], 2)
             interval(a)
+            for axis in ("lift", "pitch"):
+                if axis in a:
+                    vector(a[axis], 2)
             if a["look_at"] and a["look_at"] not in (actors | local) - {a["id"]}:
                 raise ValueError(f"Beat {n} needs a visible eyeline target or an empty look_at.")
+            prior_gaze = -1
+            for glance in a.get("gaze", []):
+                if (
+                    glance["focus"] not in (actors | local) - {a["id"]}
+                    or not prior_gaze < glance["at"] < 1
+                    or glance["at"] < 0
+                ):
+                    raise ValueError(f"Beat {n} contains an invalid gaze change.")
+                prior_gaze = glance["at"]
             for c in a["cues"]:
                 interval(c)
         if any(not 0 <= fx["at"] < 1 for fx in s["sounds"]):
@@ -265,6 +320,12 @@ def check_direction(d, story, partial=False):
             for accent in s.get("accents", [])
         ):
             raise ValueError(f"Beat {n} needs an onstage target and time for each visual accent.")
+        if not set(s.get("selective_color", [])) <= actors | local:
+            raise ValueError("Color isolation needs a visible subject.")
+        if "atmosphere" in s and s["atmosphere"]["kind"] != "none":
+            interval(s["atmosphere"])
+        if "stage_clock" in s and (not math.isfinite(s["stage_clock"]) or s["stage_clock"] < 0):
+            raise ValueError("A reused take needs a finite, nonnegative stage clock.")
         last = {}
         for e in s["events"]:
             vector(e["to"], 3)
@@ -288,7 +349,10 @@ def check_direction(d, story, partial=False):
                 raise ValueError(f"Camera {n} needs onstage targets and a 1.1–14 unit horizontal field.")
             if not 0 <= c["start"] < 1 or (i and c["start"] <= cams[i - 1]["start"]):
                 raise ValueError(f"Beat {n} camera cuts must increase.")
-    if not partial and (shown != cast or max((len(s["actors"]) for s in d["shots"]), default=0) < 4):
+    if not partial and (
+        shown != cast
+        or ("source_cut" not in story and max((len(s["actors"]) for s in d["shots"]), default=0) < 4)
+    ):
         raise ValueError("Put the ensemble together for at least one public demonstration.")
 
 
@@ -318,10 +382,17 @@ def check_treatment(treatment):
             raise ValueError(f"The treatment repeats {a} for {b}.")
 
 
+def saved_story_schema(saved):
+    return (
+        dict(STORY, properties={**STORY["properties"], "source_cut": S}) if "source_cut" in saved else STORY
+    )
+
+
 def screenplay(job, prompt, seconds):
     # Authored plans and resumes are already directed. Fresh model drafts get an independent editorial read.
     if (job / "story.json").is_file():
-        return p.stage(job, "story", STORY, prompt, check_story)
+        saved = json.loads((job / "story.json").read_text(encoding="utf8"))
+        return p.stage(job, "story", saved_story_schema(saved), prompt, check_story)
     treatment = p.stage(
         job,
         "treatment",
@@ -391,6 +462,7 @@ native-speed action, cycle for repeating work, sustain to hold a pose. Camera mo
 follow tracks the target, arc orbits, punch closes in quickly and reveal opens out. Use brief splash, dust, petals or glint accents at physical contacts and discoveries. Attach each to an onstage focus ID. Reserve them for events a viewer should notice. All timings follow anchors. Use multiple cuts during long beats,
 e.g. wide proof, insert, delayed reaction. A supporting actor should continue a different task while someone speaks.
 Use the same coordinates across cuts in one place. Set look_at to a visible actor or prop ID, or empty for a neutral gaze. Actors face -Y at 0 degrees. X is screen right. Floor Z=0.
+Use finish textured for patterned street surfaces and architecture. Choose a specific kit such as market, bedroom, lockup, grove, belfry, skyport or canyon. Stage handheld items at the wrist. Give creatures and large machinery their own low or profile view. An actor can change gaze during the shot with gaze entries (at, focus), rise/fall with lift [startZ,endZ], or lean with pitch [startDegrees,endDegrees]. For a limited-color world, selective_color lists the IDs that retain color. Use an empty list for natural full color, normal human form and live pose for ordinary people, [0,0] for unused lift and pitch, and atmosphere kind none in clear scenes. Choose scoreboard for a ranked list and skytype for floating command text. Atmosphere supports fog, sunpatch, eclipse, flicker, blackout and dawn across start/end fractions.
 Actors are 2.5 units tall. Typical X range -3 to 3, Y range -1 to 3. Actor at/to are [x,y].
 Keep coupled objects near the hands; animate handoffs and place evidence in camera focus. A prop at/to is [x,y,z],
 its base. Event anchor is empty for world space or actor@wrist1 / actor@wrist-1 / actor@spine / actor@head; to becomes a local offset. Prop positions, yaw and display text persist between visits; events assign absolute position and yaw.

@@ -53,7 +53,16 @@ def bind_model(path, model, prop_id, design):
             planning.save(path, model)
 
 
-def timings(lines, seconds, fps):
+def timings(lines, seconds, fps, locks=None):
+    if locks and any(value is not None for value in locks):
+        if len(locks) != len(lines):
+            raise ValueError("Each setup needs one duration entry.")
+        open_lines = [length for length, value in zip(lines, locks) if value is None]
+        available = seconds * fps - sum(v for v in locks if v is not None)
+        if available < 3 * len(open_lines) or not open_lines and available:
+            raise ValueError("The locked takes do not fit the edit.")
+        remaining = iter(timings(open_lines, available / fps, fps) if open_lines else [])
+        return [value if value is not None else next(remaining) for value in locks]
     # Give each spoken sentence a breath. Quantize cumulative boundaries once to avoid duration drift.
     weights = [n / audio.RATE + 0.52 for n in lines]
     scale = seconds * fps / sum(weights)
@@ -111,12 +120,15 @@ def synchronized(shot, line, marks, speed, length):
 
     result = deepcopy(shot)
     timed = [*result["actors"], *result["events"], *result["cameras"]]
+    if "atmosphere" in result:
+        timed.append(result["atmosphere"])
     timed.extend(c for a in result["actors"] for c in a["cues"])
     for item in timed:
         for k in ("start", "end"):
             if k in item:
                 item[k] = mapped(item[k])
-    for cue in [*result["sounds"], *result.get("accents", [])]:
+    glances = [g for a in result["actors"] for g in a.get("gaze", [])]
+    for cue in [*result["sounds"], *result.get("accents", []), *glances]:
         cue["at"] = mapped(cue["at"])
     return result
 
@@ -193,7 +205,7 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
     src = [blender, "-b", "-t", "4", "-noaudio", "--factory-startup", "--python-exit-code", "1", "--python"]
     looks = {a["id"]: a for a in d["looks"]}
     cast = []
-    witness = next(a["id"] for a in story["cast"] if a["id"] != story["lead"])
+    witness = next((a["id"] for a in story["cast"] if a["id"] != story["lead"]), None)
     for k, a in looks.items():
         role = "lead" if k == story["lead"] else "witness" if k == witness else "ensemble"
         outfit = {j: v for j, v in a.items() if j not in ("badge", "height")}
@@ -213,7 +225,12 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
     files = assets.ensure_models(job, directory, cast, [*src, str(HERE / "animate.py"), "--"])
     planning.save(job / "cast.json", files)
     utterances = [audio.narration(b["line"], job, ffmpeg, root) for b in story["beats"]]
-    counts = timings([len(raw) for raw, _ in utterances], story["seconds"], fps)
+    counts = timings(
+        [len(raw) for raw, _ in utterances],
+        story["seconds"],
+        fps,
+        [b.get("edit_frames") for b in story["beats"]],
+    )
     states = {p["id"]: dict(to=p["at"], text=p["text"], spin=0, anchor="") for p in d["props"]}
     places = {p["id"]: p for p in d["places"]}
     versions = hashlib.sha256()
@@ -222,6 +239,10 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
         HERE / "festival.py",
         HERE / "shot_rhythm.py",
         HERE / "world_art.py",
+        HERE / "story_objects.py",
+        HERE / "story_sets.py",
+        HERE / "surface_art.py",
+        HERE / "atmosphere.py",
         HERE / "animate.py",
         *sorted((HERE / "props").glob("*.py")),
     ]:
@@ -234,6 +255,8 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
     introductions = []
     offset = 0
     for n, (shot, count, (raw, marks)) in enumerate(zip(d["shots"], counts, utterances), 1):
+        shot = dict(shot)
+        stage_clock = shot.pop("stage_clock", offset / fps)
         length = count / fps
         available = max(0.08, length - min(0.32, length * 0.12))
         speed = max(1, (len(raw) / audio.RATE) / available)
@@ -284,7 +307,7 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
                 h,
                 fps,
                 count,
-                begin,
+                stage_clock,
                 shot,
                 before,
                 places[shot["place"]],
@@ -300,7 +323,15 @@ def render(job, story, d, quality, blender, ffmpeg, root, directory, names, stor
         if not clip.is_file() and ensemble_review.correct_clip(shared, ffprobe, w, h, fps, count):
             storage.copy_file(shared, clip)
         shots.append(
-            dict(shot=shot, before=before, clock=begin, frames=count, clip=str(clip), shared=str(shared))
+            dict(
+                shot=shot,
+                before=before,
+                clock=begin,
+                stage_clock=stage_clock,
+                frames=count,
+                clip=str(clip),
+                shared=str(shared),
+            )
         )
     plan = dict(
         width=w,

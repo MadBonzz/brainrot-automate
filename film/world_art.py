@@ -24,7 +24,7 @@ def costume(base, look):
                 break
     spine = joints["spine"]
     uniform = look["uniform"]
-    if uniform == "gown":
+    if uniform in ("gown", "dress"):
         # Gathered skirt with layered hem and a short overskirt.
         for z, w, depth, h, color in [
             (-0.26, 1.04, 0.72, 0.82, "ivory"),
@@ -32,7 +32,8 @@ def costume(base, look):
             (-0.67, 1.23, 0.86, 0.12, "cream"),
             (0.08, 0.81, 0.60, 0.10, "raspberry"),
         ]:
-            part((0, 0, z), (w, depth, h), color, spine, "cylinder")
+            fabric = look["coat"] if uniform == "dress" and color == "ivory" else color
+            part((0, 0, z), (w, depth, h), fabric, spine, "cylinder")
         part((0.26, -0.29, 0.07), (0.24, 0.12, 0.16), "raspberry", spine, "sphere")
     elif uniform == "apron":
         part((0, -0.291, 0.22), (0.69, 0.03, 0.57), "cream", spine)
@@ -94,6 +95,53 @@ def costume(base, look):
             piece((0.24 + side * 0.13, -0.26, 0.64), (0.27, 0.12, 0.21), "red", angle=(0, side * 0.33, 0))
         piece((0.24, -0.3, 0.64), (0.12, 0.13, 0.13), "gold")
 
+    form = look.get("form", "human")
+    if form in ("rock", "paper"):
+        stone = form == "rock"
+        for obj in base.children_recursive:
+            if obj.type != "MESH" or obj.get("shortfilm_joint", "").startswith(("eye", "mouth", "brow")):
+                continue
+            if max(abs(x - y) for x, y in zip(obj.color, rgb(SKIN[look["skin"]]))) < 0.0002:
+                obj.color = rgb("A7A0A6" if stone else "FFF0D4")
+        if stone:
+            for side in (-1, 1):
+                part(
+                    (side * 0.44, 0.01, 0.40),
+                    (0.45, 0.64, 0.65),
+                    "8B8997",
+                    spine,
+                    angle=(0.06, side * 0.19, 0),
+                )
+                part(
+                    (0, -0.04, -0.22),
+                    (0.49, 0.57, 0.40),
+                    "A5A2AB",
+                    joints[f"arm{side}"],
+                    angle=(0, side * 0.12, 0),
+                )
+                part(
+                    (side * 0.23, -0.31, 0.46),
+                    (0.18, 0.14, 0.095),
+                    "BCB9B5",
+                    head,
+                    angle=(0, side * 0.23, 0),
+                )
+        else:
+            part((0, -0.31, 0.38), (0.79, 0.05, 0.71), "F5E5C7", spine)
+            for side in (-1, 1):
+                part(
+                    (side * 0.20, -0.35, 0.39),
+                    (0.021, 0.026, 0.77),
+                    "C6AA8C",
+                    spine,
+                    angle=(0, side * 0.43, 0),
+                )
+    elif form == "scissors":
+        for side in (-1, 1):
+            wrist = joints[f"wrist{side}"]
+            part((0, 0.01, -0.23), (0.34, 0.32, 0.11), "raspberry", wrist, "ring", (pi / 2, 0, 0))
+            part((0, 0.02, -0.63), (0.14, 0.13, 0.68), "C6D1D6", wrist, "sail", (0.03, side * 0.17, 0))
+
 
 def chest_badge(rig, text):
     if not text:
@@ -112,6 +160,11 @@ def sign(text, xyz, width, height, color="navy", ink="ivory", parent=None):
 
 
 def city(place):
+    from story_sets import KITS, build
+
+    if place["kit"] in KITS:
+        build(place)
+        return
     if place["kit"] in ("fairground", "glasshouse"):
         from festival import district
 
@@ -383,11 +436,53 @@ def practical(spec):
 
     lettering = None
     center = 0.56
-    if kind in ("raincloud", "bouquet", "cistern", "cake"):
+    from story_objects import KINDS, build
+
+    if kind in KINDS:
+        center = build(kind, b, col)
+    elif kind in ("raincloud", "bouquet", "cistern", "cake"):
         from festival import weather_prop
 
         center = weather_prop(kind, b, root)
+    elif kind == "scoreboard":
+        b((0, 0, 1.52), (2.43, 0.25, 2.96), "navy")
+        for side in (-1, 1):
+            b((side * 1.22, -0.06, 1.51), (0.075, 0.23, 3.03), "gold")
+        label("COIN RANKING", (0, -0.151, 2.75), 0.22, "gold", root)
+        last = spec["text"].upper()
+        places = [
+            ("1. ROOK", "126"),
+            ("2. MAY", "98"),
+            ("3. OTIS", "84"),
+            ("4. JUNE", "73"),
+            ("5. ELI", "0"),
+        ]
+        if "FIRST" in last or "LAST ROOK" in last:
+            places[0], places[-1] = ("1. ELI", "133"), ("5. ROOK", "0")
+        if "--" in last:
+            places[0], places[-1] = ("1. ELI", "133"), ("5. ---", "---")
+        for i, (name, score) in enumerate(places):
+            z = 2.33 - i * 0.38
+            b(
+                (0, -0.15, z),
+                (2.20, 0.05, 0.32),
+                "724251" if i == 4 else "344963" if i % 2 == 0 else "2A3A50",
+            )
+            label(name, (-0.47, -0.19, z), 0.17, "ivory", root)
+            label(score, (0.79, -0.19, z), 0.17, "gold", root)
+        lettering = label("", (0, -0.18, 0.28), 0.17, "gold", root)
+        center = 1.52
+        root["readable_width"] = 2.65 * spec["scale"]
+    elif kind == "skytype":
+        # World-space lettering holds the same position in reverse angles.
+        text_width = max(2.1, min(4.25, 0.25 * len(spec["text"]) + 0.40))
+        b((0, 0.08, 0.11), (text_width, 0.08, 0.61), "293744")
+        lettering = label("", (0, -0.015, 0.13), 0.32, "ivory", root)
+        b((text_width * 0.42, -0.021, -0.12), (0.14, 0.05, 0.047), "gold")
+        center = 0.12
+        root["readable_width"] = (text_width + 0.20) * spec["scale"]
     elif kind in ("board", "signal"):
+        root["readable_width"] = 2.43 * spec["scale"]
         b((0, 0.04, 0.39), (0.15, 0.23, 0.78), "navy")
         b((0, 0.04, 0.06), (0.72, 0.49, 0.12), "navy")
         b((0, 0, 0.99), (2.23, 0.20, 1.11), col)

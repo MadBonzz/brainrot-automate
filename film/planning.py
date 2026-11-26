@@ -67,7 +67,7 @@ def check(value, schema, field="result"):
 def provider_schema(schema):
     """Existing files may omit new direction fields. Request all of them in strict CLI output."""
     if schema['type'] == 'object':
-        return obj(**{key: provider_schema(value) for key, value in schema['properties'].items()})
+        return obj(**{key: provider_schema(value) for key, value in schema['properties'].items() if not value.get('readOnly')})
     if schema['type'] == 'array':
         return arr(provider_schema(schema['items']))
     return schema
