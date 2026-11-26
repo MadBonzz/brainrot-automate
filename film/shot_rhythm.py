@@ -25,10 +25,9 @@ def performance_sample(elapsed, window, recipe, mode="accent"):
         release = min(0.18, window * 0.20)
         return min(1, elapsed / attack) * peak, 1 - smooth((elapsed - window + release) / release)
     duration = min(window, frames / 24 + 0.16)
-    attack = max(0.001, duration - min(0.16, duration * 0.20))
-    release_at = attack
+    attack = duration - min(0.16, duration * 0.20)
     key = min(elapsed / attack, 1) * frames
-    weight = 1 - smooth((elapsed - release_at) / (duration - attack))
+    weight = 1 - smooth((elapsed - attack) / (duration - attack))
     return key, weight
 
 

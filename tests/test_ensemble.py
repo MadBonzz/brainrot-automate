@@ -97,6 +97,7 @@ class EpisodeTests(unittest.TestCase):
 
     def test_native_time_and_camera(self):
         recipe = {"frames": 24}
+        self.assertAlmostEqual(shot_rhythm.performance_sample(0.0004, 0.001, recipe)[0], 12)
         for window in (2, 8):
             self.assertAlmostEqual(shot_rhythm.performance_sample(0.5, window, recipe)[0], 12)
         self.assertEqual(shot_rhythm.performance_sample(2, 8, recipe)[1], 0)
