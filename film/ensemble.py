@@ -433,7 +433,11 @@ def screenplay(job, prompt, seconds):
         check_treatment,
     )
     prompt += "\nStage this chain of events in the spoken story and images: " + json.dumps(treatment)
-    draft = p.stage(job, "story-draft", STORY, prompt, check_story, {"seconds": seconds})
+    def check_draft(value):
+        check_story(value)
+        p.check_narration((i, beat["line"]) for i, beat in enumerate(value["beats"], 1))
+
+    draft = p.stage(job, "story-draft", STORY, prompt, check_draft, {"seconds": seconds})
     rubric = """Read the spoken lines as a first-time viewer. Find the early personal hook and public
 demonstration, a second person's countermove, what the lead misunderstood, a planted physical detail,
 and the later event which changes its meaning. Could the viewer predict the solution given the evidence?
@@ -452,7 +456,7 @@ beat and propose a filmable repair. Flag disconnected scenes, padding and a surp
                 f"story-rewrite-{revision + 1}",
                 STORY,
                 prompt + "\nDraft: " + json.dumps(draft) + "\nEdit: " + json.dumps(note),
-                check_story,
+                check_draft,
                 {"seconds": seconds},
             )
     raise ValueError("Story still needs editorial work: " + note["correction"])

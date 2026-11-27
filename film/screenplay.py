@@ -22,31 +22,15 @@ HERE = Path(__file__).resolve().parent
 FPS = 30
 
 
-def voice_line(text):
-    return " ".join(re.findall(r"[\w']+", text.casefold()))
-
-
 def check(lines):
     if not lines:
         raise ValueError("A screenplay needs at least one spoken event.")
+    planning.check_narration((line["id"], line["say"]) for line in lines)
     ids = set()
-    sentences = set()
-    spoken = set()
     for line in lines:
         if line["id"] in ids or not line["id"] or not line["evidence"].strip():
             raise ValueError("Give each line a unique ID and a visible event to review.")
         ids.add(line["id"])
-        words = voice_line(line["say"])
-        if not words or words in spoken:
-            raise ValueError(f"Empty or repeated spoken line at {line['id']}")
-        spoken.add(words)
-        for sentence in re.split(r"(?<=[.!?])\s+", line["say"]):
-            key = voice_line(sentence)
-            if len(key.split()) < 5:
-                continue
-            if key in sentences:
-                raise ValueError(f"Repeated sentence at {line['id']}: {sentence}")
-            sentences.add(key)
         if not line.get("shots"):
             raise ValueError(f"Missing picture for {line['id']}")
 

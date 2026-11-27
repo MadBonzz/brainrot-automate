@@ -73,7 +73,7 @@ def provider_schema(schema):
     return schema
 
 
-def generate(prompt, schema, job):
+def generate(prompt, schema, job, images=()):
     """Swap this function for a local model when desired. Return parsed JSON."""
     exe = shutil.which("codex")
     if not exe:
@@ -83,7 +83,10 @@ def generate(prompt, schema, job):
         fmt, result = work / "schema.json", work / "result.json"
         save(fmt, provider_schema(schema))
         cmd = [exe, "exec", "-c", 'model_provider="openai"', "--ephemeral", "--skip-git-repo-check", "--sandbox", "read-only", "--output-schema",
-               str(fmt), "-o", str(result), "-"]
+               str(fmt), "-o", str(result)]
+        for image in images:
+            cmd.extend(["--image", str(Path(image).resolve())])
+        cmd.append("-")
         env = os.environ.copy()
         for key in ("OPENAI_API_KEY", "CODEX_API_KEY"):
             env.pop(key, None)
@@ -98,6 +101,27 @@ def generate(prompt, schema, job):
             raise RuntimeError("Codex generation failed. The CLI reported:\n"
                                + "\n".join(detail[-8:]))
         return json.loads(result.read_text(encoding="utf-8-sig"))
+
+
+def spoken_words(text):
+    return " ".join(re.findall(r"[\w']+", text.casefold().replace("’", "'")))
+
+
+def check_narration(passages):
+    lines = set()
+    sentences = set()
+    for label, text in passages:
+        phrase = spoken_words(text)
+        if not phrase or phrase in lines:
+            raise ValueError(f"Empty or repeated spoken line at {label}")
+        lines.add(phrase)
+        for sentence in re.split(r"(?<=[.!?])\s+", text):
+            phrase = spoken_words(sentence)
+            if len(phrase.split()) < 5:
+                continue
+            if phrase in sentences:
+                raise ValueError(f"Repeated sentence at {label}: {sentence}")
+            sentences.add(phrase)
 
 
 def story_checks(value):
