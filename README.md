@@ -190,3 +190,16 @@ Ensemble films caption the voice one or two words at a time. Very fast words sha
 For a walk-in or an exit, actors can specify `travel` with `kind` (`enter` or `exit`), `side` (`left`, `right`, `front` or `back`) and `distance` in stage units. Put the contact mark in both `at` and `to`. The shot keeps that mark and finds a clear approach past the other cast members. Use `coverage: follow` in the travel cue to track the crossing with a medium shot. The render report lists the setups in which performers cross the stage or change height and marks any moving performer that the camera never targeted during the move.
 
 The ensemble edit uses closer portrait framing on solo reaction shots. It preserves the native composition on signs, pairs, full-body crossings, falls and wide views. Lettering is applied after framing. Set `"framing": "native"` in a saved story for the original camera framing throughout. The render report distinguishes staged camera shots from additional editorial cut-ins.
+
+
+## Review a story against its finished animation
+
+Render the Bell Bay example with its harbor set, choreographed lantern accident, drum and crossing.
+
+```powershell
+uv run movie.py --from-plan example/bell-bay --quality review
+```
+
+Open `review/screened/movie.mp4` in the printed job folder. The adjoining `screening.html` plays each spoken line with its actual picture and records a review against that movie's fingerprint. The shared harbor is defined once in `example/bell-bay/takes/shared-set.json`. The other takes position characters, move the light planks and direct the cameras.
+
+For an existing ensemble job, use `--resume JOB --quality review --screenplay PATH`. The job saves the script and its staged takes for subsequent edits. The editor records each line once, uses the recording to set the cut length and compares the exported dialogue to the intended recording in half-second windows. Exact repeated narration is rejected. Visual reviews start at “Unreviewed.” A staged take can declare `speech_cues` with a source `time` in seconds and unique `words` from the line. Camera cuts, poses, exposure and prop holds then share those spoken anchors. On Windows the narrator supplies word boundaries. The Linux Flite backend can measure word onsets from its synthesis model. Backends without matching word data use estimated boundaries.

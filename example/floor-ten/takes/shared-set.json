@@ -1,0 +1,19 @@
+{
+  "objects": [
+    {"id": "kit", "kind": "actor", "at": [-0.65, 0.18, 0], "size": [1, 1, 1], "color": "ivory", "actor": "kit", "mood": "calm", "rotation": [0, 0, 22]},
+    {"id": "vale", "kind": "actor", "at": [0.66, 0.29, 0], "size": [1, 1, 1], "color": "ivory", "actor": "vale", "mood": "calm", "rotation": [0, 0, -24]},
+    {"id": "nia", "kind": "actor", "at": [-1.64, 0.62, 0], "size": [1, 1, 1], "color": "ivory", "actor": "nia", "mood": "calm", "rotation": [0, 0, 35]},
+    {"id": "part4", "kind": "box", "at": [0.1, 0.29, 0.73], "size": [1.8, 0.56, 0.12], "color": "8E7862"},
+    {"id": "trophy", "kind": "group", "at": [0, 0, 0], "size": [1, 1, 1], "color": "ivory"},
+    {"id": "part6", "kind": "box", "at": [0, 0, 0], "size": [0.35, 0.26, 0.09], "color": "514F55", "parent": "trophy"},
+    {"id": "part7", "kind": "box", "at": [0, 0, 0.17], "size": [0.085, 0.09, 0.3], "color": "D2AC63", "parent": "trophy"},
+    {"id": "part8", "kind": "horn", "at": [0, 0, 0.34], "size": [0.36, 0.34, 0.24], "color": "E0B766", "parent": "trophy"},
+    {"id": "part9", "kind": "ring", "at": [-0.18, 0, 0.34], "size": [0.2, 0.2, 0.059], "color": "E7BE72", "parent": "trophy", "rotation": [90, 0, 0]},
+    {"id": "part10", "kind": "ring", "at": [0.18, 0, 0.34], "size": [0.2, 0.2, 0.059], "color": "E7BE72", "parent": "trophy", "rotation": [90, 0, 0]},
+    {"id": "tag", "kind": "group", "at": [0, -0.14, 0.12], "size": [1, 1, 1], "color": "ivory", "parent": "trophy"},
+    {"id": "part12", "kind": "box", "at": [0, 0, 0], "size": [0.36, 0.05, 0.25], "color": "71866F", "parent": "tag"},
+    {"id": "part13", "kind": "text", "at": [0, -0.041, 0], "size": [1, 1, 1], "color": "FFF2CA", "text": "2", "font_size": 0.22, "parent": "tag"},
+    {"id": "part14", "kind": "box", "at": [0, 0.036, 0], "size": [0.36, 0.025, 0.25], "color": "9B5655", "parent": "tag"},
+    {"id": "part15", "kind": "text", "at": [0, 0.054, 0], "size": [1, 1, 1], "color": "FFECC7", "text": "−2", "font_size": 0.17, "parent": "tag", "rotation": [90, 0, 180]}
+  ]
+}

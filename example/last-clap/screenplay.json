@@ -1,0 +1,120 @@
+{
+  "title": "The Last Clap at Our Wedding",
+  "lines": [
+    {
+      "id": "wedding-01",
+      "say": "Where we live, applause brings rain. Brides hire my sister to clap in a field and keep the cloud away from their weddings. Today was her own wedding. I promised her a dry dress.",
+      "evidence": "A clap brings rain at the rehearsal, followed by the sister in the field.",
+      "shots": [
+        {
+          "beat": 1
+        },
+        {
+          "beat": 2
+        }
+      ]
+    },
+    {
+      "id": "wedding-02",
+      "say": "Dad needed rain for his strawberries, so I hired a band to play beside his empty tank. When the crowd applauded, the cloud came straight to the nursery.",
+      "evidence": "The empty tank and band show where the protagonist tries to send the rain.",
+      "shots": [
+        {
+          "beat": 3
+        },
+        {
+          "beat": 4
+        }
+      ]
+    },
+    {
+      "id": "wedding-03",
+      "say": "The band stopped. My sister brought out her flowers. One little clap came from somewhere near her elbow, and rain went straight down the front of her dress. Both her hands were on the bouquet.",
+      "evidence": "The cloud switches to the bride and the flowers draw attention.",
+      "shots": [
+        {
+          "beat": 5
+        },
+        {
+          "beat": 7
+        }
+      ]
+    },
+    {
+      "id": "wedding-04",
+      "say": "Hidden in the flowers were two little wooden hands. Mum used to clap them from her hospital bed. Dad had fixed the spring so my sister could hear her at the wedding.",
+      "evidence": "The wooden hands and repaired spring are revealed.",
+      "shots": [
+        {
+          "take": "takes/wooden-hands.json"
+        }
+      ]
+    },
+    {
+      "id": "wedding-05",
+      "say": "Dad reached to break the spring. He thought he'd ruined the wedding. I caught his wrist. One tiny clap had pulled the cloud away from an entire band. I wanted to know why.",
+      "evidence": "The father reaches for the mechanism and the child intervenes.",
+      "shots": [
+        {
+          "beat": 9
+        }
+      ]
+    },
+    {
+      "id": "wedding-06",
+      "say": "I clapped once by the tank. The rain came to me. Then the wooden hands clicked on the other side of the yard and the cloud went back. The last clap won, however quiet it was.",
+      "evidence": "The two successive sounds draw the cloud to opposite positions.",
+      "shots": [
+        {
+          "beat": 11
+        }
+      ]
+    },
+    {
+      "id": "wedding-07",
+      "say": "I could leave the flowers beside the strawberries and keep my promise. But the whole point was for my sister to hear Mum. I gave her the bouquet and paid the band to wheel Dad's tank over to her.",
+      "evidence": "The bouquet returns to the bride and the band moves the tank.",
+      "shots": [
+        {
+          "beat": 12
+        },
+        {
+          "beat": 13
+        }
+      ]
+    },
+    {
+      "id": "wedding-08",
+      "say": "My sister climbed into the empty tank in her wedding dress. She'd stood through thirty people's weddings in a wet potato field. She thought she could manage a little rain at her own.",
+      "evidence": "The bride steps into the tank with the flowers.",
+      "shots": [
+        {
+          "beat": 14
+        }
+      ]
+    },
+    {
+      "id": "wedding-09",
+      "say": "When they said their vows, Dad wound the spring. Mum's little hands applauded. Everyone else kept their hands in their pockets while the tank filled up around the bride.",
+      "evidence": "The wooden hands clap at the vows and the tank catches rain.",
+      "shots": [
+        {
+          "beat": 15
+        },
+        {
+          "beat": 16
+        }
+      ]
+    },
+    {
+      "id": "wedding-10",
+      "say": "Then my sister threw the bouquet. Gus caught it. For once at a wedding, everybody knew exactly where the rain was going next.",
+      "evidence": "The bouquet leaves the bride, Gus catches it, and rain follows the flowers.",
+      "shots": [
+        {
+          "beat": 17
+        }
+      ]
+    }
+  ]
+}

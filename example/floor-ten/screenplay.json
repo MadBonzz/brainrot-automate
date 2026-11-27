@@ -1,0 +1,117 @@
+{
+  "title": "Taking Separate Lifts",
+  "lines": [
+    {
+      "id": "lift-01",
+      "say": "My sister's first trumpet solo was on floor ten. She wanted me beside her when the conductor raised his hand. We had until noon to persuade the lift to take us there.",
+      "evidence": "The waiting conductor and the siblings with matching sixes establish the appointment.",
+      "shots": [
+        {
+          "beat": 4
+        },
+        {
+          "beat": 5
+        }
+      ]
+    },
+    {
+      "id": "lift-02",
+      "say": "Our lift has no buttons. It adds the numbers on its passengers. My sister and I are both sixes. Together we went straight past her concert and stopped in cheese storage on twelve.",
+      "evidence": "Two sixes board and the destination becomes twelve.",
+      "shots": [
+        {
+          "beat": 1
+        },
+        {
+          "beat": 6
+        }
+      ]
+    },
+    {
+      "id": "lift-03",
+      "say": "She tried crouching behind me. The dial stayed at twelve. Apparently the lift could still do sums below waist height.",
+      "evidence": "The crouching passenger remains inside and the destination stays twelve.",
+      "shots": [
+        {
+          "beat": 7
+        }
+      ]
+    },
+    {
+      "id": "lift-04",
+      "say": "In the freight bay I watched Dot return a parcel marked three. The inspector flipped its tag to minus three. Dot was an eight, and her lift stopped at five.",
+      "evidence": "A numbered parcel is marked as a return and the destination changes.",
+      "shots": [
+        {
+          "beat": 8
+        },
+        {
+          "beat": 9
+        }
+      ]
+    },
+    {
+      "id": "lift-05",
+      "say": "At five a chute opened. Dot got out. The parcel went away for good. That was the price of subtracting freight.",
+      "evidence": "The parcel disappears into the returns chute.",
+      "shots": [
+        {
+          "beat": 10
+        }
+      ]
+    },
+    {
+      "id": "lift-06",
+      "say": "My racing trophy stood in the lobby. Its freight tag said two. I'd won it by one stair. My sister saw me looking at it. She didn't ask.",
+      "evidence": "The siblings look from the trophy's two to their own numbers.",
+      "shots": [
+        {
+          "beat": 11
+        },
+        {
+          "beat": 12
+        }
+      ]
+    },
+    {
+      "id": "lift-07",
+      "say": "I took the cup off its stand and asked to return it. The inspector wanted to know what was wrong with it. It kept taking me to the wrong floor, I said. He stamped the tag.",
+      "evidence": "The cup passes to the inspector and gets marked as a return.",
+      "shots": [
+        {
+          "take": "takes/return-cup.json"
+        }
+      ]
+    },
+    {
+      "id": "lift-08",
+      "say": "My sister and I stepped in together with the cup. Twelve minus two. At last the dial pointed to ten.",
+      "evidence": "The two siblings and cup ride with ten showing.",
+      "shots": [
+        {
+          "beat": 15
+        }
+      ]
+    },
+    {
+      "id": "lift-09",
+      "say": "When the doors opened, the chute swallowed my trophy. The clang carried right into the concert hall. The conductor turned around. We'd made it.",
+      "evidence": "The cup disappears at their destination.",
+      "shots": [
+        {
+          "beat": 16
+        }
+      ]
+    },
+    {
+      "id": "lift-10",
+      "say": "My sister raised her trumpet. Her first note cracked halfway through. She grinned and played the second half twice as loud. That was the bit I'd given up the cup to hear.",
+      "evidence": "The conductor cues the sister, who plays with her brother present.",
+      "shots": [
+        {
+          "beat": 17
+        }
+      ]
+    }
+  ]
+}

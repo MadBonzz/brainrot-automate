@@ -222,6 +222,7 @@ def main():
         job.mkdir(parents=True)
     stage_message('Job: '+str(job))
     with job_lock(job):
+        source = None
         if not a.resume:
             source = ((ROOT/'example' if a.prop_id else ROOT/'example'/'last-clap') if a.demo else a.from_plan)
             if source:
@@ -239,17 +240,23 @@ def main():
         prop_id = a.prop_id or request.get('prop_id')
         request.update(characters=names, asset_root=str(asset_root), cast_override=str(directory) if override else None, prop_id=prop_id)
         planning.save(job/'request.json', request)
-        from film.screenplay import render as edit_screenplay
+        from film.screenplay import render as edit_screenplay, save_plan, available_footage
         script = a.screenplay
-        if script is None and a.from_plan and (a.from_plan/'screenplay.json').is_file():
-            script = a.from_plan/'screenplay.json'
+        if script is None and source and (source/'screenplay.json').is_file():
+            script = source/'screenplay.json'
+        if script is None and a.resume and (job/'screenplay'/'screenplay.json').is_file():
+            script = job/'screenplay'/'screenplay.json'
+        references = []
         if script is not None:
             script = script.resolve()
             if not script.is_file():
                 raise FileNotFoundError(script)
             if request.get('format', 1) != 2:
                 raise ValueError('A screenplay edit needs an ensemble cast and timeline.')
-            if a.resume and (job/a.quality/'timeline.json').is_file():
+            script = save_plan(script, job/'screenplay')
+            saved = json.loads(script.read_text(encoding='utf8'))
+            references = [s for line in saved['lines'] for s in line['shots'] if 'beat' in s]
+            if a.resume and not (a.storyboard or a.prepare_only) and available_footage(job/a.quality,references):
                 movie = edit_screenplay(script, job/a.quality, job/a.quality/'screened', asset_root, ffmpeg, blender)
                 stage_message(f'Picture and dialogue ready for review at {movie}')
                 return
@@ -263,7 +270,8 @@ def main():
                 ensemble.check_direction(design,story)
                 planning.save(job/'direction.json',design)
             print(story['title'],flush=True)
-            ensemble_movie.render(job,story,design,a.quality,blender,ffmpeg,asset_root,directory,names,a.storyboard,a.prepare_only)
+            prepare_assets_only = a.prepare_only or (script is not None and not references and not a.storyboard)
+            ensemble_movie.render(job,story,design,a.quality,blender,ffmpeg,asset_root,directory,names,a.storyboard,prepare_assets_only)
             if script is not None and not (a.storyboard or a.prepare_only):
                 movie = edit_screenplay(script, job/a.quality, job/a.quality/'screened', asset_root, ffmpeg, blender)
                 stage_message(f'Picture and dialogue ready for review at {movie}')

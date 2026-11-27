@@ -1,4 +1,5 @@
 """Review the final encoded picture and verify the dialogue in its actual audio stream."""
+
 from array import array
 import argparse
 import hashlib
@@ -23,10 +24,29 @@ def movie_hash(path):
 def dialogue_check(movie, lines, ffmpeg, assets):
     """Compare the decoded AAC with each intended recording in multiple speech windows."""
     decoded = array("h")
-    decoded.frombytes(subprocess.check_output([
-        ffmpeg, "-v", "error", "-threads", "1", "-i", str(movie), "-map", "0:a:0",
-        "-vn", "-ac", "1", "-ar", str(audio.RATE), "-f", "s16le", "-"
-    ]))
+    decoded.frombytes(
+        subprocess.check_output(
+            [
+                ffmpeg,
+                "-v",
+                "error",
+                "-threads",
+                "1",
+                "-i",
+                str(movie),
+                "-map",
+                "0:a:0",
+                "-vn",
+                "-ac",
+                "1",
+                "-ar",
+                str(audio.RATE),
+                "-f",
+                "s16le",
+                "-",
+            ]
+        )
+    )
     if sys.byteorder != "little":
         decoded.byteswap()
     rows = []
@@ -40,16 +60,16 @@ def dialogue_check(movie, lines, ffmpeg, assets):
         for first in range(0, len(ref), window):
             stop = min(first + window, len(ref))
             x = ref[first:stop:12]
-            y = decoded[at + first:at + stop:12]
-            xx = sum(v*v for v in x)
-            if xx < max(len(x), 1)*35**2:
+            y = decoded[at + first : at + stop : 12]
+            xx = sum(v * v for v in x)
+            if xx < max(len(x), 1) * 35**2:
                 continue
-            yy = sum(v*v for v in y)
-            xy = sum(v*w for v,w in zip(x,y))
-            scores.append(xy / math.sqrt(xx * yy) if yy else 0.)
-        if not scores or min(scores) < .80:
+            yy = sum(v * v for v in y)
+            xy = sum(v * w for v, w in zip(x, y))
+            scores.append(xy / math.sqrt(xx * yy) if yy else 0.0)
+        if not scores or min(scores) < 0.80:
             raise ValueError(f"Exported speech differs from the recording at {line['id']}")
-        rows.append({"id":line["id"],"windows":len(scores),"lowest_correlation":round(min(scores),4)})
+        rows.append({"id": line["id"], "windows": len(scores), "lowest_correlation": round(min(scores), 4)})
     return rows
 
 
@@ -57,7 +77,7 @@ def review_page(movie, manifest):
     """Make a standalone cue player. Reviewer observations apply only to this encode."""
     manifest = dict(manifest)
     manifest["sha256"] = movie_hash(movie)
-    data = json.dumps(manifest,ensure_ascii=False).replace("<","\\u003c")
+    data = json.dumps(manifest, ensure_ascii=False).replace("<", "\\u003c")
     template = """<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width">
 <title>Screening room</title><style>
 *{box-sizing:border-box}body{margin:0;background:#141923;color:#f4efe5;font:16px system-ui}
@@ -91,24 +111,25 @@ document.querySelector('#save').onclick=()=>{
  const file=new Blob([JSON.stringify({title:film.title,sha256:film.sha256,notes},null,2)],{type:'application/json'});
  const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download='visual-review.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000)};
 </script>"""
-    html = template.replace("__SOURCE__",escape(movie.name,quote=True)).replace("__DATA__",data)
-    (movie.parent/"screening.html").write_text(html,encoding="utf8")
+    html = template.replace("__SOURCE__", escape(movie.name, quote=True)).replace("__DATA__", data)
+    (movie.parent / "screening.html").write_text(html, encoding="utf8")
 
 
 def inspect(movie, assets=None, ffmpeg="ffmpeg"):
     import shutil
-    ffmpeg=shutil.which(ffmpeg) or ffmpeg
-    info=json.loads((movie.parent/"screening.json").read_text(encoding="utf8"))
-    checks=dialogue_check(movie,info["lines"],ffmpeg,assets)
-    data={"sha256":movie_hash(movie),"dialogue":checks}
-    (movie.parent/"audio-checks.json").write_text(json.dumps(data,indent=2),encoding="utf8")
-    review_page(movie,info)
+
+    ffmpeg = shutil.which(ffmpeg) or ffmpeg
+    info = json.loads((movie.parent / "screening.json").read_text(encoding="utf8"))
+    checks = dialogue_check(movie, info["lines"], ffmpeg, assets)
+    data = {"sha256": movie_hash(movie), "dialogue": checks}
+    (movie.parent / "audio-checks.json").write_text(json.dumps(data, indent=2), encoding="utf8")
+    review_page(movie, info)
     return data
 
 
-if __name__=="__main__":
-    parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("movie",type=Path)
-    parser.add_argument("--assets",type=Path)
-    args=parser.parse_args()
-    inspect(args.movie.resolve(),args.assets)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("movie", type=Path)
+    parser.add_argument("--assets", type=Path)
+    args = parser.parse_args()
+    inspect(args.movie.resolve(), args.assets)

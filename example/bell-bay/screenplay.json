@@ -1,0 +1,85 @@
+{
+  "title": "The Quietest Drum in Bell Bay",
+  "lines": [
+    {
+      "id": "bell-01",
+      "say": "My little brother was leading the harbor parade for the first time. He carried the flag. I had our grandfather's drum. Mum was waiting across the water for us to start.",
+      "evidence": "The brothers, drum and parade marshal establish opposite piers before the crossing.",
+      "shots": [
+        {
+          "take": "takes/parade.json"
+        }
+      ]
+    },
+    {
+      "id": "bell-02",
+      "say": "There isn't a bridge in Bell Bay until two lanterns face each other. Mum had the west light. Ours faced hers from the east pier. Look what grew between them.",
+      "evidence": "The lamps remain on opposite banks as ten bright planks rise out of the water.",
+      "shots": [
+        {
+          "take": "takes/rule.json"
+        }
+      ]
+    },
+    {
+      "id": "bell-03",
+      "say": "My brother swung his flag. It clipped our lantern and knocked it into the harbor. The bridge fell in after it. Across the gap, Mum still had a perfectly good light and absolutely nowhere to go.",
+      "evidence": "The flag swings into the light, which tips into the water. The planks drop and the family ends on opposite banks.",
+      "shots": [
+        {
+          "take": "takes/spill.json"
+        }
+      ]
+    },
+    {
+      "id": "bell-04",
+      "say": "Then our barber tilted his pocket mirror. One plank came back. A reflection counted as the other lantern. His mirror was too small to get us any farther, but I'd seen that color of light somewhere else.",
+      "evidence": "The mirror turns toward the surviving lamp and raises just one plank.",
+      "shots": [
+        {
+          "take": "takes/mirror.json"
+        }
+      ]
+    },
+    {
+      "id": "bell-05",
+      "say": "The inside of my drum was polished brass. The only way to point it at Mum was to tear off the skin. My grandfather had opened forty parades with that drum. I took a breath and pulled.",
+      "evidence": "The drummer reaches across the head, peels it away and reveals the bright brass underneath.",
+      "shots": [
+        {
+          "take": "takes/tear.json"
+        }
+      ]
+    },
+    {
+      "id": "bell-06",
+      "say": "I held the brass up to Mum's lamp. The first plank appeared where the lantern had fallen. Then came another. This time they went all the way across.",
+      "evidence": "The drummer turns the open rim toward the opposite light. Planks emerge successively between the piers.",
+      "shots": [
+        {
+          "take": "takes/build.json"
+        }
+      ]
+    },
+    {
+      "id": "bell-07",
+      "say": "I sent my brother first. I had to follow with the drum still facing Mum or the bridge would disappear under my feet. She waited until we were both on the dock before she waved.",
+      "evidence": "The smaller child crosses, followed by the drummer carrying the brass. Both arrive on the mother's dock.",
+      "shots": [
+        {
+          "take": "takes/cross.json"
+        }
+      ]
+    },
+    {
+      "id": "bell-08",
+      "say": "The bandmaster raised his baton. Out of habit I played the opening roll. Both sticks went straight through the hole. My brother said it was the first parade where he could hear the crowd cheering for him.",
+      "evidence": "Two sticks move through the open rim. Cut out to the brother and the group on the far pier.",
+      "shots": [
+        {
+          "take": "takes/roll.json"
+        }
+      ]
+    }
+  ]
+}
