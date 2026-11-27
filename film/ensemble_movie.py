@@ -318,6 +318,7 @@ def render(
         )
     files = assets.ensure_models(job, directory, cast, [*src, str(HERE / "animate.py"), "--"])
     planning.save(job / "cast.json", files)
+    review_lines = []
     utterances = [audio.narration(b["line"], job, ffmpeg, root) for b in story["beats"]]
     counts = timings(
         [len(raw) for raw, _ in utterances],
@@ -375,12 +376,19 @@ def render(
         captions_for_line(captions, marks, begin, len(raw) / audio.RATE, speed, caption_style)
         capacity = round((offset + count) * audio.RATE / fps) - len(speech)
         clip = raw[:capacity]
+        review_lines.append(dict(id=f"beat-{n:02}",start=begin,end=begin+length,speech_start=begin,
+                                speech_end=begin+len(clip)/audio.RATE,say=beat["line"],evidence=beat["visible"]))
         if pickup:
             take = pace_voice(pickup[0], speed, dst, ffmpeg)
             start_sample = min(capacity, max(len(clip), round(pickup_start * audio.RATE)))
             take = take[: capacity - start_sample]
             clip.extend(array("h", [0]) * (start_sample - len(clip)))
             clip.extend(take)
+            review_lines[-1]["end"] = begin + start_sample/audio.RATE
+            review_lines.append(dict(id=f"beat-{n:02}-pickup",start=begin+start_sample/audio.RATE,
+                                     end=begin+length,speech_start=begin+start_sample/audio.RATE,
+                                     speech_end=begin+(start_sample+len(take))/audio.RATE,
+                                     say=beat["pickup"], evidence=beat["visible"]))
             captions_for_line(
                 captions, pickup[1], begin + start_sample / audio.RATE, len(take) / audio.RATE, speed, caption_style
             )
@@ -488,5 +496,9 @@ def render(
         (dst / "picture-edit.json").unlink(missing_ok=True)
     planning.save(dst / "render-review.json", proof)
     (dst / "movie.partial.mp4").replace(dst / "movie.mp4")
+    from .screening import review_page
+    manifest = dict(title=story["title"],fps=fps,frames=offset,lines=review_lines)
+    planning.save(dst/"screening.json", manifest)
+    review_page(dst/"movie.mp4", manifest)
     print(f"Finished: {dst / 'movie.mp4'} ({offset / fps:.2f}s)", flush=True)
     return dst / "movie.mp4"

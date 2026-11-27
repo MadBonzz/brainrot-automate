@@ -167,6 +167,7 @@ def args():
     p.add_argument('--seconds', type=int, default=45, help='Approximate writing target, 12–180 seconds.')
     p.add_argument('--quality', choices=['preview', 'review', 'final'], default='final')
     group = p.add_mutually_exclusive_group()
+    p.add_argument('--screenplay', type=Path, help='Cut a saved ensemble film to this spoken script and its staged takes.')
     group.add_argument('--demo', action='store_true', help='Render the included saved example without any model calls.')
     group.add_argument('--resume', type=Path, help='Reuse a prior job and valid completed stages.')
     group.add_argument('--from-plan', type=Path, help='Render a folder containing story.json and direction.json.')
@@ -207,6 +208,8 @@ def main():
         return
     if not 12 <= a.seconds <= 180:
         raise ValueError('--seconds must be between 12 and 180.')
+    if a.screenplay and (a.storyboard or a.prepare_only):
+        raise ValueError('A screenplay edit needs rendered shot footage.')
     if a.idea and (a.resume or a.demo or a.from_plan):
         raise ValueError('Use --idea on a new generated movie.')
     blender, ffmpeg=locate('blender'), locate('ffmpeg')
@@ -236,6 +239,20 @@ def main():
         prop_id = a.prop_id or request.get('prop_id')
         request.update(characters=names, asset_root=str(asset_root), cast_override=str(directory) if override else None, prop_id=prop_id)
         planning.save(job/'request.json', request)
+        from film.screenplay import render as edit_screenplay
+        script = a.screenplay
+        if script is None and a.from_plan and (a.from_plan/'screenplay.json').is_file():
+            script = a.from_plan/'screenplay.json'
+        if script is not None:
+            script = script.resolve()
+            if not script.is_file():
+                raise FileNotFoundError(script)
+            if request.get('format', 1) != 2:
+                raise ValueError('A screenplay edit needs an ensemble cast and timeline.')
+            if a.resume and (job/a.quality/'timeline.json').is_file():
+                movie = edit_screenplay(script, job/a.quality, job/a.quality/'screened', asset_root, ffmpeg, blender)
+                stage_message(f'Picture and dialogue ready for review at {movie}')
+                return
         stage_message('Preparing story and shot direction…')
         if request.get('format',1)==2:
             model_path,model=ensemble_movie.named_model(asset_root,prop_id) if prop_id else (None,None)
@@ -247,6 +264,9 @@ def main():
                 planning.save(job/'direction.json',design)
             print(story['title'],flush=True)
             ensemble_movie.render(job,story,design,a.quality,blender,ffmpeg,asset_root,directory,names,a.storyboard,a.prepare_only)
+            if script is not None and not (a.storyboard or a.prepare_only):
+                movie = edit_screenplay(script, job/a.quality, job/a.quality/'screened', asset_root, ffmpeg, blender)
+                stage_message(f'Picture and dialogue ready for review at {movie}')
             return
         if a.storyboard or a.prepare_only:raise ValueError('Preparing a timeline or storyboard takes an ensemble plan.')
         prop_path = asset_root/'props/named'/(assets.character_id(prop_id)+'.json') if prop_id else None

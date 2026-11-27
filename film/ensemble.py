@@ -460,6 +460,7 @@ beat and propose a filmable repair. Flag disconnected scenes, padding and a surp
 
 def plan(job, idea, seconds, names=None, prop_id=None, prop_model=None):
     prompt = f"""Write an original {seconds}-second first-person animated social fable. Premise: {idea or "Invent a fresh town."}
+Tell one continuous story in time order. Introduce the protagonist's goal before an aside. Each new line changes what someone knows, wants, owns or does. When an earlier clue returns, show its new consequence. Read the entire narration aloud as one paragraph and remove redundant recaps, stray labels and gags that interrupt cause and effect. Speak abbreviations and numerals as a listener should hear them.
 Use about {round(seconds * 2.45)} spoken words. Give each beat 1–2 short spoken sentences.
 In the first two sentences combine the public rule with a personal contradiction or immediate mishap. Start inside the impossible rule. Show a public example and a ridiculous, logical civic custom; give
 at least four distinct people jobs, wants and actions. Give the protagonist a specific personal goal, a failed
@@ -479,7 +480,7 @@ of the visible actor carrying the beat, the lead for choice. Use also_because fo
             " Its appearance is " + json.dumps(prop_model) if prop_model else ""
         )
     story = screenplay(job, prompt, seconds)
-    direction_prompt = f"""Direct this story in a vertical block-built world. Return reusable kit, cast, props and blocking.
+    direction_prompt = f"""Direct this story in a vertical block-built world. For each physical verb, show the continuous action and its result during the spoken clause. Keep a transferred object readable at both hands. Keep each person on the correct side of a threshold after crossing it. For an embrace or lift, stage the approach, contact, supported body and release. Keep the same light rules, prop ownership and positions across cuts. Return reusable kit, cast, props and blocking.
 Stage the public rule, failed attempt, counterexample and cost as visible changes. For a reveal, sync its authored timing fraction to a unique short spoken phrase. Use the opening 12 seconds for an image of the mechanism, one public example and a personal stake.
 Cut when information changes: aim around 1–2 seconds in rapid passages, then hold longer for a difficult
 choice or a joke. Compose foreground evidence, the acting pair and background work at different depths.
